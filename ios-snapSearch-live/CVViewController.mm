@@ -15,6 +15,7 @@
 using namespace cv;
 
 @interface CVViewController () <CvVideoCameraDelegate, G8TesseractDelegate>
+@property (weak, nonatomic) IBOutlet UISlider *zoomSlider;
 @property (weak, nonatomic) IBOutlet UIImageView *cameraImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *resultImageView;
 
@@ -81,6 +82,9 @@ using namespace cv;
             self.videoDevice = device;
         }
     }
+    
+    CGAffineTransform trans = CGAffineTransformMakeRotation(M_PI_2);
+    self.zoomSlider.transform = trans;
     //[self updateMask];
 }
 
@@ -192,16 +196,20 @@ using namespace cv;
     return [UIImage imageWithCGImage:masked];
 }
 
--(void) startCamera {
-    [self.videoCamera start];
+-(void) cameraZoom:(float)zoom {
     
     NSError *error = nil;
     if ([self.videoDevice lockForConfiguration:&error]) {
-        self.videoDevice.videoZoomFactor = 1.5;
+        self.videoDevice.videoZoomFactor = zoom;
         [self.videoDevice unlockForConfiguration];
     }else {
         NSLog(@"error: %@", error);
     }
+}
+
+-(void) startCamera {
+    [self.videoCamera start];
+    [self cameraZoom:self.zoomSlider.value];
 }
 
 
@@ -324,6 +332,11 @@ using namespace cv;
     // Pass the selected object to the new view controller.
 }
 */
+
+
+- (IBAction)onZoomChange:(id)sender {
+   [self cameraZoom:self.zoomSlider.value];
+}
 
 - (IBAction)onPan:(UIPanGestureRecognizer *)sender {
     CGPoint loc = [sender locationInView:self.cameraImageView];
