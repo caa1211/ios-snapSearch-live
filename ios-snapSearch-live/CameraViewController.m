@@ -7,9 +7,9 @@
 //
 
 #import "CameraViewController.h"
-
 #import <AVFoundation/AVCaptureOutput.h>
-#import "CVWrapper.h"
+#import <Foundation/Foundation.h>
+#import <AVFoundation/AVFoundation.h>
 
 @interface CameraViewController () <AVCaptureVideoDataOutputSampleBufferDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *cameraImageView;

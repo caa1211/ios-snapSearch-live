@@ -26,9 +26,6 @@
 		AD9499A91B57A21300541B59 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD9499A81B57A21300541B59 /* CoreGraphics.framework */; };
 		AD9499AB1B57A22200541B59 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD9499AA1B57A22200541B59 /* CoreMedia.framework */; };
 		AD9499AD1B57A23700541B59 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD9499AC1B57A23700541B59 /* AssetsLibrary.framework */; };
-		AD9499B61B57A4EF00541B59 /* CVSquares.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD9499B01B57A4EF00541B59 /* CVSquares.cpp */; };
-		AD9499B71B57A4EF00541B59 /* CVText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD9499B21B57A4EF00541B59 /* CVText.cpp */; };
-		AD9499B81B57A4EF00541B59 /* CVWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = AD9499B51B57A4EF00541B59 /* CVWrapper.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,12 +66,6 @@
 		AD9499AA1B57A22200541B59 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		AD9499AC1B57A23700541B59 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		AD9499AF1B57A34600541B59 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
-		AD9499B01B57A4EF00541B59 /* CVSquares.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CVSquares.cpp; sourceTree = "<group>"; };
-		AD9499B11B57A4EF00541B59 /* CVSquaresHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVSquaresHeader.h; sourceTree = "<group>"; };
-		AD9499B21B57A4EF00541B59 /* CVText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CVText.cpp; sourceTree = "<group>"; };
-		AD9499B31B57A4EF00541B59 /* CVText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVText.h; sourceTree = "<group>"; };
-		AD9499B41B57A4EF00541B59 /* CVWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVWrapper.h; sourceTree = "<group>"; };
-		AD9499B51B57A4EF00541B59 /* CVWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CVWrapper.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,7 +110,6 @@
 			isa = PBXGroup;
 			children = (
 				AD1BF22C1B57C149007B0A2C /* tmp */,
-				AD9499B91B57A4F700541B59 /* cv tools */,
 				AD9499AE1B57A23C00541B59 /* Frameworks */,
 				AD94996E1B57A10100541B59 /* ios-snapSearch-live */,
 				AD9499881B57A10200541B59 /* ios-snapSearch-liveTests */,
@@ -193,19 +183,6 @@
 				AD94999A1B57A19900541B59 /* AVFoundation.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		AD9499B91B57A4F700541B59 /* cv tools */ = {
-			isa = PBXGroup;
-			children = (
-				AD9499B01B57A4EF00541B59 /* CVSquares.cpp */,
-				AD9499B11B57A4EF00541B59 /* CVSquaresHeader.h */,
-				AD9499B21B57A4EF00541B59 /* CVText.cpp */,
-				AD9499B31B57A4EF00541B59 /* CVText.h */,
-				AD9499B41B57A4EF00541B59 /* CVWrapper.h */,
-				AD9499B51B57A4EF00541B59 /* CVWrapper.mm */,
-			);
-			name = "cv tools";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -309,13 +286,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD9499B81B57A4EF00541B59 /* CVWrapper.mm in Sources */,
 				AD9499981B57A13700541B59 /* CameraViewController.m in Sources */,
 				AD9499751B57A10100541B59 /* AppDelegate.m in Sources */,
 				AD9499721B57A10100541B59 /* main.m in Sources */,
-				AD9499B61B57A4EF00541B59 /* CVSquares.cpp in Sources */,
 				AD1BF22A1B57BE97007B0A2C /* CVViewController.mm in Sources */,
-				AD9499B71B57A4EF00541B59 /* CVText.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

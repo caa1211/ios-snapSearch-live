@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>A4477DF6-85C9-4795-8871-47F728C66E0E</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ios-snapSearch-live</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>22986CED4914243DBB67EC129FF21FB2080F7FAA</key>
+		<string>https://github.com/caa1211/ios-snapSearch-live.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ios-snapSearch-live.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>22986CED4914243DBB67EC129FF21FB2080F7FAA</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/caa1211/ios-snapSearch-live.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>22986CED4914243DBB67EC129FF21FB2080F7FAA</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>22986CED4914243DBB67EC129FF21FB2080F7FAA</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ios-snapSearch-live</string>
+		</dict>
+	</array>
+</dict>
+</plist>
