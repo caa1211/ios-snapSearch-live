@@ -1,0 +1,1 @@
+PODS_IOS_SNAPSEARCH_LIVE_FXBLURVIEW_OTHER_LDFLAGS = -framework "Accelerate" -framework "QuartzCore"

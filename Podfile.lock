@@ -1,10 +1,13 @@
 PODS:
+  - FXBlurView (1.6.3)
   - TesseractOCRiOS (4.0.0)
 
 DEPENDENCIES:
+  - FXBlurView
   - TesseractOCRiOS
 
 SPEC CHECKSUMS:
+  FXBlurView: c6d23f3d35af2c6282296a2930f61c6e2c788d01
   TesseractOCRiOS: 90638afbe43d082433f2e76b384c7901d23956df
 
 COCOAPODS: 0.37.2

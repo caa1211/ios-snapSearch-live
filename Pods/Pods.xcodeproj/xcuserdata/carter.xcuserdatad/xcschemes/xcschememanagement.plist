@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Pods-ios-snapSearch-live-FXBlurView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-ios-snapSearch-live-TesseractOCRiOS.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -17,12 +22,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>205556483B93E9A61E1EAAF2</key>
+		<key>2AF3A42C31CCEA82CE3DDAC4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7743BEE91353156BA6401FA7</key>
+		<key>4DE1DE86EA5103469AF01A3A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A6B9B72BEB0BD1517846FFED</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -11,6 +11,7 @@
 		AD1BF22A1B57BE97007B0A2C /* CVViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = AD1BF2281B57BE97007B0A2C /* CVViewController.mm */; };
 		AD1BF22B1B57BE97007B0A2C /* CVViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD1BF2291B57BE97007B0A2C /* CVViewController.xib */; };
 		AD1BF2341B57F74C007B0A2C /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = AD1BF2331B57F74C007B0A2C /* tessdata */; };
+		AD80D9DF1B584C5B00827B6C /* snap.wav in Resources */ = {isa = PBXBuildFile; fileRef = AD80D9DE1B584C5B00827B6C /* snap.wav */; };
 		AD9499721B57A10100541B59 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AD9499711B57A10100541B59 /* main.m */; };
 		AD9499751B57A10100541B59 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AD9499741B57A10100541B59 /* AppDelegate.m */; };
 		AD94997D1B57A10100541B59 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD94997C1B57A10100541B59 /* Images.xcassets */; };
@@ -28,6 +29,8 @@
 		AD9499A91B57A21300541B59 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD9499A81B57A21300541B59 /* CoreGraphics.framework */; };
 		AD9499AB1B57A22200541B59 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD9499AA1B57A22200541B59 /* CoreMedia.framework */; };
 		AD9499AD1B57A23700541B59 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD9499AC1B57A23700541B59 /* AssetsLibrary.framework */; };
+		ADD50EC51B5815D200E984A7 /* bg5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ADD50EC41B5815D200E984A7 /* bg5.jpg */; };
+		ADD50EC71B58175100E984A7 /* Solid_black.png in Resources */ = {isa = PBXBuildFile; fileRef = ADD50EC61B58175100E984A7 /* Solid_black.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +49,7 @@
 		AD1BF2281B57BE97007B0A2C /* CVViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CVViewController.mm; sourceTree = "<group>"; };
 		AD1BF2291B57BE97007B0A2C /* CVViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CVViewController.xib; sourceTree = "<group>"; };
 		AD1BF2331B57F74C007B0A2C /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; name = tessdata; path = "ios-snapSearch-live/tessdata"; sourceTree = "<group>"; };
+		AD80D9DE1B584C5B00827B6C /* snap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = snap.wav; path = "ios-snapSearch-live/snap.wav"; sourceTree = "<group>"; };
 		AD94996C1B57A10100541B59 /* ios-snapSearch-live.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-snapSearch-live.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD9499701B57A10100541B59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AD9499711B57A10100541B59 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -70,6 +74,8 @@
 		AD9499AA1B57A22200541B59 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		AD9499AC1B57A23700541B59 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		AD9499AF1B57A34600541B59 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		ADD50EC41B5815D200E984A7 /* bg5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg5.jpg; sourceTree = "<group>"; };
+		ADD50EC61B58175100E984A7 /* Solid_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Solid_black.png; sourceTree = "<group>"; };
 		EC365631FD5C1C71610A25C8 /* Pods-ios-snapSearch-live.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-snapSearch-live.release.xcconfig"; path = "Pods/Target Support Files/Pods-ios-snapSearch-live/Pods-ios-snapSearch-live.release.xcconfig"; sourceTree = "<group>"; };
 		FC12FE9E5995E87549F039CC /* Pods-ios-snapSearch-live.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-snapSearch-live.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios-snapSearch-live/Pods-ios-snapSearch-live.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -116,6 +122,9 @@
 		AD9499631B57A10100541B59 = {
 			isa = PBXGroup;
 			children = (
+				ADD50EC41B5815D200E984A7 /* bg5.jpg */,
+				ADD50EC61B58175100E984A7 /* Solid_black.png */,
+				AD80D9DE1B584C5B00827B6C /* snap.wav */,
 				AD1BF2331B57F74C007B0A2C /* tessdata */,
 				AD1BF22C1B57C149007B0A2C /* tmp */,
 				AD9499AE1B57A23C00541B59 /* Frameworks */,
@@ -286,10 +295,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADD50EC51B5815D200E984A7 /* bg5.jpg in Resources */,
+				ADD50EC71B58175100E984A7 /* Solid_black.png in Resources */,
 				AD9499991B57A13700541B59 /* CameraViewController.xib in Resources */,
 				AD1BF22B1B57BE97007B0A2C /* CVViewController.xib in Resources */,
 				AD1BF2341B57F74C007B0A2C /* tessdata in Resources */,
 				AD9499801B57A10100541B59 /* LaunchScreen.xib in Resources */,
+				AD80D9DF1B584C5B00827B6C /* snap.wav in Resources */,
 				AD94997D1B57A10100541B59 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

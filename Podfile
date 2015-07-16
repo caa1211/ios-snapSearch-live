@@ -3,6 +3,7 @@
 
 target 'ios-snapSearch-live' do
     pod 'TesseractOCRiOS'
+    pod 'FXBlurView'
 end
 
 target 'ios-snapSearch-liveTests' do

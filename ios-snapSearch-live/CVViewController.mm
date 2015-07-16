@@ -9,6 +9,8 @@
 #import "CVViewController.h"
 #import <opencv2/videoio/cap_ios.h>
 #import <TesseractOCR/TesseractOCR.h>
+#import <QuartzCore/QuartzCore.h>
+#import "FXBlurView.h"
 
 using namespace cv;
 
@@ -16,8 +18,8 @@ using namespace cv;
 @property (weak, nonatomic) IBOutlet UIImageView *cameraImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *resultImageView;
 
-@property (weak, nonatomic) IBOutlet UIView *recognizeTarget;
 @property (retain, nonatomic) CvVideoCamera* videoCamera;
+@property (retain, nonatomic) AVCaptureDevice *videoDevice;
 @property (retain, nonatomic) UIImage* currentImage;
 @property (weak, nonatomic) IBOutlet UIView *recognizeWrapper;
 
@@ -26,8 +28,12 @@ using namespace cv;
 @property(strong, nonatomic) dispatch_queue_t cropImageQueue;
 
 @property (assign, nonatomic) CGPoint startPanLoc;
-@property (assign, nonatomic) CGFloat baseScaleX;
-@property (assign, nonatomic) CGFloat baseScaleY;
+
+@property (weak, nonatomic) IBOutlet UIView *recognizeTarget;
+@property (weak, nonatomic) IBOutlet UIImageView *targetImageView;
+
+@property (weak, nonatomic) IBOutlet FXBlurView *cameraViewMask;
+@property (weak, nonatomic) IBOutlet UIView *ctrlView;
 
 @end
 
@@ -36,6 +42,10 @@ using namespace cv;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"Snap Search";
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+    [self.navigationController.navigationBar setBarTintColor:[[UIColor alloc] initWithRed:0.280 green:0.533 blue:0.542 alpha:1.000]];
+    
     self.operationQueue = [[NSOperationQueue alloc] init];
     self.cropImageQueue = dispatch_queue_create("crop_queue", nil);
     
@@ -48,12 +58,150 @@ using namespace cv;
     self.videoCamera.delegate = self;
     [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(startCamera) userInfo:nil repeats:NO];
     
+    self.cameraViewMask.dynamic = YES;
+    self.cameraViewMask.blurRadius = 20;
+
+    self.recognizeTarget.layer.cornerRadius = 35;
+    self.recognizeTarget.layer.masksToBounds = YES;
+    self.recognizeTarget.layer.borderWidth = 4.0f;
+    self.recognizeTarget.layer.borderColor = CGColorRetain([UIColor whiteColor].CGColor);
     
     
+    self.cameraViewMask.layer.shadowColor = [[UIColor blackColor] CGColor];
+    self.cameraViewMask.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
+    self.cameraViewMask.layer.shadowRadius = 3.0f;
+    self.cameraViewMask.layer.shadowOpacity = 1.0f;
+    
+    
+    NSArray * devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+    for ( AVCaptureDevice * device in devices )
+    {
+        if ( AVCaptureDevicePositionBack == [ device position ] )
+        {
+            self.videoDevice = device;
+        }
+    }
+    //[self updateMask];
+}
+
+-(void) updateMask {
+    
+    CGRect r = self.cameraViewMask.bounds;
+    CGRect r2 = self.recognizeTarget.frame;    CAShapeLayer* lay = [CAShapeLayer layer];
+    CGMutablePathRef path = CGPathCreateMutable();
+    CGPathAddRect(path, nil, r2);
+    CGPathAddRect(path, nil, r);
+    lay.path = path;
+    CGPathRelease(path);
+    lay.fillRule = kCAFillRuleEvenOdd;
+    
+    self.cameraViewMask.layer.mask = lay;
+}
+
+- (UIImage *)blurWithCoreImage:(UIImage *)sourceImage
+{
+    CIImage *inputImage = [CIImage imageWithCGImage:sourceImage.CGImage];
+    
+    // Apply Affine-Clamp filter to stretch the image so that it does not
+    // look shrunken when gaussian blur is applied
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    CIFilter *clampFilter = [CIFilter filterWithName:@"CIAffineClamp"];
+    [clampFilter setValue:inputImage forKey:@"inputImage"];
+    [clampFilter setValue:[NSValue valueWithBytes:&transform objCType:@encode(CGAffineTransform)] forKey:@"inputTransform"];
+    
+    // Apply gaussian blur filter with radius of 30
+    CIFilter *gaussianBlurFilter = [CIFilter filterWithName: @"CIGaussianBlur"];
+    [gaussianBlurFilter setValue:clampFilter.outputImage forKey: @"inputImage"];
+    [gaussianBlurFilter setValue:@30 forKey:@"inputRadius"];
+    
+    CIContext *context = [CIContext contextWithOptions:nil];
+    CGImageRef cgImage = [context createCGImage:gaussianBlurFilter.outputImage fromRect:[inputImage extent]];
+    
+    // Set up output context.
+    UIGraphicsBeginImageContext(self.view.frame.size);
+    CGContextRef outputContext = UIGraphicsGetCurrentContext();
+    
+    // Invert image coordinates
+    CGContextScaleCTM(outputContext, 1.0, -1.0);
+    CGContextTranslateCTM(outputContext, 0, -self.view.frame.size.height);
+    
+    // Draw base image.
+    CGContextDrawImage(outputContext, self.view.frame, cgImage);
+    
+    // Apply white tint
+    CGContextSaveGState(outputContext);
+    CGContextSetFillColorWithColor(outputContext, [UIColor colorWithWhite:1 alpha:0.2].CGColor);
+    CGContextFillRect(outputContext, self.view.frame);
+    CGContextRestoreGState(outputContext);
+    
+    // Output image is ready.
+    UIImage *outputImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return outputImage;
+}
+
+
+
+-(void) maskWithImage:(UIImage*) maskImage TargetView:(UIView*) targetView{
+    CALayer *_maskingLayer = [CALayer layer];
+    _maskingLayer.frame = targetView.bounds;
+    [_maskingLayer setContents:(id)[maskImage CGImage]];
+    [targetView.layer setMask:_maskingLayer];
+}
+
+- (UIImage*) createInvertMask:(UIImage *)maskImage withTargetImage:(UIImage *) image {
+    
+    CGImageRef maskRef = maskImage.CGImage;
+    
+    CGBitmapInfo bitmapInfo = kCGImageAlphaNone;
+    CGColorRenderingIntent renderingIntent = kCGRenderingIntentDefault;
+    
+    CGImageRef mask = CGImageCreate(CGImageGetWidth(maskRef),
+                                    CGImageGetHeight(maskRef),
+                                    CGImageGetBitsPerComponent(maskRef),
+                                    CGImageGetBitsPerPixel(maskRef),
+                                    CGImageGetBytesPerRow(maskRef),
+                                    CGColorSpaceCreateDeviceGray(),
+                                    bitmapInfo,
+                                    CGImageGetDataProvider(maskRef),
+                                    nil, NO,
+                                    renderingIntent);
+    
+    
+    CGImageRef masked = CGImageCreateWithMask([image CGImage], mask);
+    
+    CGImageRelease(mask);
+    CGImageRelease(maskRef);
+    
+    return [UIImage imageWithCGImage:masked];
+}
+
+
+-(UIImage*) maskImage:(UIImage *)image withMask:(UIImage *)maskImage {
+    
+    CGImageRef maskRef = maskImage.CGImage;
+    CGImageRef mask = CGImageMaskCreate(CGImageGetWidth(maskRef),
+                                        CGImageGetHeight(maskRef),
+                                        CGImageGetBitsPerComponent(maskRef),
+                                        CGImageGetBitsPerPixel(maskRef),
+                                        CGImageGetBytesPerRow(maskRef),
+                                        CGImageGetDataProvider(maskRef), NULL, false);
+    
+    CGImageRef masked = CGImageCreateWithMask([image CGImage], mask);
+    return [UIImage imageWithCGImage:masked];
 }
 
 -(void) startCamera {
     [self.videoCamera start];
+    
+    NSError *error = nil;
+    if ([self.videoDevice lockForConfiguration:&error]) {
+        self.videoDevice.videoZoomFactor = 1.5;
+        [self.videoDevice unlockForConfiguration];
+    }else {
+        NSLog(@"error: %@", error);
+    }
 }
 
 
@@ -70,8 +218,8 @@ using namespace cv;
     }
     */
     
-    self.currentImage = [self UIImageFromCVMat:image];
     
+    self.currentImage = [self UIImageFromCVMat:image];
     //[self cropByTarget:nil];
 }
 
@@ -104,16 +252,23 @@ using namespace cv;
 //    }
 //    cropedImg = [self UIImageFromCVMat:mat];
     
+//    dispatch_sync(dispatch_get_main_queue(), ^{
+//        //self.resultImageView.image = cropedImg;
+//        self.targetImageView.image = cropedImg;
+//    });
+    
     // Apply openCV effect
     cropedImg = [self UIImageFromCVMat:[self imageScanableProcessing:[self cvMatFromUIImage:cropedImg]]];
+    
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        //self.resultImageView.image = cropedImg;
+        self.targetImageView.image = cropedImg;
+    });
     
     if (completion!=nil) {
         completion(cropedImg);
     }
-    
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        self.resultImageView.image = cropedImg;
-    });
+
 }
 
 - (void) doRecognition:(UIImage*)image{
@@ -130,7 +285,8 @@ using namespace cv;
         NSString *recognizedText = tesseract.recognizedText;
         
         //dispatch_sync(dispatch_get_main_queue(), ^{
-            self.resultLabel.text = recognizedText;
+        self.resultLabel.text = recognizedText;
+        self.targetImageView.image = nil;
        // });
         
         [G8Tesseract clearCache];
@@ -140,6 +296,12 @@ using namespace cv;
 
 
 - (IBAction)onRecognize:(id)sender {
+    
+    SystemSoundID soundID;
+    NSURL *buttonURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"snap" ofType:@"wav"]];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)buttonURL, &soundID);
+    AudioServicesPlaySystemSound(soundID);
+    
     dispatch_async(self.cropImageQueue, ^{
         [self cropByTarget:^(UIImage *image) {
             [self doRecognition:image];
@@ -165,23 +327,52 @@ using namespace cv;
 
 - (IBAction)onPan:(UIPanGestureRecognizer *)sender {
     CGPoint loc = [sender locationInView:self.cameraImageView];
-    UIView *targetView = self.recognizeTarget;
     if(sender.state == UIGestureRecognizerStateBegan){
         self.startPanLoc = loc;
-        self.baseScaleX = targetView.transform.a;
-        self.baseScaleY = targetView.transform.d;
     }else if(sender.state == UIGestureRecognizerStateChanged){
-
-        CGFloat scalex = (loc.x - self.startPanLoc.x)/50;
-        CGFloat scaley = (loc.y - self.startPanLoc.y)/50;
-
-        CGFloat cscalex = MAX(self.baseScaleX+scalex, 0.3);
-        CGFloat cscaley = MAX(self.baseScaleY+scaley, 0.3);
+        int invertX = self.startPanLoc.x > self.recognizeTarget.center.x ? 1: -1;
+        int invertY = self.startPanLoc.y > self.recognizeTarget.center.y ? 1: -1;
+        CGFloat scalex = invertX*(loc.x - self.startPanLoc.x)/5; //loc.x - self.startPanLoc.x > 1 ? 3: -3;
+        CGFloat scaley = invertY*(loc.y - self.startPanLoc.y)/5; //loc.y - self.startPanLoc.y> 1 ? 3:-3;
+ 
+        CGRect newFrame = self.recognizeTarget.frame;
+        CGPoint center =  self.recognizeTarget.center;
+        newFrame.size.width = MIN(newFrame.size.width + scalex, 290);
+        newFrame.size.height = MIN(newFrame.size.height + scaley, 250);
+        newFrame.size.width = MAX(newFrame.size.width + scalex, 100);
+        newFrame.size.height = MAX(newFrame.size.height + scaley, 40);
         
-        cscalex = MIN(cscalex, 2);
-        cscaley = MIN(cscaley, 2.5);
+        self.recognizeTarget.frame = newFrame;
+        self.recognizeTarget.center = center;
         
-        self.recognizeTarget.transform = CGAffineTransformMakeScale(cscalex, cscaley);
+        if (newFrame.size.height < 80){
+            self.recognizeTarget.layer.cornerRadius = 35 * newFrame.size.height/80;
+        }
+        
+//        NSArray * devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+//        AVCaptureDevice *videoDevice;
+//        
+//        NSError *error = nil;
+//        for ( AVCaptureDevice * device in devices )
+//        {
+//            if ( AVCaptureDevicePositionBack == [ device position ] )
+//            {
+//                videoDevice = device;
+//            }
+//        }
+//        if ([videoDevice lockForConfiguration:&error]) {
+//            if(videoDevice.videoZoomFactor + scalex < 2  && videoDevice.videoZoomFactor > 1){
+//                videoDevice.videoZoomFactor = videoDevice.videoZoomFactor + scalex;
+//            }
+//            [videoDevice unlockForConfiguration];
+//        }else {
+//            NSLog(@"error: %@", error);
+//        }
+        
+        
+        //[self updateMask];
+    }else if(sender.state == UIGestureRecognizerStateEnded){
+          self.targetImageView.frame = CGRectMake(0, 0, self.recognizeTarget.frame.size.width, self.recognizeTarget.frame.size.height);
     }
 }
 #pragma mark - G8Tesseract

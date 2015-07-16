@@ -10,5 +10,13 @@
             </PersistentString>
          </PersistentStrings>
       </ContextState>
+      <ContextState
+         contextName = "-[CVViewController viewDidLoad]:CVViewController.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = "videoDevice.videoZoomFactor">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
    </ContextStates>
 </VariablesViewState>
