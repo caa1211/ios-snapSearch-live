@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A884AFC901F39F7DCE43E8BC /* libPods-ios-snapSearch-live.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D699EE18E84A35D68F049A /* libPods-ios-snapSearch-live.a */; };
 		AD1BF22A1B57BE97007B0A2C /* CVViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = AD1BF2281B57BE97007B0A2C /* CVViewController.mm */; };
 		AD1BF22B1B57BE97007B0A2C /* CVViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD1BF2291B57BE97007B0A2C /* CVViewController.xib */; };
+		AD1BF2341B57F74C007B0A2C /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = AD1BF2331B57F74C007B0A2C /* tessdata */; };
 		AD9499721B57A10100541B59 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AD9499711B57A10100541B59 /* main.m */; };
 		AD9499751B57A10100541B59 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AD9499741B57A10100541B59 /* AppDelegate.m */; };
 		AD94997D1B57A10100541B59 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD94997C1B57A10100541B59 /* Images.xcassets */; };
@@ -39,9 +41,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		87D699EE18E84A35D68F049A /* libPods-ios-snapSearch-live.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ios-snapSearch-live.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD1BF2271B57BE97007B0A2C /* CVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVViewController.h; sourceTree = "<group>"; };
 		AD1BF2281B57BE97007B0A2C /* CVViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CVViewController.mm; sourceTree = "<group>"; };
 		AD1BF2291B57BE97007B0A2C /* CVViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CVViewController.xib; sourceTree = "<group>"; };
+		AD1BF2331B57F74C007B0A2C /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; name = tessdata; path = "ios-snapSearch-live/tessdata"; sourceTree = "<group>"; };
 		AD94996C1B57A10100541B59 /* ios-snapSearch-live.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-snapSearch-live.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD9499701B57A10100541B59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AD9499711B57A10100541B59 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -66,6 +70,8 @@
 		AD9499AA1B57A22200541B59 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		AD9499AC1B57A23700541B59 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		AD9499AF1B57A34600541B59 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		EC365631FD5C1C71610A25C8 /* Pods-ios-snapSearch-live.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-snapSearch-live.release.xcconfig"; path = "Pods/Target Support Files/Pods-ios-snapSearch-live/Pods-ios-snapSearch-live.release.xcconfig"; sourceTree = "<group>"; };
+		FC12FE9E5995E87549F039CC /* Pods-ios-snapSearch-live.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-snapSearch-live.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios-snapSearch-live/Pods-ios-snapSearch-live.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +89,7 @@
 				AD94999F1B57A1E700541B59 /* UIKit.framework in Frameworks */,
 				AD94999D1B57A1BC00541B59 /* opencv2.framework in Frameworks */,
 				AD94999B1B57A19900541B59 /* AVFoundation.framework in Frameworks */,
+				A884AFC901F39F7DCE43E8BC /* libPods-ios-snapSearch-live.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,11 +116,13 @@
 		AD9499631B57A10100541B59 = {
 			isa = PBXGroup;
 			children = (
+				AD1BF2331B57F74C007B0A2C /* tessdata */,
 				AD1BF22C1B57C149007B0A2C /* tmp */,
 				AD9499AE1B57A23C00541B59 /* Frameworks */,
 				AD94996E1B57A10100541B59 /* ios-snapSearch-live */,
 				AD9499881B57A10200541B59 /* ios-snapSearch-liveTests */,
 				AD94996D1B57A10100541B59 /* Products */,
+				B2CB87B87E385B1E70BE7012 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -181,8 +190,18 @@
 				AD94999E1B57A1E700541B59 /* UIKit.framework */,
 				AD94999C1B57A1BC00541B59 /* opencv2.framework */,
 				AD94999A1B57A19900541B59 /* AVFoundation.framework */,
+				87D699EE18E84A35D68F049A /* libPods-ios-snapSearch-live.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B2CB87B87E385B1E70BE7012 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FC12FE9E5995E87549F039CC /* Pods-ios-snapSearch-live.debug.xcconfig */,
+				EC365631FD5C1C71610A25C8 /* Pods-ios-snapSearch-live.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -192,9 +211,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AD94998F1B57A10200541B59 /* Build configuration list for PBXNativeTarget "ios-snapSearch-live" */;
 			buildPhases = (
+				2F8574FDA2B857976D2ED560 /* Check Pods Manifest.lock */,
 				AD9499681B57A10100541B59 /* Sources */,
 				AD9499691B57A10100541B59 /* Frameworks */,
 				AD94996A1B57A10100541B59 /* Resources */,
+				F26D95114E6D9DB3B155B825 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -267,6 +288,7 @@
 			files = (
 				AD9499991B57A13700541B59 /* CameraViewController.xib in Resources */,
 				AD1BF22B1B57BE97007B0A2C /* CVViewController.xib in Resources */,
+				AD1BF2341B57F74C007B0A2C /* tessdata in Resources */,
 				AD9499801B57A10100541B59 /* LaunchScreen.xib in Resources */,
 				AD94997D1B57A10100541B59 /* Images.xcassets in Resources */,
 			);
@@ -280,6 +302,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2F8574FDA2B857976D2ED560 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F26D95114E6D9DB3B155B825 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ios-snapSearch-live/Pods-ios-snapSearch-live-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		AD9499681B57A10100541B59 /* Sources */ = {
@@ -401,6 +456,7 @@
 		};
 		AD9499901B57A10200541B59 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FC12FE9E5995E87549F039CC /* Pods-ios-snapSearch-live.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -417,6 +473,7 @@
 		};
 		AD9499911B57A10200541B59 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EC365631FD5C1C71610A25C8 /* Pods-ios-snapSearch-live.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (

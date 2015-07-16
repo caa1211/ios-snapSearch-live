@@ -8,10 +8,11 @@
 
 #import "CVViewController.h"
 #import <opencv2/videoio/cap_ios.h>
+#import <TesseractOCR/TesseractOCR.h>
 
 using namespace cv;
 
-@interface CVViewController () <CvVideoCameraDelegate>
+@interface CVViewController () <CvVideoCameraDelegate, G8TesseractDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *cameraImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *resultImageView;
 
@@ -20,6 +21,14 @@ using namespace cv;
 @property (retain, nonatomic) UIImage* currentImage;
 @property (weak, nonatomic) IBOutlet UIView *recognizeWrapper;
 
+@property (weak, nonatomic) IBOutlet UILabel *resultLabel;
+@property (nonatomic, strong) NSOperationQueue *operationQueue;
+@property(strong, nonatomic) dispatch_queue_t cropImageQueue;
+
+@property (assign, nonatomic) CGPoint startPanLoc;
+@property (assign, nonatomic) CGFloat baseScaleX;
+@property (assign, nonatomic) CGFloat baseScaleY;
+
 @end
 
 @implementation CVViewController
@@ -27,6 +36,8 @@ using namespace cv;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.operationQueue = [[NSOperationQueue alloc] init];
+    self.cropImageQueue = dispatch_queue_create("crop_queue", nil);
     
     self.videoCamera = [[CvVideoCamera alloc] initWithParentView:self.cameraImageView];
     self.videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionBack;
@@ -57,10 +68,11 @@ using namespace cv;
     */
     
     self.currentImage = [self UIImageFromCVMat:image];
-    [self cropByTarget];
+    
+    //[self cropByTarget:nil];
 }
 
-- (void) cropByTarget{
+- (void) cropByTarget:(void(^)(UIImage *image))completion{
     UIImage *image = self.currentImage;
     CGRect wrapperRect = self.recognizeWrapper.frame;
     CGRect frameRect = self.recognizeTarget.frame;
@@ -92,13 +104,44 @@ using namespace cv;
     // Apply openCV effect
     cropedImg = [self UIImageFromCVMat:[self imageScanableProcessing:[self cvMatFromUIImage:cropedImg]]];
     
+    if (completion!=nil) {
+        completion(cropedImg);
+    }
+    
     dispatch_sync(dispatch_get_main_queue(), ^{
         self.resultImageView.image = cropedImg;
     });
 }
 
+- (void) doRecognition:(UIImage*)image{
+    UIImage *bwImage = [image g8_blackAndWhite];
+    G8RecognitionOperation *operation = [[G8RecognitionOperation alloc]initWithLanguage:@"eng"];
+    operation.tesseract.maximumRecognitionTime = 10.0;
+    //operation.tesseract.engineMode = G8OCREngineModeTesseractCubeCombined;
+    //operation.tesseract.pageSegmentationMode = G8PageSegmentationModeSingleLine;
+    
+    operation.delegate = self;
+    operation.tesseract.image = bwImage;
+    operation.recognitionCompleteBlock = ^(G8Tesseract *tesseract) {
+        // Fetch the recognized text
+        NSString *recognizedText = tesseract.recognizedText;
+        
+        //dispatch_sync(dispatch_get_main_queue(), ^{
+            self.resultLabel.text = recognizedText;
+       // });
+        
+        [G8Tesseract clearCache];
+    };
+    [self.operationQueue addOperation:operation];
+}
+
+
 - (IBAction)onRecognize:(id)sender {
-    [self cropByTarget];
+    dispatch_async(self.cropImageQueue, ^{
+        [self cropByTarget:^(UIImage *image) {
+            [self doRecognition:image];
+        }];
+    });
 }
 
 
@@ -117,6 +160,28 @@ using namespace cv;
 }
 */
 
+- (IBAction)onPan:(UIPanGestureRecognizer *)sender {
+    NSLog(@"==========================!=");
+    CGPoint loc = [sender locationInView:self.cameraImageView];
+    UIView *targetView = self.recognizeTarget;
+    if(sender.state == UIGestureRecognizerStateBegan){
+        self.startPanLoc = loc;
+        self.baseScaleX = targetView.transform.a;
+        self.baseScaleY = targetView.transform.d;
+    }else if(sender.state == UIGestureRecognizerStateChanged){
+
+        CGFloat scalex = (loc.x - self.startPanLoc.x)/50;
+        CGFloat scaley = (loc.y - self.startPanLoc.y)/50;
+
+        CGFloat cscalex = MAX(self.baseScaleX+scalex, 0.3);
+        CGFloat cscaley = MAX(self.baseScaleY+scaley, 0.3);
+        
+        cscalex = MIN(cscalex, 2);
+        cscaley = MIN(cscaley, 2.5);
+        
+        self.recognizeTarget.transform = CGAffineTransformMakeScale(cscalex, cscaley);
+    }
+}
 
 #pragma mark - CV tools
 
@@ -133,6 +198,7 @@ using namespace cv;
     // Gray image (Need to markout gray image before enable DetectLetters)
     cvtColor(image, image_copy, CV_RGBA2GRAY);
     image = image_copy;
+    
     return image;
 }
 
