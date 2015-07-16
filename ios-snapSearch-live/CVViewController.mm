@@ -47,6 +47,9 @@ using namespace cv;
     self.videoCamera.grayscaleMode = NO;
     self.videoCamera.delegate = self;
     [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(startCamera) userInfo:nil repeats:NO];
+    
+    
+    
 }
 
 -(void) startCamera {
@@ -161,7 +164,6 @@ using namespace cv;
 */
 
 - (IBAction)onPan:(UIPanGestureRecognizer *)sender {
-    NSLog(@"==========================!=");
     CGPoint loc = [sender locationInView:self.cameraImageView];
     UIView *targetView = self.recognizeTarget;
     if(sender.state == UIGestureRecognizerStateBegan){
@@ -181,6 +183,12 @@ using namespace cv;
         
         self.recognizeTarget.transform = CGAffineTransformMakeScale(cscalex, cscaley);
     }
+}
+#pragma mark - G8Tesseract
+
+- (void)progressImageRecognitionForTesseract:(G8Tesseract *)tesseract {
+
+    NSLog(@"progress: %lu", (unsigned long)tesseract.progress);
 }
 
 #pragma mark - CV tools
