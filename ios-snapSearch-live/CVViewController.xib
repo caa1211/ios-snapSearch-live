@@ -27,8 +27,9 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1mM-fw-mVK">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <subviews>
-                        <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hLC-EA-fBG">
+                        <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hLC-EA-fBG" userLabel="cameraView">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                             <gestureRecognizers/>
                             <connections>
                                 <outletCollection property="gestureRecognizers" destination="hVg-3h-Nf5" appends="YES" id="TgZ-eG-4VB"/>
@@ -81,7 +82,7 @@
                                     </variation>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" red="0.56955516579999999" green="0.40211473219999999" blue="0.29901475700000002" alpha="0.77000000000000002" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" red="0.71486367984693877" green="0.50738970178281628" blue="0.37992521849163702" alpha="0.77000000000000002" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="1Fc-uQ-WNj" secondAttribute="trailing" id="37N-QX-f66"/>
                                 <constraint firstAttribute="width" constant="320" id="AEe-Q5-kEs"/>
