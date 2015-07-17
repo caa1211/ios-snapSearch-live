@@ -1,16 +1,22 @@
 PODS:
+  - BFPaperButton (2.0.18):
+    - UIColor+BFPaperColors
   - DKCircleButton (1.1)
   - FXBlurView (1.6.3)
   - TesseractOCRiOS (4.0.0)
+  - UIColor+BFPaperColors (1.7.1)
 
 DEPENDENCIES:
+  - BFPaperButton
   - DKCircleButton
   - FXBlurView
   - TesseractOCRiOS
 
 SPEC CHECKSUMS:
+  BFPaperButton: 16b3ec9c2964d24f89f623a4113321d3f003ed60
   DKCircleButton: 62564c9debae08ad77dabb8d9658dfeb5520f2c4
   FXBlurView: c6d23f3d35af2c6282296a2930f61c6e2c788d01
   TesseractOCRiOS: 90638afbe43d082433f2e76b384c7901d23956df
+  UIColor+BFPaperColors: b1efa4320e2f56c4b14f73232faf967ba0e5b4a2
 
 COCOAPODS: 0.37.2

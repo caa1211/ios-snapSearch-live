@@ -3,39 +3,6 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "-[CVViewController setupProgressbar:]:CVViewController.mm">
-         <PersistentStrings>
-            <PersistentString
-               value = "r">
-            </PersistentString>
-            <PersistentString
-               value = "self.targetImageView.layer.mask.frame">
-            </PersistentString>
-            <PersistentString
-               value = "self.targetImageView.bounds">
-            </PersistentString>
-            <PersistentString
-               value = "self.targetImageView.frame">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "__33-[CVViewController cropByTarget:]_block_invoke:CVViewController.mm">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.targetImageView">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[CVViewController updateProgress:]:CVViewController.mm">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.targetImageView.layer.mask.frame">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "-[CVViewController doRecognition:]:CVViewController.mm">
          <PersistentStrings>
             <PersistentString
@@ -44,21 +11,13 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[CVViewController viewDidLoad]:CVViewController.mm">
+         contextName = "-[CVViewController setupActionButtons]:CVViewController.mm">
          <PersistentStrings>
             <PersistentString
-               value = "videoDevice.videoZoomFactor">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[CVViewController progressImageRecognitionForTesseract:]:CVViewController.mm">
-         <PersistentStrings>
-            <PersistentString
-               value = "tesseract.progress">
+               value = "self.actionBtnGroup.frame">
             </PersistentString>
             <PersistentString
-               value = "tesseract.progress / 100.0">
+               value = "parentRect.size.width/2">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

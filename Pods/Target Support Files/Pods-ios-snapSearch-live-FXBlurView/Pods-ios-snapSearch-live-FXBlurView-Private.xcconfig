@@ -1,6 +1,6 @@
 #include "Pods-ios-snapSearch-live-FXBlurView.xcconfig"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/FXBlurView" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/DKCircleButton" "${PODS_ROOT}/Headers/Public/FXBlurView" "${PODS_ROOT}/Headers/Public/TesseractOCRiOS" "${PODS_ROOT}/Headers/Public/TesseractOCRiOS/TesseractOCR"
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/FXBlurView" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/BFPaperButton" "${PODS_ROOT}/Headers/Public/DKCircleButton" "${PODS_ROOT}/Headers/Public/FXBlurView" "${PODS_ROOT}/Headers/Public/TesseractOCRiOS" "${PODS_ROOT}/Headers/Public/TesseractOCRiOS/TesseractOCR" "${PODS_ROOT}/Headers/Public/UIColor+BFPaperColors"
 OTHER_LDFLAGS = ${PODS_IOS_SNAPSEARCH_LIVE_FXBLURVIEW_OTHER_LDFLAGS} -ObjC
 PODS_ROOT = ${SRCROOT}
 SKIP_INSTALL = YES
