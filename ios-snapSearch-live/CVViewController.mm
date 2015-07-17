@@ -74,7 +74,7 @@ using namespace cv;
     self.recognizeTarget.layer.cornerRadius = 35;
     self.recognizeTarget.layer.masksToBounds = YES;
     self.recognizeTarget.layer.borderWidth = 4.0f;
-    self.recognizeTarget.layer.borderColor = CGColorRetain([UIColor whiteColor].CGColor);
+    self.recognizeTarget.layer.borderColor = CGColorRetain([UIColor colorWithRed:0.901 green:0.858 blue:0.859 alpha:1.000].CGColor);
     
     
     self.cameraViewMask.layer.shadowColor = [[UIColor blackColor] CGColor];
