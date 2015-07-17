@@ -109,7 +109,12 @@ using namespace cv;
     //on setting
 }
 
+- (void)viewDidLayoutSubviews {
+    //[self setupEffectButtons];
+}
+
 -(void) setupEffectButtons {
+
     self.grayBtn = [[DKCircleButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
     
     self.grayBtn.center = CGPointMake(30, 230);

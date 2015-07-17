@@ -76,7 +76,33 @@
  
  
  
+ -(void) setupEffectButtons {
+ CGRect parentRect = self.view.bounds;
  
+ self.grayBtn = [[DKCircleButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+ self.grayBtn.center = CGPointMake(parentRect.size.width - 40, 100);
+ self.grayBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+ [self.grayBtn setTitleColor:[UIColor colorWithWhite:1 alpha:1.0] forState:UIControlStateNormal];
+ self.grayBtn.animateTap = NO;
+ [self.grayBtn setTitle:NSLocalizedString(@"G", nil) forState:UIControlStateNormal];
+ self.grayBtn.tag = 1;
+ [self.grayBtn addTarget:self action:@selector(tapOnButton:) forControlEvents:UIControlEventTouchUpInside];
+ [self.view addSubview:self.grayBtn];
+ 
+ self.invertBtn = [[DKCircleButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+ self.invertBtn.center = CGPointMake(parentRect.size.width - 90, 100);
+ self.invertBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+ [self.invertBtn setTitleColor:[UIColor colorWithWhite:1 alpha:1.0] forState:UIControlStateNormal];
+ self.invertBtn.tag = 2;
+ self.invertBtn.animateTap = NO;
+ [self.invertBtn setTitle:NSLocalizedString(@"I", nil) forState:UIControlStateNormal];
+ 
+ [self.invertBtn addTarget:self action:@selector(tapOnButton:) forControlEvents:UIControlEventTouchUpInside];
+ [self.view addSubview:self.invertBtn];
+ 
+ [self updateButtonStatus:self.grayBtn];
+ [self updateButtonStatus:self.invertBtn];
+ }
  
  
  
