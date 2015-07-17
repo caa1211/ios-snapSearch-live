@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ios-snapSearch-live/CVViewController.mm"
-            timestampString = "458777030.968089"
+            timestampString = "458787042.737998"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "281"
-            endingLineNumber = "281"
+            startingLineNumber = "312"
+            endingLineNumber = "312"
             landmarkName = "-doRecognition:"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ios-snapSearch-live/CVViewController.mm"
-            timestampString = "458777030.968089"
+            timestampString = "458787042.737998"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "291"
-            endingLineNumber = "291"
+            startingLineNumber = "323"
+            endingLineNumber = "323"
             landmarkName = "-doRecognition:"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ios-snapSearch-live/CVViewController.mm"
-            timestampString = "458777030.968089"
+            timestampString = "458787042.737998"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "362"
-            endingLineNumber = "362"
+            startingLineNumber = "399"
+            endingLineNumber = "399"
             landmarkName = "-onPan:"
             landmarkType = "5">
          </BreakpointContent>
@@ -54,18 +54,33 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "30721"
-            condition = "!&quot;Bookmark&quot;"
-            continueAfterRunningActions = "Yes"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
             filePath = "ios-snapSearch-live/CVViewController.mm"
-            timestampString = "1437083532.021067"
+            timestampString = "458787042.737998"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "331"
-            endingLineNumber = "661"
-            landmarkName = "@implementation CVViewController"
-            landmarkType = "3">
+            startingLineNumber = "298"
+            endingLineNumber = "298"
+            landmarkName = "-updateProgress:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ios-snapSearch-live/CVViewController.mm"
+            timestampString = "458787042.737998"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "294"
+            endingLineNumber = "294"
+            landmarkName = "-setupProgressbar:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

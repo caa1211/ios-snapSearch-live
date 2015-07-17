@@ -35,7 +35,7 @@ using namespace cv;
 
 @property (weak, nonatomic) IBOutlet FXBlurView *cameraViewMask;
 @property (weak, nonatomic) IBOutlet UIView *ctrlView;
-
+@property (assign, nonatomic) BOOL isRecognizing;
 @end
 
 @implementation CVViewController
@@ -83,7 +83,8 @@ using namespace cv;
         }
     }
     
-    CGAffineTransform trans = CGAffineTransformMakeRotation(M_PI_2);
+    self.isRecognizing = NO;
+    CGAffineTransform trans = CGAffineTransformMakeRotation(-1 * M_PI_2);
     self.zoomSlider.transform = trans;
     //[self updateMask];
 }
@@ -269,14 +270,34 @@ using namespace cv;
     cropedImg = [self UIImageFromCVMat:[self imageScanableProcessing:[self cvMatFromUIImage:cropedImg]]];
     
     dispatch_sync(dispatch_get_main_queue(), ^{
-        //self.resultImageView.image = cropedImg;
         self.targetImageView.image = cropedImg;
+        [self setupProgressbar:cropedImg];
+        
     });
     
     if (completion!=nil) {
         completion(cropedImg);
     }
 
+}
+
+-(void) setupProgressbar:(UIImage *)image{
+    CGRect r = CGRectMake(0, 0, image.size.width, image.size.height);
+    CAShapeLayer* lay = [CAShapeLayer layer];
+    CGMutablePathRef path = CGPathCreateMutable();
+    CGPathAddRect(path, nil, r);
+    lay.path = path;
+    CGPathRelease(path);
+    lay.fillRule = kCAFillRuleEvenOdd;
+    
+    self.targetImageView.layer.mask = lay;
+}
+
+-(void) updateProgress:(CGFloat)percent {
+    CGRect imageRect = CGRectMake(0, 0, self.targetImageView.image.size.width, self.targetImageView.image.size.height);
+    CGFloat currentX = (imageRect.size.width) * percent;
+    imageRect.origin.x = 200;//currentX;
+    self.targetImageView.layer.mask.frame = imageRect;
 }
 
 - (void) doRecognition:(UIImage*)image{
@@ -288,16 +309,18 @@ using namespace cv;
     
     operation.delegate = self;
     operation.tesseract.image = bwImage;
+    self.isRecognizing = YES;
+    
     operation.recognitionCompleteBlock = ^(G8Tesseract *tesseract) {
         // Fetch the recognized text
         NSString *recognizedText = tesseract.recognizedText;
         
-        //dispatch_sync(dispatch_get_main_queue(), ^{
         self.resultLabel.text = recognizedText;
         self.targetImageView.image = nil;
-       // });
+        self.targetImageView.layer.mask = nil;
         
         [G8Tesseract clearCache];
+        self.isRecognizing = NO;
     };
     [self.operationQueue addOperation:operation];
 }
@@ -339,6 +362,10 @@ using namespace cv;
 }
 
 - (IBAction)onPan:(UIPanGestureRecognizer *)sender {
+    if (self.isRecognizing == YES) {
+        return;
+    }
+    
     CGPoint loc = [sender locationInView:self.cameraImageView];
     if(sender.state == UIGestureRecognizerStateBegan){
         self.startPanLoc = loc;
@@ -392,7 +419,11 @@ using namespace cv;
 
 - (void)progressImageRecognitionForTesseract:(G8Tesseract *)tesseract {
 
-    NSLog(@"progress: %lu", (unsigned long)tesseract.progress);
+    //NSLog(@"progress: %lu", (unsigned long)tesseract.progress);
+    
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        [self updateProgress:(unsigned long)tesseract.progress / 100.0];
+   });
 }
 
 #pragma mark - CV tools

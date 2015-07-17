@@ -10,7 +10,7 @@
                 <outlet property="cameraImageView" destination="hLC-EA-fBG" id="pWK-bm-wUr"/>
                 <outlet property="cameraViewMask" destination="e82-yb-AJF" id="FE3-k3-J7X"/>
                 <outlet property="ctrlView" destination="Z3a-gI-tZ7" id="lem-XY-a70"/>
-                <outlet property="recognizeTarget" destination="gGA-tc-BVO" id="Hw4-Kr-M1z"/>
+                <outlet property="recognizeTarget" destination="gGA-tc-BVO" id="chH-r9-0lM"/>
                 <outlet property="recognizeWrapper" destination="1mM-fw-mVK" id="J54-tZ-Fis"/>
                 <outlet property="resultImageView" destination="g3F-cN-hHS" id="Yaa-Kg-DBE"/>
                 <outlet property="resultLabel" destination="1Fc-uQ-WNj" id="Hfg-fz-ZyO"/>

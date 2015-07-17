@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4DE1DE86EA5103469AF01A3A"
+               BlueprintIdentifier = "4DA35EDF122976B797676E67"
                BuildableName = "libPods-ios-snapSearch-live-TesseractOCRiOS.a"
                BlueprintName = "Pods-ios-snapSearch-live-TesseractOCRiOS"
                ReferencedContainer = "container:Pods.xcodeproj">

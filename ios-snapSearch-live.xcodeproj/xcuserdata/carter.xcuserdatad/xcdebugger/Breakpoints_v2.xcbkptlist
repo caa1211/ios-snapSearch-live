@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ios-snapSearch-live/CVViewController.mm"
-            timestampString = "458777030.968089"
+            timestampString = "458781763.112761"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "241"
-            endingLineNumber = "241"
+            startingLineNumber = "245"
+            endingLineNumber = "245"
             landmarkName = "-cropByTarget:"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ios-snapSearch-live/CVViewController.mm"
-            timestampString = "458776376.577323"
+            timestampString = "458781763.112761"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
             landmarkName = "-updateMask"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ios-snapSearch-live/CVViewController.mm"
-            timestampString = "458777030.968089"
+            timestampString = "458781763.112761"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "238"
-            endingLineNumber = "238"
+            startingLineNumber = "242"
+            endingLineNumber = "242"
             landmarkName = "-cropByTarget:"
             landmarkType = "5">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ios-snapSearch-live/CVViewController.mm"
-            timestampString = "458777030.968089"
+            timestampString = "458781763.112761"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "239"
-            endingLineNumber = "239"
+            startingLineNumber = "243"
+            endingLineNumber = "243"
             landmarkName = "-cropByTarget:"
             landmarkType = "5">
          </BreakpointContent>
