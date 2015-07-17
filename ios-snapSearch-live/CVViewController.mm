@@ -317,6 +317,7 @@ using namespace cv;
     operation.recognitionCompleteBlock = ^(G8Tesseract *tesseract) {
         // Fetch the recognized text
         NSString *recognizedText = tesseract.recognizedText;
+        NSLog(@"recognizedText= %@", recognizedText);
         self.resultLabel.text = recognizedText;
         self.targetImageView.image = nil;
         self.targetImageView.layer.mask = nil;
