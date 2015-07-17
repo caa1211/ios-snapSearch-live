@@ -21,5 +21,16 @@
             </PersistentString>
          </PersistentStrings>
       </ContextState>
+      <ContextState
+         contextName = "__33-[CVViewController cropByTarget:]_block_invoke:CVViewController.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = " self.recognizeTargetView.innerImage.image">
+            </PersistentString>
+            <PersistentString
+               value = "self.recognizeTargetView.innerImageView.image">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
    </ContextStates>
 </VariablesViewState>

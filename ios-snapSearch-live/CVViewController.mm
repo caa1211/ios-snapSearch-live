@@ -12,12 +12,14 @@
 #import <QuartzCore/QuartzCore.h>
 #import "FXBlurView.h"
 #import <DKCircleButton.h>
-
+#import "RecognizeTargetView.h"
 #import "NSString+FontAwesome.h"
 
 using namespace cv;
 
 @interface CVViewController () <CvVideoCameraDelegate, G8TesseractDelegate>
+@property (weak, nonatomic) IBOutlet RecognizeTargetView *recognizeTargetView;
+
 @property (weak, nonatomic) IBOutlet UISlider *zoomSlider;
 @property (weak, nonatomic) IBOutlet UIImageView *cameraImageView;
 
@@ -31,10 +33,6 @@ using namespace cv;
 @property(strong, nonatomic) dispatch_queue_t cropImageQueue;
 
 @property (assign, nonatomic) CGPoint startPanLoc;
-
-@property (weak, nonatomic) IBOutlet UIView *recognizeTarget;
-@property (weak, nonatomic) IBOutlet UIImageView *targetImageView;
-
 @property (weak, nonatomic) IBOutlet FXBlurView *cameraViewMask;
 @property (weak, nonatomic) IBOutlet UIView *ctrlView;
 @property (assign, nonatomic) BOOL isRecognizing;
@@ -50,7 +48,6 @@ using namespace cv;
 @end
 
 @implementation CVViewController
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -84,18 +81,10 @@ using namespace cv;
     
     self.cameraViewMask.dynamic = YES;
     self.cameraViewMask.blurRadius = 20;
-
-    self.recognizeTarget.layer.cornerRadius = 35;
-    self.recognizeTarget.layer.masksToBounds = YES;
-    self.recognizeTarget.layer.borderWidth = 4.0f;
-    self.recognizeTarget.layer.borderColor = CGColorRetain([UIColor colorWithRed:0.901 green:0.858 blue:0.859 alpha:1.000].CGColor);
-    
-    
     self.cameraViewMask.layer.shadowColor = [[UIColor blackColor] CGColor];
     self.cameraViewMask.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
     self.cameraViewMask.layer.shadowRadius = 2.0f;
     self.cameraViewMask.layer.shadowOpacity = 1.0f;
-    
     
     NSArray * devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
     for ( AVCaptureDevice * device in devices )
@@ -109,9 +98,7 @@ using namespace cv;
     self.isRecognizing = NO;
     CGAffineTransform trans = CGAffineTransformMakeRotation(-1 * M_PI_2);
     self.zoomSlider.transform = trans;
-    //[self updateMask];
-    
-    
+
     self.editButton.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:25];
     [self.editButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-pencil-square-o"] forState:UIControlStateNormal];
     
@@ -119,7 +106,7 @@ using namespace cv;
 }
 
 -(void) onSetting:(id) sender{
-
+    //on setting
 }
 
 -(void) setupEffectButtons {
@@ -170,73 +157,7 @@ using namespace cv;
         self.isInvert = self.isInvert == YES ? NO: YES;
     }
     
-    [self updateButtonStatus:btn ];
-}
-
--(void) updateMask {
-    
-    CGRect r = self.cameraViewMask.bounds;
-    CGRect r2 = self.recognizeTarget.frame;    CAShapeLayer* lay = [CAShapeLayer layer];
-    CGMutablePathRef path = CGPathCreateMutable();
-    CGPathAddRect(path, nil, r2);
-    CGPathAddRect(path, nil, r);
-    lay.path = path;
-    CGPathRelease(path);
-    lay.fillRule = kCAFillRuleEvenOdd;
-    
-    self.cameraViewMask.layer.mask = lay;
-}
-
-- (UIImage *)blurWithCoreImage:(UIImage *)sourceImage
-{
-    CIImage *inputImage = [CIImage imageWithCGImage:sourceImage.CGImage];
-    
-    // Apply Affine-Clamp filter to stretch the image so that it does not
-    // look shrunken when gaussian blur is applied
-    CGAffineTransform transform = CGAffineTransformIdentity;
-    CIFilter *clampFilter = [CIFilter filterWithName:@"CIAffineClamp"];
-    [clampFilter setValue:inputImage forKey:@"inputImage"];
-    [clampFilter setValue:[NSValue valueWithBytes:&transform objCType:@encode(CGAffineTransform)] forKey:@"inputTransform"];
-    
-    // Apply gaussian blur filter with radius of 30
-    CIFilter *gaussianBlurFilter = [CIFilter filterWithName: @"CIGaussianBlur"];
-    [gaussianBlurFilter setValue:clampFilter.outputImage forKey: @"inputImage"];
-    [gaussianBlurFilter setValue:@30 forKey:@"inputRadius"];
-    
-    CIContext *context = [CIContext contextWithOptions:nil];
-    CGImageRef cgImage = [context createCGImage:gaussianBlurFilter.outputImage fromRect:[inputImage extent]];
-    
-    // Set up output context.
-    UIGraphicsBeginImageContext(self.view.frame.size);
-    CGContextRef outputContext = UIGraphicsGetCurrentContext();
-    
-    // Invert image coordinates
-    CGContextScaleCTM(outputContext, 1.0, -1.0);
-    CGContextTranslateCTM(outputContext, 0, -self.view.frame.size.height);
-    
-    // Draw base image.
-    CGContextDrawImage(outputContext, self.view.frame, cgImage);
-    
-    // Apply white tint
-    CGContextSaveGState(outputContext);
-    CGContextSetFillColorWithColor(outputContext, [UIColor colorWithWhite:1 alpha:0.2].CGColor);
-    CGContextFillRect(outputContext, self.view.frame);
-    CGContextRestoreGState(outputContext);
-    
-    // Output image is ready.
-    UIImage *outputImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return outputImage;
-}
-
-
-
--(void) maskWithImage:(UIImage*) maskImage TargetView:(UIView*) targetView{
-    CALayer *_maskingLayer = [CALayer layer];
-    _maskingLayer.frame = targetView.bounds;
-    [_maskingLayer setContents:(id)[maskImage CGImage]];
-    [targetView.layer setMask:_maskingLayer];
+    [self updateButtonStatus:btn];
 }
 
 - (UIImage*) createInvertMask:(UIImage *)maskImage withTargetImage:(UIImage *) image {
@@ -282,7 +203,6 @@ using namespace cv;
 }
 
 -(void) cameraZoom:(float)zoom {
-    
     NSError *error = nil;
     if ([self.videoDevice lockForConfiguration:&error]) {
         self.videoDevice.videoZoomFactor = zoom;
@@ -311,7 +231,6 @@ using namespace cv;
     }
     */
     
-    
     self.currentImage = [self UIImageFromCVMat:image];
     //[self cropByTarget:nil];
 }
@@ -319,7 +238,7 @@ using namespace cv;
 - (void) cropByTarget:(void(^)(UIImage *image))completion{
     UIImage *image = self.currentImage;
     CGRect wrapperRect = self.recognizeWrapper.frame;
-    CGRect frameRect = self.recognizeTarget.frame;
+    CGRect frameRect = self.recognizeTargetView.frame;
     CGFloat scaleW = image.size.width / wrapperRect.size.width;
     CGFloat scaleH = image.size.height / wrapperRect.size.height;
 
@@ -328,7 +247,6 @@ using namespace cv;
                              (frameRect.origin.y )*scaleH,
                              frameRect.size.width*scaleW,
                              (frameRect.size.height )*scaleH
-                             
                              );
     
     CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], rect);
@@ -350,8 +268,10 @@ using namespace cv;
     cropedImg = [self UIImageFromCVMat:[self imageScanableProcessing:[self cvMatFromUIImage:cropedImg]]];
     
     dispatch_sync(dispatch_get_main_queue(), ^{
-        self.targetImageView.image = cropedImg;
-        [self setupProgressbar:cropedImg];
+        //self.targetImageView.image = cropedImg;
+
+        [self.recognizeTargetView setInnerImage:cropedImg];
+        [self.recognizeTargetView setupProgressbar:cropedImg];
         
     });
     
@@ -359,25 +279,6 @@ using namespace cv;
         completion(cropedImg);
     }
 
-}
-
--(void) setupProgressbar:(UIImage *)image{
-    CGRect r = CGRectMake(0, 0, image.size.width, image.size.height);
-    CAShapeLayer* lay = [CAShapeLayer layer];
-    CGMutablePathRef path = CGPathCreateMutable();
-    CGPathAddRect(path, nil, r);
-    lay.path = path;
-    CGPathRelease(path);
-    lay.fillRule = kCAFillRuleEvenOdd;
-    
-    self.targetImageView.layer.mask = lay;
-}
-
--(void) updateProgress:(CGFloat)percent {
-    CGRect imageRect = CGRectMake(0, 0, self.targetImageView.image.size.width, self.targetImageView.image.size.height);
-    //CGFloat currentX = (imageRect.size.width) * percent;
-    imageRect.origin.x = 200;//currentX;
-    self.targetImageView.layer.mask.frame = imageRect;
 }
 
 - (void) doRecognition:(UIImage*)image complete:(void(^)(NSString *recognizedText))complete{
@@ -417,12 +318,11 @@ using namespace cv;
     AudioServicesPlaySystemSound(soundID);
     
     dispatch_async(self.cropImageQueue, ^{
-        [self fillRargetImage];
+        [self.recognizeTargetView fillInnerImage];
         [self cropByTarget:^(UIImage *image) {
             [self doRecognition:image complete:^(NSString *recognizedText) {
                 self.resultLabel.text = recognizedText;
-                self.targetImageView.image = nil;
-                self.targetImageView.layer.mask = nil;
+                [self.recognizeTargetView finishProgress];
                 self.isRecognizing = NO;
             }];
         }];
@@ -435,24 +335,10 @@ using namespace cv;
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
-
 - (IBAction)onZoomChange:(id)sender {
    [self cameraZoom:self.zoomSlider.value];
 }
 
-- (void) fillRargetImage {
-    self.targetImageView.frame = CGRectMake(0, 0, self.recognizeTarget.frame.size.width, self.recognizeTarget.frame.size.height);
-}
 - (IBAction)onPan:(UIPanGestureRecognizer *)sender {
     if (self.isRecognizing) {
         return;
@@ -463,29 +349,27 @@ using namespace cv;
         self.startPanLoc = loc;
     }else if(sender.state == UIGestureRecognizerStateChanged){
         
-        int invertX = self.startPanLoc.x > self.recognizeTarget.center.x ? 1: -1;
-        int invertY = self.startPanLoc.y > self.recognizeTarget.center.y ? 1: -1;
+        int invertX = self.startPanLoc.x > self.recognizeTargetView.center.x ? 1: -1;
+        int invertY = self.startPanLoc.y > self.recognizeTargetView.center.y ? 1: -1;
         CGFloat offsetX = invertX*(loc.x - self.startPanLoc.x)/8; //loc.x - self.startPanLoc.x > 1 ? 3: -3;
         CGFloat offsetY = invertY*(loc.y - self.startPanLoc.y)/8; //loc.y - self.startPanLoc.y> 1 ? 3:-3;
  
-        CGRect newFrame = self.recognizeTarget.frame;
-        CGPoint center =  self.recognizeTarget.center;
+        CGRect newFrame = self.recognizeTargetView.frame;
+        CGPoint center =  self.recognizeTargetView.center;
         newFrame.size.width = MIN(newFrame.size.width + offsetX, 290);
         newFrame.size.height = MIN(newFrame.size.height + offsetY, 250);
         newFrame.size.width = MAX(newFrame.size.width + offsetX, 100);
         newFrame.size.height = MAX(newFrame.size.height + offsetY, 40);
         
-        self.recognizeTarget.frame = newFrame;
-        self.recognizeTarget.center = center;
+        self.recognizeTargetView.frame = newFrame;
+        self.recognizeTargetView.center = center;
         
         if (newFrame.size.height < 80){
-            self.recognizeTarget.layer.cornerRadius = 35 * newFrame.size.height/80;
+            self.recognizeTargetView.layer.cornerRadius = 35 * newFrame.size.height/80;
         }
-        
-        
-        
+   
     }else if(sender.state == UIGestureRecognizerStateEnded){
-        [self fillRargetImage];
+        [self.recognizeTargetView fillInnerImage];
     }
 }
 #pragma mark - G8Tesseract
@@ -495,7 +379,7 @@ using namespace cv;
     //NSLog(@"progress: %lu", (unsigned long)tesseract.progress);
     
     dispatch_sync(dispatch_get_main_queue(), ^{
-        [self updateProgress:(unsigned long)tesseract.progress / 100.0];
+        [self.recognizeTargetView updateProgress:(unsigned long)tesseract.progress / 100.0];
    });
 }
 
@@ -525,6 +409,10 @@ using namespace cv;
     
     return image;
 }
+
+
+
+#pragma mark - OpenCV tools
 
 -(std::vector<cv::Rect>) detectLetters:(cv::Mat)img{
     std::vector<cv::Rect> boundRect;

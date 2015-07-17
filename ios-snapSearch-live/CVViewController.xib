@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CVViewController">
@@ -13,10 +12,9 @@
                 <outlet property="ctrlView" destination="Z3a-gI-tZ7" id="lem-XY-a70"/>
                 <outlet property="editButton" destination="RUx-UT-LTj" id="ixJ-hA-Llz"/>
                 <outlet property="langButton" destination="gVm-sA-7vZ" id="8Pv-Ut-zk3"/>
-                <outlet property="recognizeTarget" destination="gGA-tc-BVO" id="chH-r9-0lM"/>
+                <outlet property="recognizeTargetView" destination="kYb-HP-uOc" id="qrd-ue-Wc6"/>
                 <outlet property="recognizeWrapper" destination="1mM-fw-mVK" id="J54-tZ-Fis"/>
                 <outlet property="resultLabel" destination="1Fc-uQ-WNj" id="Hfg-fz-ZyO"/>
-                <outlet property="targetImageView" destination="bAr-1c-nFv" id="lJf-BR-exq"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="zoomSlider" destination="TUO-mp-4rj" id="StO-ct-orn"/>
             </connections>
@@ -59,17 +57,19 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z3a-gI-tZ7" userLabel="ctrlView">
                             <rect key="frame" x="0.0" y="373" width="320" height="195"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Fc-uQ-WNj">
-                                    <rect key="frame" x="0.0" y="21" width="320" height="68"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="clip" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Fc-uQ-WNj">
+                                    <rect key="frame" x="136" y="35" width="48" height="54"/>
                                     <constraints>
+                                        <constraint firstAttribute="width" constant="320" id="1sj-5g-1pw"/>
                                         <constraint firstAttribute="width" constant="320" id="31i-yE-8N5"/>
-                                        <constraint firstAttribute="height" constant="68" id="m3t-7P-Ogd"/>
+                                        <constraint firstAttribute="height" constant="54" id="m3t-7P-Ogd"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="19"/>
                                     <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                     <variation key="default">
                                         <mask key="constraints">
+                                            <exclude reference="1sj-5g-1pw"/>
                                             <exclude reference="31i-yE-8N5"/>
                                         </mask>
                                     </variation>
@@ -109,45 +109,15 @@
                                 <constraint firstItem="1Fc-uQ-WNj" firstAttribute="leading" secondItem="Z3a-gI-tZ7" secondAttribute="leading" id="UD2-E1-wD3"/>
                                 <constraint firstAttribute="height" constant="195" id="bRF-iH-0ur"/>
                                 <constraint firstItem="gVm-sA-7vZ" firstAttribute="leading" secondItem="Z3a-gI-tZ7" secondAttribute="leading" id="jpQ-Of-gaV"/>
+                                <constraint firstAttribute="centerX" secondItem="1Fc-uQ-WNj" secondAttribute="centerX" id="oyW-0U-9bC"/>
                                 <constraint firstItem="RUx-UT-LTj" firstAttribute="top" secondItem="Z3a-gI-tZ7" secondAttribute="top" id="teF-8y-c6e"/>
-                            </constraints>
-                        </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gGA-tc-BVO" userLabel="targetView">
-                            <rect key="frame" x="80" y="180" width="160" height="68"/>
-                            <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bAr-1c-nFv">
-                                    <rect key="frame" x="0.0" y="0.0" width="160" height="68"/>
-                                </imageView>
-                            </subviews>
-                            <color key="backgroundColor" red="1" green="0.0" blue="0.01085100634" alpha="0.070000000000000007" colorSpace="calibratedRGB"/>
-                            <gestureRecognizers/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="68" id="94i-kJ-FhK"/>
-                                <constraint firstItem="bAr-1c-nFv" firstAttribute="height" secondItem="gGA-tc-BVO" secondAttribute="height" id="AVu-aJ-S1C"/>
-                                <constraint firstItem="bAr-1c-nFv" firstAttribute="width" secondItem="gGA-tc-BVO" secondAttribute="width" id="Cf0-co-yOD"/>
-                                <constraint firstItem="bAr-1c-nFv" firstAttribute="height" secondItem="gGA-tc-BVO" secondAttribute="height" id="ENT-Dp-7rH"/>
-                                <constraint firstItem="bAr-1c-nFv" firstAttribute="leading" secondItem="gGA-tc-BVO" secondAttribute="leading" id="Ept-jf-kUW"/>
-                                <constraint firstAttribute="trailing" secondItem="bAr-1c-nFv" secondAttribute="trailing" id="IhW-5T-3BD"/>
-                                <constraint firstItem="bAr-1c-nFv" firstAttribute="width" secondItem="gGA-tc-BVO" secondAttribute="height" multiplier="40:17" id="MgJ-xw-W3K"/>
-                                <constraint firstAttribute="bottom" secondItem="bAr-1c-nFv" secondAttribute="bottom" id="bkj-5f-Z6i"/>
-                                <constraint firstItem="bAr-1c-nFv" firstAttribute="top" secondItem="gGA-tc-BVO" secondAttribute="top" id="llh-cV-NN6"/>
-                                <constraint firstItem="bAr-1c-nFv" firstAttribute="width" secondItem="gGA-tc-BVO" secondAttribute="width" id="rb6-cO-fFz"/>
-                                <constraint firstItem="bAr-1c-nFv" firstAttribute="height" secondItem="gGA-tc-BVO" secondAttribute="height" id="sAa-Ba-JJZ"/>
-                                <constraint firstItem="bAr-1c-nFv" firstAttribute="width" secondItem="gGA-tc-BVO" secondAttribute="width" id="xDF-BF-OHc"/>
-                                <constraint firstAttribute="width" constant="160" id="yj0-yF-Cgi"/>
                             </constraints>
                             <variation key="default">
                                 <mask key="constraints">
-                                    <exclude reference="AVu-aJ-S1C"/>
-                                    <exclude reference="Cf0-co-yOD"/>
-                                    <exclude reference="ENT-Dp-7rH"/>
-                                    <exclude reference="MgJ-xw-W3K"/>
-                                    <exclude reference="xDF-BF-OHc"/>
+                                    <exclude reference="37N-QX-f66"/>
+                                    <exclude reference="UD2-E1-wD3"/>
                                 </mask>
                             </variation>
-                            <connections>
-                                <outletCollection property="gestureRecognizers" destination="N8o-eq-wBY" appends="YES" id="nxA-Bc-FIE"/>
-                            </connections>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IJ0-XX-Vxh">
                             <rect key="frame" x="128" y="330" width="64" height="93"/>
@@ -174,16 +144,24 @@
                                 <action selector="onZoomChange:" destination="-1" eventType="valueChanged" id="P9M-Uy-3w5"/>
                             </connections>
                         </slider>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kYb-HP-uOc" userLabel="recognizeTarget" customClass="RecognizeTargetView">
+                            <rect key="frame" x="80" y="182" width="160" height="68"/>
+                            <color key="backgroundColor" red="0.78944116709183676" green="0.31350613243489356" blue="0.37101554385157198" alpha="0.14999999999999999" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="160" id="AfX-o6-qb2"/>
+                                <constraint firstAttribute="height" constant="68" id="PnF-yI-2MV"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="centerY" secondItem="gGA-tc-BVO" secondAttribute="centerY" constant="70" id="GSg-5n-O5D"/>
+                        <constraint firstAttribute="centerX" secondItem="kYb-HP-uOc" secondAttribute="centerX" id="6nJ-n5-xS4"/>
+                        <constraint firstAttribute="centerY" secondItem="kYb-HP-uOc" secondAttribute="centerY" constant="68" id="GEx-hp-Cq8"/>
                         <constraint firstItem="TUO-mp-4rj" firstAttribute="leading" secondItem="1mM-fw-mVK" secondAttribute="leading" constant="-28" id="GbQ-1i-sgU"/>
                         <constraint firstAttribute="bottom" secondItem="e82-yb-AJF" secondAttribute="bottom" id="IRH-bd-u18"/>
                         <constraint firstAttribute="trailing" secondItem="e82-yb-AJF" secondAttribute="trailing" id="If6-pf-gF6"/>
                         <constraint firstAttribute="width" constant="320" id="Ivm-SX-yN7"/>
                         <constraint firstItem="Z3a-gI-tZ7" firstAttribute="leading" secondItem="1mM-fw-mVK" secondAttribute="leading" id="L1G-85-rNf"/>
-                        <constraint firstAttribute="centerX" secondItem="gGA-tc-BVO" secondAttribute="centerX" id="ORY-4k-bCM"/>
                         <constraint firstAttribute="centerX" secondItem="IJ0-XX-Vxh" secondAttribute="centerX" id="QdO-PO-gFU"/>
                         <constraint firstAttribute="bottom" secondItem="Z3a-gI-tZ7" secondAttribute="bottom" id="T0A-oY-TiU"/>
                         <constraint firstItem="TUO-mp-4rj" firstAttribute="top" secondItem="1mM-fw-mVK" secondAttribute="top" constant="127" id="TDR-G0-14W"/>
@@ -194,13 +172,11 @@
                         <constraint firstItem="e82-yb-AJF" firstAttribute="leading" secondItem="1mM-fw-mVK" secondAttribute="leading" id="eLb-Py-6g4"/>
                         <constraint firstItem="Z3a-gI-tZ7" firstAttribute="top" secondItem="IJ0-XX-Vxh" secondAttribute="bottom" constant="170" id="gc2-lQ-dno"/>
                         <constraint firstAttribute="bottom" secondItem="hLC-EA-fBG" secondAttribute="bottom" id="gzO-yp-u9d"/>
-                        <constraint firstItem="gGA-tc-BVO" firstAttribute="top" secondItem="1mM-fw-mVK" secondAttribute="top" constant="180" id="nTM-Mr-Vel"/>
                         <constraint firstAttribute="trailing" secondItem="hLC-EA-fBG" secondAttribute="trailing" id="pfY-BP-Cfo"/>
                         <constraint firstItem="hLC-EA-fBG" firstAttribute="top" secondItem="1mM-fw-mVK" secondAttribute="top" id="qHF-Zd-M9M"/>
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
-                            <exclude reference="nTM-Mr-Vel"/>
                             <exclude reference="gc2-lQ-dno"/>
                         </mask>
                     </variation>
