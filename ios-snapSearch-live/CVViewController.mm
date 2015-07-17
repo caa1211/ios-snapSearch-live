@@ -295,7 +295,7 @@ using namespace cv;
 
 -(void) updateProgress:(CGFloat)percent {
     CGRect imageRect = CGRectMake(0, 0, self.targetImageView.image.size.width, self.targetImageView.image.size.height);
-    CGFloat currentX = (imageRect.size.width) * percent;
+    //CGFloat currentX = (imageRect.size.width) * percent;
     imageRect.origin.x = 200;//currentX;
     self.targetImageView.layer.mask.frame = imageRect;
 }
@@ -309,12 +309,14 @@ using namespace cv;
     
     operation.delegate = self;
     operation.tesseract.image = bwImage;
+    //operation.tesseract.charWhitelist = @"0123456789";
+    operation.tesseract.charWhitelist = @"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    //operation.tesseract.charBlacklist = @".|\\/,';:`~-_^";
     self.isRecognizing = YES;
     
     operation.recognitionCompleteBlock = ^(G8Tesseract *tesseract) {
         // Fetch the recognized text
         NSString *recognizedText = tesseract.recognizedText;
-        
         self.resultLabel.text = recognizedText;
         self.targetImageView.image = nil;
         self.targetImageView.layer.mask = nil;
@@ -334,6 +336,7 @@ using namespace cv;
     AudioServicesPlaySystemSound(soundID);
     
     dispatch_async(self.cropImageQueue, ^{
+        [self fillRargetImage];
         [self cropByTarget:^(UIImage *image) {
             [self doRecognition:image];
         }];
@@ -361,6 +364,9 @@ using namespace cv;
    [self cameraZoom:self.zoomSlider.value];
 }
 
+- (void) fillRargetImage {
+    self.targetImageView.frame = CGRectMake(0, 0, self.recognizeTarget.frame.size.width, self.recognizeTarget.frame.size.height);
+}
 - (IBAction)onPan:(UIPanGestureRecognizer *)sender {
     if (self.isRecognizing == YES) {
         return;
@@ -412,7 +418,7 @@ using namespace cv;
         
         //[self updateMask];
     }else if(sender.state == UIGestureRecognizerStateEnded){
-          self.targetImageView.frame = CGRectMake(0, 0, self.recognizeTarget.frame.size.width, self.recognizeTarget.frame.size.height);
+        [self fillRargetImage];
     }
 }
 #pragma mark - G8Tesseract
