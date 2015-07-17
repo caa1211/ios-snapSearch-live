@@ -12,10 +12,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "FXBlurView.h"
 #import <DKCircleButton.h>
-#import <BFPaperButton.h>
-#import <UIColor+BFPaperColors.h>
+
 #import "NSString+FontAwesome.h"
-#import "NSTimer+Blocks.h"
 
 using namespace cv;
 
@@ -79,7 +77,7 @@ using namespace cv;
     self.videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionBack;
     self.videoCamera.defaultAVCaptureVideoOrientation = AVCaptureVideoOrientationPortrait;
     self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPresetHigh;
-    self.videoCamera.defaultFPS = 15;
+    self.videoCamera.defaultFPS = 30;
     self.videoCamera.grayscaleMode = NO;
     self.videoCamera.delegate = self;
     [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(startCamera) userInfo:nil repeats:NO];
@@ -116,67 +114,12 @@ using namespace cv;
     
     self.editButton.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:25];
     [self.editButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-pencil-square-o"] forState:UIControlStateNormal];
-
+    
+    [self setupEffectButtons];
 }
 
 -(void) onSetting:(id) sender{
 
-}
-
--(void) viewDidLayoutSubviews{
-    [self setupEffectButtons];
-    [self setupActionButtons];
-}
-
--(void) setupActionButtons {
-    CGRect parentRect = self.actionBtnGroup.bounds;
-
-    self.actionBtnGroup.layer.shadowColor = [[UIColor blackColor] CGColor];
-    self.actionBtnGroup.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-    self.actionBtnGroup.layer.shadowRadius = 2.0f;
-    self.actionBtnGroup.layer.shadowOpacity = 0.5;
-    
-    BFPaperButton *ecBtn = [[BFPaperButton alloc] initWithFrame:CGRectMake(0, 0, parentRect.size.width/2, parentRect.size.height/2) raised:NO];
-    ecBtn.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:30];
-    [ecBtn setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-shopping-cart"] forState:UIControlStateNormal];
-    ecBtn.loweredShadowOpacity = 0.1;
-    ecBtn.backgroundColor = [UIColor colorWithRed:0.447 green:0.580 blue:0.555 alpha:1.000];
-    [ecBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [ecBtn addTarget:self action:@selector(onSearchBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.actionBtnGroup addSubview:ecBtn];
-    
-    BFPaperButton *searchBtn = [[BFPaperButton alloc] initWithFrame:CGRectMake(parentRect.size.width/2, 0, parentRect.size.width/2, parentRect.size.height/2) raised:NO];
-    searchBtn.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:30];
-    [searchBtn setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-search"] forState:UIControlStateNormal];
-    searchBtn.loweredShadowOpacity = 0.1;
-    searchBtn.backgroundColor = [UIColor colorWithRed:0.387 green:0.528 blue:0.529 alpha:1.000];
-    [searchBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [searchBtn addTarget:self action:@selector(onSearchBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.actionBtnGroup addSubview:searchBtn];
-    
-    BFPaperButton *dicthBtn = [[BFPaperButton alloc] initWithFrame:CGRectMake(0, parentRect.size.height/2, parentRect.size.width/2, parentRect.size.height/2) raised:NO];
-    dicthBtn.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:30];
-    [dicthBtn setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-book"] forState:UIControlStateNormal];
-    dicthBtn.loweredShadowOpacity = 0.1;
-    dicthBtn.backgroundColor = [UIColor colorWithRed:0.286 green:0.428 blue:0.455 alpha:1.000];
-    [dicthBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [dicthBtn addTarget:self action:@selector(onSearchBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.actionBtnGroup addSubview:dicthBtn];
-    
-    BFPaperButton *copyBtn = [[BFPaperButton alloc] initWithFrame:CGRectMake(parentRect.size.width/2, parentRect.size.height/2, parentRect.size.width/2, parentRect.size.height/2) raised:NO];
-    copyBtn.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:30];
-    [copyBtn setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-clipboard"] forState:UIControlStateNormal];
-    copyBtn.loweredShadowOpacity = 0.1;
-    copyBtn.backgroundColor = [UIColor colorWithRed:0.223 green:0.361 blue:0.399 alpha:1.000];
-    [copyBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [dicthBtn addTarget:self action:@selector(onSearchBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.actionBtnGroup addSubview:copyBtn];
-  
-    
-}
-
--(void) onSearchBtnClick:(id)sender {
-    [self.actionBtnGroup bringSubviewToFront:sender];
 }
 
 -(void) setupEffectButtons {
@@ -185,9 +128,8 @@ using namespace cv;
     self.grayBtn.center = CGPointMake(30, 230);
     self.grayBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     [self.grayBtn setTitleColor:[UIColor colorWithWhite:1 alpha:1.0] forState:UIControlStateNormal];
-    //grayBtn.animateTap = NO;
+    self.grayBtn.animateTap = NO;
     [self.grayBtn setTitle:NSLocalizedString(@"G", nil) forState:UIControlStateNormal];
-    //zoom1x.tag = @"1x";
     self.grayBtn.tag = 1;
     [self.grayBtn addTarget:self action:@selector(tapOnButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.grayBtn];
@@ -197,7 +139,7 @@ using namespace cv;
     self.invertBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     [self.invertBtn setTitleColor:[UIColor colorWithWhite:1 alpha:1.0] forState:UIControlStateNormal];
     self.invertBtn.tag = 2;
-    //invertBtn.animateTap = NO;
+    self.invertBtn.animateTap = NO;
     [self.invertBtn setTitle:NSLocalizedString(@"I", nil) forState:UIControlStateNormal];
     
     [self.invertBtn addTarget:self action:@selector(tapOnButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -402,11 +344,7 @@ using namespace cv;
 //        cv::rectangle(mat,letterBBoxes[i],cv::Scalar(0,255,0),3,8,0);
 //    }
 //    cropedImg = [self UIImageFromCVMat:mat];
-    
-//    dispatch_sync(dispatch_get_main_queue(), ^{
-//        //self.resultImageView.image = cropedImg;
-//        self.targetImageView.image = cropedImg;
-//    });
+
     
     // Apply openCV effect
     cropedImg = [self UIImageFromCVMat:[self imageScanableProcessing:[self cvMatFromUIImage:cropedImg]]];
@@ -442,11 +380,11 @@ using namespace cv;
     self.targetImageView.layer.mask.frame = imageRect;
 }
 
-- (void) doRecognition:(UIImage*)image{
+- (void) doRecognition:(UIImage*)image complete:(void(^)(NSString *recognizedText))complete{
     UIImage *bwImage = [image g8_blackAndWhite];
     G8RecognitionOperation *operation = [[G8RecognitionOperation alloc]initWithLanguage:@"eng"];
     operation.tesseract.maximumRecognitionTime = 10.0;
-    //operation.tesseract.engineMode = G8OCREngineModeTesseractCubeCombined;
+    //operation.tesseract.engineMode = G8OCREngineModeTesseractOnly;
     //operation.tesseract.pageSegmentationMode = G8PageSegmentationModeSingleLine;
     
     operation.delegate = self;
@@ -454,18 +392,13 @@ using namespace cv;
     //operation.tesseract.charWhitelist = @"0123456789";
     operation.tesseract.charWhitelist = @"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     //operation.tesseract.charBlacklist = @".|\\/,';:`~-_^";
-    self.isRecognizing = YES;
     
     operation.recognitionCompleteBlock = ^(G8Tesseract *tesseract) {
         // Fetch the recognized text
         NSString *recognizedText = tesseract.recognizedText;
         NSLog(@"recognizedText= %@", recognizedText);
-        self.resultLabel.text = recognizedText;
-        self.targetImageView.image = nil;
-        self.targetImageView.layer.mask = nil;
-        
+        complete(recognizedText);
         [G8Tesseract clearCache];
-        self.isRecognizing = NO;
     };
     [self.operationQueue addOperation:operation];
 }
@@ -473,6 +406,11 @@ using namespace cv;
 
 - (IBAction)onRecognize:(id)sender {
     
+    if (self.isRecognizing) {
+        return;
+    }
+    
+    self.isRecognizing = YES;
     SystemSoundID soundID;
     NSURL *buttonURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"snap" ofType:@"wav"]];
     AudioServicesCreateSystemSoundID((__bridge CFURLRef)buttonURL, &soundID);
@@ -481,7 +419,12 @@ using namespace cv;
     dispatch_async(self.cropImageQueue, ^{
         [self fillRargetImage];
         [self cropByTarget:^(UIImage *image) {
-            [self doRecognition:image];
+            [self doRecognition:image complete:^(NSString *recognizedText) {
+                self.resultLabel.text = recognizedText;
+                self.targetImageView.image = nil;
+                self.targetImageView.layer.mask = nil;
+                self.isRecognizing = NO;
+            }];
         }];
     });
 }
@@ -519,17 +462,18 @@ using namespace cv;
     if(sender.state == UIGestureRecognizerStateBegan){
         self.startPanLoc = loc;
     }else if(sender.state == UIGestureRecognizerStateChanged){
+        
         int invertX = self.startPanLoc.x > self.recognizeTarget.center.x ? 1: -1;
         int invertY = self.startPanLoc.y > self.recognizeTarget.center.y ? 1: -1;
-        CGFloat scalex = invertX*(loc.x - self.startPanLoc.x)/10; //loc.x - self.startPanLoc.x > 1 ? 3: -3;
-        CGFloat scaley = invertY*(loc.y - self.startPanLoc.y)/10; //loc.y - self.startPanLoc.y> 1 ? 3:-3;
+        CGFloat offsetX = invertX*(loc.x - self.startPanLoc.x)/8; //loc.x - self.startPanLoc.x > 1 ? 3: -3;
+        CGFloat offsetY = invertY*(loc.y - self.startPanLoc.y)/8; //loc.y - self.startPanLoc.y> 1 ? 3:-3;
  
         CGRect newFrame = self.recognizeTarget.frame;
         CGPoint center =  self.recognizeTarget.center;
-        newFrame.size.width = MIN(newFrame.size.width + scalex, 290);
-        newFrame.size.height = MIN(newFrame.size.height + scaley, 250);
-        newFrame.size.width = MAX(newFrame.size.width + scalex, 100);
-        newFrame.size.height = MAX(newFrame.size.height + scaley, 40);
+        newFrame.size.width = MIN(newFrame.size.width + offsetX, 290);
+        newFrame.size.height = MIN(newFrame.size.height + offsetY, 250);
+        newFrame.size.width = MAX(newFrame.size.width + offsetX, 100);
+        newFrame.size.height = MAX(newFrame.size.height + offsetY, 40);
         
         self.recognizeTarget.frame = newFrame;
         self.recognizeTarget.center = center;
@@ -538,28 +482,8 @@ using namespace cv;
             self.recognizeTarget.layer.cornerRadius = 35 * newFrame.size.height/80;
         }
         
-//        NSArray * devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
-//        AVCaptureDevice *videoDevice;
-//        
-//        NSError *error = nil;
-//        for ( AVCaptureDevice * device in devices )
-//        {
-//            if ( AVCaptureDevicePositionBack == [ device position ] )
-//            {
-//                videoDevice = device;
-//            }
-//        }
-//        if ([videoDevice lockForConfiguration:&error]) {
-//            if(videoDevice.videoZoomFactor + scalex < 2  && videoDevice.videoZoomFactor > 1){
-//                videoDevice.videoZoomFactor = videoDevice.videoZoomFactor + scalex;
-//            }
-//            [videoDevice unlockForConfiguration];
-//        }else {
-//            NSLog(@"error: %@", error);
-//        }
         
         
-        //[self updateMask];
     }else if(sender.state == UIGestureRecognizerStateEnded){
         [self fillRargetImage];
     }
