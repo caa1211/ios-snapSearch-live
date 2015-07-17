@@ -1,7 +1,7 @@
 #include "Pods-ios-snapSearch-live-TesseractOCRiOS.xcconfig"
 CLANG_CXX_LIBRARY = ${PODS_IOS_SNAPSEARCH_LIVE_TESSERACTOCRIOS_CLANG_CXX_LIBRARY}
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/TesseractOCRiOS" "${PODS_ROOT}/Headers/Private/TesseractOCRiOS/TesseractOCR" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/FXBlurView" "${PODS_ROOT}/Headers/Public/TesseractOCRiOS" "${PODS_ROOT}/Headers/Public/TesseractOCRiOS/TesseractOCR"
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/TesseractOCRiOS" "${PODS_ROOT}/Headers/Private/TesseractOCRiOS/TesseractOCR" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/DKCircleButton" "${PODS_ROOT}/Headers/Public/FXBlurView" "${PODS_ROOT}/Headers/Public/TesseractOCRiOS" "${PODS_ROOT}/Headers/Public/TesseractOCRiOS/TesseractOCR"
 LIBRARY_SEARCH_PATHS = ${PODS_IOS_SNAPSEARCH_LIVE_TESSERACTOCRIOS_LIBRARY_SEARCH_PATHS}
 OTHER_LDFLAGS = ${PODS_IOS_SNAPSEARCH_LIVE_TESSERACTOCRIOS_OTHER_LDFLAGS} -ObjC
 PODS_ROOT = ${SRCROOT}

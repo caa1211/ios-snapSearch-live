@@ -11,6 +11,7 @@
 #import <TesseractOCR/TesseractOCR.h>
 #import <QuartzCore/QuartzCore.h>
 #import "FXBlurView.h"
+#import <DKCircleButton.h>
 
 using namespace cv;
 
@@ -36,6 +37,12 @@ using namespace cv;
 @property (weak, nonatomic) IBOutlet FXBlurView *cameraViewMask;
 @property (weak, nonatomic) IBOutlet UIView *ctrlView;
 @property (assign, nonatomic) BOOL isRecognizing;
+
+@property (assign, nonatomic) BOOL isGray;
+@property (assign, nonatomic) BOOL isInvert;
+@property (retain, nonatomic) DKCircleButton *grayBtn;
+@property (retain, nonatomic) DKCircleButton *invertBtn;
+
 @end
 
 @implementation CVViewController
@@ -43,6 +50,8 @@ using namespace cv;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.isGray = YES;
+    self.isInvert = YES;
     self.title = @"Snap Search";
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     [self.navigationController.navigationBar setBarTintColor:[[UIColor alloc] initWithRed:0.280 green:0.533 blue:0.542 alpha:1.000]];
@@ -57,7 +66,7 @@ using namespace cv;
     self.videoCamera.defaultFPS = 15;
     self.videoCamera.grayscaleMode = NO;
     self.videoCamera.delegate = self;
-    [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(startCamera) userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(startCamera) userInfo:nil repeats:NO];
     
     self.cameraViewMask.dynamic = YES;
     self.cameraViewMask.blurRadius = 20;
@@ -87,6 +96,60 @@ using namespace cv;
     CGAffineTransform trans = CGAffineTransformMakeRotation(-1 * M_PI_2);
     self.zoomSlider.transform = trans;
     //[self updateMask];
+    
+    [self setupEffectButtons];
+}
+
+-(void) setupEffectButtons {
+    self.grayBtn = [[DKCircleButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    
+    self.grayBtn.center = CGPointMake(30, 230);
+    self.grayBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+    [self.grayBtn setTitleColor:[UIColor colorWithWhite:1 alpha:1.0] forState:UIControlStateNormal];
+    //grayBtn.animateTap = NO;
+    [self.grayBtn setTitle:NSLocalizedString(@"G", nil) forState:UIControlStateNormal];
+    //zoom1x.tag = @"1x";
+    self.grayBtn.tag = 1;
+    [self.grayBtn addTarget:self action:@selector(tapOnButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.grayBtn];
+    
+    self.invertBtn = [[DKCircleButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    self.invertBtn.center = CGPointMake(30, 280);
+    self.invertBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+    [self.invertBtn setTitleColor:[UIColor colorWithWhite:1 alpha:1.0] forState:UIControlStateNormal];
+    self.invertBtn.tag = 2;
+    //invertBtn.animateTap = NO;
+    [self.invertBtn setTitle:NSLocalizedString(@"I", nil) forState:UIControlStateNormal];
+    
+    [self.invertBtn addTarget:self action:@selector(tapOnButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.invertBtn];
+
+    [self updateButtonStatus:self.grayBtn];
+    [self updateButtonStatus:self.invertBtn];
+}
+
+-(void)updateButtonStatus:(DKCircleButton *)btn{
+    
+    if (btn == self.invertBtn && self.isInvert) {
+        btn.backgroundColor = [UIColor colorWithRed:0.817 green:0.773 blue:0.344 alpha:0.590];
+    }else if(btn == self.grayBtn && self.isGray){
+        btn.backgroundColor = [UIColor colorWithRed:0.817 green:0.773 blue:0.344 alpha:0.590];
+    }else {
+        btn.backgroundColor = [UIColor colorWithWhite:0 alpha:0.4];
+    }
+}
+
+
+-(void) tapOnButton:(id)sender{
+    DKCircleButton *btn = (DKCircleButton *)sender;
+    if (btn.tag == 1){
+        self.isGray = self.isGray == YES ? NO: YES;
+      
+    }else if(btn.tag == 2) {
+        self.isInvert = self.isInvert == YES ? NO: YES;
+    }
+    
+    [self updateButtonStatus:btn ];
 }
 
 -(void) updateMask {
@@ -217,7 +280,7 @@ using namespace cv;
 - (void)processImage:(cv::Mat&)image
 {
     // OpenCV convert to scanable mode
-    // image = [self imageScanableProcessing:image];
+    //image = [self imageScanableProcessing:image];
     
     /*
     //DetectLetters
@@ -369,7 +432,7 @@ using namespace cv;
     self.targetImageView.frame = CGRectMake(0, 0, self.recognizeTarget.frame.size.width, self.recognizeTarget.frame.size.height);
 }
 - (IBAction)onPan:(UIPanGestureRecognizer *)sender {
-    if (self.isRecognizing == YES) {
+    if (self.isRecognizing) {
         return;
     }
     
@@ -379,8 +442,8 @@ using namespace cv;
     }else if(sender.state == UIGestureRecognizerStateChanged){
         int invertX = self.startPanLoc.x > self.recognizeTarget.center.x ? 1: -1;
         int invertY = self.startPanLoc.y > self.recognizeTarget.center.y ? 1: -1;
-        CGFloat scalex = invertX*(loc.x - self.startPanLoc.x)/5; //loc.x - self.startPanLoc.x > 1 ? 3: -3;
-        CGFloat scaley = invertY*(loc.y - self.startPanLoc.y)/5; //loc.y - self.startPanLoc.y> 1 ? 3:-3;
+        CGFloat scalex = invertX*(loc.x - self.startPanLoc.x)/10; //loc.x - self.startPanLoc.x > 1 ? 3: -3;
+        CGFloat scaley = invertY*(loc.y - self.startPanLoc.y)/10; //loc.y - self.startPanLoc.y> 1 ? 3:-3;
  
         CGRect newFrame = self.recognizeTarget.frame;
         CGPoint center =  self.recognizeTarget.center;
@@ -438,16 +501,24 @@ using namespace cv;
 - (cv::Mat) imageScanableProcessing:(cv::Mat)image{
     
     cv::Mat image_copy;
-    cvtColor(image, image_copy, CV_BGRA2BGR);
-    image = image_copy;
     
-    // Invert image
-    bitwise_not(image, image_copy);
-    image = image_copy;
+
+        cvtColor(image, image_copy, CV_BGRA2BGR);
+        image = image_copy;
+
+   
+    if (self.isInvert) {
+        // Invert image
+        bitwise_not(image, image_copy);
+        image = image_copy;
+    }
     
-    // Gray image (Need to markout gray image before enable DetectLetters)
-    cvtColor(image, image_copy, CV_RGBA2GRAY);
-    image = image_copy;
+    if (self.isGray) {
+        // Gray image (Need to markout gray image before enable DetectLetters)
+        cvtColor(image, image_copy, CV_RGBA2GRAY);
+        image = image_copy;
+    }
+
     
     return image;
 }

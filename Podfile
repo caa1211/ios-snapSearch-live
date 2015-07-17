@@ -4,6 +4,7 @@
 target 'ios-snapSearch-live' do
     pod 'TesseractOCRiOS'
     pod 'FXBlurView'
+    pod 'DKCircleButton'
 end
 
 target 'ios-snapSearch-liveTests' do

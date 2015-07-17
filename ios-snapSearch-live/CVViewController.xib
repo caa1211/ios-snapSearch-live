@@ -129,17 +129,6 @@
                                 <outletCollection property="gestureRecognizers" destination="N8o-eq-wBY" appends="YES" id="nxA-Bc-FIE"/>
                             </connections>
                         </view>
-                        <slider opaque="NO" alpha="0.5499999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1.3" minValue="1" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="TUO-mp-4rj">
-                            <rect key="frame" x="246" y="199" width="109" height="31"/>
-                            <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="105" id="6B6-sI-sUz"/>
-                                <constraint firstAttribute="height" constant="30" id="nGF-bn-ANo"/>
-                            </constraints>
-                            <connections>
-                                <action selector="onZoomChange:" destination="-1" eventType="valueChanged" id="P9M-Uy-3w5"/>
-                            </connections>
-                        </slider>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IJ0-XX-Vxh">
                             <rect key="frame" x="128" y="325" width="64" height="93"/>
                             <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -154,10 +143,21 @@
                                 <action selector="onRecognize:" destination="-1" eventType="touchUpInside" id="e52-W3-iYe"/>
                             </connections>
                         </button>
+                        <slider opaque="NO" alpha="0.5499999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1.3" minValue="1" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="TUO-mp-4rj">
+                            <rect key="frame" x="-30" y="127" width="120" height="31"/>
+                            <color key="tintColor" red="0.90642936862244894" green="0.87855990165361508" blue="0.30338905858189041" alpha="0.67000000000000004" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="116" id="6B6-sI-sUz"/>
+                                <constraint firstAttribute="height" constant="30" id="nGF-bn-ANo"/>
+                            </constraints>
+                            <connections>
+                                <action selector="onZoomChange:" destination="-1" eventType="valueChanged" id="P9M-Uy-3w5"/>
+                            </connections>
+                        </slider>
                     </subviews>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="TUO-mp-4rj" firstAttribute="leading" secondItem="1mM-fw-mVK" secondAttribute="leading" constant="248" id="GbQ-1i-sgU"/>
+                        <constraint firstItem="TUO-mp-4rj" firstAttribute="leading" secondItem="1mM-fw-mVK" secondAttribute="leading" constant="-28" id="GbQ-1i-sgU"/>
                         <constraint firstAttribute="bottom" secondItem="e82-yb-AJF" secondAttribute="bottom" id="IRH-bd-u18"/>
                         <constraint firstAttribute="trailing" secondItem="e82-yb-AJF" secondAttribute="trailing" id="If6-pf-gF6"/>
                         <constraint firstAttribute="width" constant="320" id="Ivm-SX-yN7"/>
@@ -165,7 +165,7 @@
                         <constraint firstAttribute="centerX" secondItem="gGA-tc-BVO" secondAttribute="centerX" id="ORY-4k-bCM"/>
                         <constraint firstAttribute="centerX" secondItem="IJ0-XX-Vxh" secondAttribute="centerX" id="QdO-PO-gFU"/>
                         <constraint firstAttribute="bottom" secondItem="Z3a-gI-tZ7" secondAttribute="bottom" id="T0A-oY-TiU"/>
-                        <constraint firstItem="TUO-mp-4rj" firstAttribute="top" secondItem="1mM-fw-mVK" secondAttribute="top" constant="199" id="TDR-G0-14W"/>
+                        <constraint firstItem="TUO-mp-4rj" firstAttribute="top" secondItem="1mM-fw-mVK" secondAttribute="top" constant="127" id="TDR-G0-14W"/>
                         <constraint firstAttribute="width" secondItem="hLC-EA-fBG" secondAttribute="width" id="WFA-gc-EAB"/>
                         <constraint firstItem="Z3a-gI-tZ7" firstAttribute="top" secondItem="IJ0-XX-Vxh" secondAttribute="bottom" constant="-50" id="XtV-Pr-r0z"/>
                         <constraint firstAttribute="trailing" secondItem="Z3a-gI-tZ7" secondAttribute="trailing" id="aGK-5R-mQN"/>

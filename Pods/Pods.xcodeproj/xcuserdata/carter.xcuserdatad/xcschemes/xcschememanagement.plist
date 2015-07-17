@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Pods-ios-snapSearch-live-DKCircleButton.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-ios-snapSearch-live-FXBlurView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>4DA35EDF122976B797676E67</key>
+		<key>265D9610807A4683E6C97374</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8D9EF6DC4C290A65A92531F3</key>
+		<key>52B03D02D6F35EC4406275A0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AF6B799C709B30C1B040D00E</key>
+		<key>B8BF3D47EC6CE0645DEE0E7B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F150B7907DB62A5A8C916DAA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
