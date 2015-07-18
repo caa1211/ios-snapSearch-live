@@ -105,11 +105,9 @@ using namespace cv;
 
     self.editButton.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:25];
     [self.editButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-pencil-square-o"] forState:UIControlStateNormal];
-    
     [self setupEffectButtons];
     
     self.resultLabel.text = @"";
-    
     //fa-dot-circle-o
     [self.recognizeButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-bullseye"] forState:UIControlStateNormal];
     self.recognizeButton.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:88];
@@ -122,11 +120,18 @@ using namespace cv;
     self.recognizeButton.liftedShadowOffset = CGSizeMake(0, 0);
     self.recognizeButton.tapCircleColor = [UIColor colorWithRed:1.000 green:0.672 blue:0.532 alpha:0.300];
     self.recognizeButton.tapCircleDiameter = MAX(self.recognizeButton.frame.size.width, self.recognizeButton.frame.size.height) * 8;
-   
+}
+
+- (IBAction)onEdit:(id)sender {
+     NSLog(@"=========onEdit==================");
+}
+
+- (IBAction)onLang:(id)sender {
+     NSLog(@"==========onLang=================");
 }
 
 -(void) onSetting:(id) sender{
-    //on setting
+    NSLog(@"=============onSetting==============");
 }
 
 - (void)viewDidLayoutSubviews {
