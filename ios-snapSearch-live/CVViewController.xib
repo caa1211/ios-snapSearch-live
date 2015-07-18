@@ -9,6 +9,7 @@
                 <outlet property="actionBtnGroup" destination="aJq-ZL-XI3" id="Np2-sZ-N0x"/>
                 <outlet property="cameraImageView" destination="hLC-EA-fBG" id="pWK-bm-wUr"/>
                 <outlet property="cameraViewMask" destination="e82-yb-AJF" id="FE3-k3-J7X"/>
+                <outlet property="clipFirstCharacter" destination="lpQ-6Z-xRc" id="2Gz-hT-tcG"/>
                 <outlet property="ctrlView" destination="Z3a-gI-tZ7" id="lem-XY-a70"/>
                 <outlet property="editButton" destination="RUx-UT-LTj" id="ixJ-hA-Llz"/>
                 <outlet property="langButton" destination="gVm-sA-7vZ" id="8Pv-Ut-zk3"/>
@@ -34,6 +35,7 @@
                             <gestureRecognizers/>
                             <connections>
                                 <outletCollection property="gestureRecognizers" destination="hVg-3h-Nf5" appends="YES" id="TgZ-eG-4VB"/>
+                                <outletCollection property="gestureRecognizers" destination="nZy-Rh-0Cu" appends="YES" id="7TX-3r-QmV"/>
                             </connections>
                         </imageView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kYb-HP-uOc" userLabel="recognizeTarget" customClass="RecognizeTargetView">
@@ -98,20 +100,20 @@
                                         </mask>
                                     </variation>
                                 </imageView>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RUx-UT-LTj">
-                                    <rect key="frame" x="158" y="0.0" width="162" height="84"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lpQ-6Z-xRc" userLabel="＞">
+                                    <rect key="frame" x="0.0" y="0.0" width="162" height="40"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="162" id="Z00-G3-DyG"/>
-                                        <constraint firstAttribute="height" constant="84" id="ciB-fD-gha"/>
+                                        <constraint firstAttribute="width" constant="162" id="PLZ-hD-WTp"/>
+                                        <constraint firstAttribute="height" constant="40" id="noM-9r-SM3"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                    <inset key="contentEdgeInsets" minX="0.0" minY="-40" maxX="-110" maxY="0.0"/>
-                                    <state key="normal" title="Edit">
-                                        <color key="titleColor" red="0.92549026012420654" green="0.79607850313186646" blue="0.66274511814117432" alpha="1" colorSpace="deviceRGB"/>
+                                    <inset key="contentEdgeInsets" minX="-110" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <state key="normal" title="aa">
+                                        <color key="titleColor" red="0.92549026010000002" green="0.79607850309999995" blue="0.66274511810000003" alpha="1" colorSpace="deviceRGB"/>
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <connections>
-                                        <action selector="onEdit:" destination="-1" eventType="touchUpInside" id="ro2-ox-SYP"/>
+                                        <action selector="onClipFirstCharacter:" destination="-1" eventType="touchUpInside" id="q7Q-8r-TKp"/>
                                     </connections>
                                 </button>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Snap Search" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m2x-YL-X2V">
@@ -123,6 +125,22 @@
                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RUx-UT-LTj">
+                                    <rect key="frame" x="158" y="0.0" width="162" height="40"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="162" id="Z00-G3-DyG"/>
+                                        <constraint firstAttribute="height" constant="40" id="ciB-fD-gha"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                    <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="-110" maxY="0.0"/>
+                                    <state key="normal" title="Edit">
+                                        <color key="titleColor" red="0.92549026012420654" green="0.79607850313186646" blue="0.66274511814117432" alpha="1" colorSpace="deviceRGB"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="onEdit:" destination="-1" eventType="touchUpInside" id="ro2-ox-SYP"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
@@ -131,6 +149,7 @@
                                 <constraint firstItem="e82-yb-AJF" firstAttribute="top" secondItem="Z3a-gI-tZ7" secondAttribute="top" id="6DA-iO-0jt"/>
                                 <constraint firstAttribute="width" constant="320" id="AEe-Q5-kEs"/>
                                 <constraint firstItem="Q3d-Wb-QtR" firstAttribute="top" secondItem="Z3a-gI-tZ7" secondAttribute="top" id="Cde-BP-Jl4"/>
+                                <constraint firstItem="lpQ-6Z-xRc" firstAttribute="leading" secondItem="Z3a-gI-tZ7" secondAttribute="leading" id="FDE-JE-ERH"/>
                                 <constraint firstAttribute="height" constant="300" id="G3e-xi-iQd"/>
                                 <constraint firstItem="e82-yb-AJF" firstAttribute="leading" secondItem="Z3a-gI-tZ7" secondAttribute="leading" id="JjL-qU-rQW"/>
                                 <constraint firstAttribute="bottom" secondItem="Q3d-Wb-QtR" secondAttribute="bottom" id="T5j-xX-neL"/>
@@ -138,6 +157,7 @@
                                 <constraint firstItem="m2x-YL-X2V" firstAttribute="top" secondItem="Z3a-gI-tZ7" secondAttribute="top" constant="38" id="cMd-Hs-ebt"/>
                                 <constraint firstAttribute="bottom" secondItem="e82-yb-AJF" secondAttribute="bottom" id="elN-h1-ltt"/>
                                 <constraint firstAttribute="trailing" secondItem="e82-yb-AJF" secondAttribute="trailing" id="ilW-f1-z9g"/>
+                                <constraint firstItem="lpQ-6Z-xRc" firstAttribute="top" secondItem="Z3a-gI-tZ7" secondAttribute="top" id="kpg-K6-6XL"/>
                                 <constraint firstItem="Q3d-Wb-QtR" firstAttribute="leading" secondItem="Z3a-gI-tZ7" secondAttribute="leading" id="lOR-pc-8Xj"/>
                                 <constraint firstAttribute="bottom" secondItem="m2x-YL-X2V" secondAttribute="bottom" constant="108" id="m5v-eW-1K6"/>
                                 <constraint firstItem="m2x-YL-X2V" firstAttribute="width" secondItem="Z3a-gI-tZ7" secondAttribute="width" id="s9H-Kj-SqA"/>
@@ -255,5 +275,10 @@
                 <action selector="onPan:" destination="-1" id="vqg-4p-3wB"/>
             </connections>
         </panGestureRecognizer>
+        <tapGestureRecognizer id="nZy-Rh-0Cu">
+            <connections>
+                <action selector="onCameraViewTap:" destination="-1" id="afP-lJ-hpt"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
 </document>

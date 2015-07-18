@@ -61,8 +61,9 @@ typedef enum OCR_LANG_MODE : NSInteger {
 @property (weak, nonatomic) IBOutlet UIView *actionBtnGroup;
 @property (weak, nonatomic) IBOutlet UIButton *editButton;
 @property (weak, nonatomic) IBOutlet UIButton *langButton;
-
+@property (assign, nonatomic) BOOL isEditing;
 @property (assign, nonatomic) OCR_LANG_MODE ocrLang;
+@property (weak, nonatomic) IBOutlet UIButton *clipFirstCharacter;
 @property(strong, nonatomic) NSArray *langArray;
 @end
 
@@ -96,6 +97,7 @@ typedef enum OCR_LANG_MODE : NSInteger {
     self.isInvert = YES;
     self.title = @"Snap Search";
     self.ocrLang = OCR_LANG_MODE_ENG;
+    self.isEditing = NO;
     
     UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-cog"] style:UIBarButtonItemStylePlain target:self action:@selector(onSetting:)];
     [settingButton setTintColor:[UIColor whiteColor]];
@@ -145,6 +147,10 @@ typedef enum OCR_LANG_MODE : NSInteger {
     self.editButton.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:25];
     [self.editButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-pencil-square-o"] forState:UIControlStateNormal];
     
+    [self.clipFirstCharacter setHidden:YES];
+    self.clipFirstCharacter.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:25];
+    [self.clipFirstCharacter setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-long-arrow-right"] forState:UIControlStateNormal];
+    
     [self setupEffectButtons];
     
     self.resultLabel.text = @"";
@@ -172,11 +178,13 @@ typedef enum OCR_LANG_MODE : NSInteger {
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     [self.editButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-check"] forState:UIControlStateNormal];
     [self openEditMode:YES];
+    self.resultLabel.borderStyle = UITextBorderStyleRoundedRect;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     [self.editButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-pencil-square-o"] forState:UIControlStateNormal];
     [self openEditMode:NO];
+    self.resultLabel.borderStyle = UITextBorderStyleNone;
 }
 
 - (void) openEditMode:(BOOL)isediting {
@@ -187,6 +195,16 @@ typedef enum OCR_LANG_MODE : NSInteger {
     self.recognizeTargetView.hidden = isediting;
     self.langButton.hidden = isediting;
     self.recognizeButton.hidden = isediting;
+    self.isEditing = isediting;
+    [self.clipFirstCharacter setHidden:!isediting];
+}
+
+- (IBAction)onClipFirstCharacter:(id)sender {
+    if([self.resultLabel.text length] != 0){
+        NSString *tempStr = [[NSString alloc] init];
+        tempStr = [self.resultLabel.text substringFromIndex:1];
+        self.resultLabel.text = tempStr;
+    }
 }
 
 - (IBAction)onEdit:(id)sender {
@@ -473,6 +491,12 @@ typedef enum OCR_LANG_MODE : NSInteger {
 
 - (IBAction)onZoomChange:(id)sender {
    [self cameraZoom:self.zoomSlider.value];
+}
+- (IBAction)onCameraViewTap:(UITapGestureRecognizer *)sender {
+
+    if (self.isEditing) {
+        [self.resultLabel resignFirstResponder];
+    }
 }
 
 - (IBAction)onPan:(UIPanGestureRecognizer *)sender {

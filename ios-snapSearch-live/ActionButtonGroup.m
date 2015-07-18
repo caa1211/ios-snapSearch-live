@@ -26,21 +26,21 @@
     self.layer.shadowRadius = 2.0f;
     self.layer.shadowOpacity = 0.5;
     
-//    BFPaperButton *ecBtn = [[BFPaperButton alloc] initWithFrame:CGRectMake(0, 0, parentRect.size.width/2, parentRect.size.height/2) raised:NO];
-//    ecBtn.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:28];
-//    [ecBtn setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-shopping-cart"] forState:UIControlStateNormal];
-//    ecBtn.backgroundColor = [UIColor colorWithRed:0.447 green:0.580 blue:0.555 alpha:1.000];
-//    [ecBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [ecBtn addTarget:self action:@selector(onECBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//    [self addSubview:ecBtn];
+    BFPaperButton *ecBtn = [[BFPaperButton alloc] initWithFrame:CGRectMake(0, 0, parentRect.size.width/2, parentRect.size.height/2) raised:NO];
+    ecBtn.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:28];
+    [ecBtn setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-shopping-cart"] forState:UIControlStateNormal];
+    ecBtn.backgroundColor = [UIColor colorWithRed:0.447 green:0.580 blue:0.555 alpha:1.000];
+    [ecBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [ecBtn addTarget:self action:@selector(onECBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:ecBtn];
     
-    BFPaperButton *mapBtn = [[BFPaperButton alloc] initWithFrame:CGRectMake(0, 0, parentRect.size.width/2, parentRect.size.height/2) raised:NO];
-    mapBtn.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:34];
-    [mapBtn setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-map-marker"] forState:UIControlStateNormal];
-    mapBtn.backgroundColor = [UIColor colorWithRed:0.447 green:0.580 blue:0.555 alpha:1.000];
-    [mapBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [mapBtn addTarget:self action:@selector(onMapBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:mapBtn];
+//    BFPaperButton *mapBtn = [[BFPaperButton alloc] initWithFrame:CGRectMake(0, 0, parentRect.size.width/2, parentRect.size.height/2) raised:NO];
+//    mapBtn.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:34];
+//    [mapBtn setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-map-marker"] forState:UIControlStateNormal];
+//    mapBtn.backgroundColor = [UIColor colorWithRed:0.447 green:0.580 blue:0.555 alpha:1.000];
+//    [mapBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [mapBtn addTarget:self action:@selector(onMapBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//    [self addSubview:mapBtn];
     
     BFPaperButton *searchBtn = [[BFPaperButton alloc] initWithFrame:CGRectMake(parentRect.size.width/2, 0, parentRect.size.width/2, parentRect.size.height/2) raised:NO];
     searchBtn.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:28];
