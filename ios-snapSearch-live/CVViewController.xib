@@ -58,8 +58,8 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z3a-gI-tZ7" userLabel="ctrlView">
                             <rect key="frame" x="0.0" y="378" width="320" height="300"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e82-yb-AJF" userLabel="mask" customClass="FXBlurView">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="190"/>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="e82-yb-AJF" userLabel="mask" customClass="FXBlurView">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="tintColor" red="0.71486367979999998" green="0.50738970179999998" blue="0.37992521849999999" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
@@ -78,8 +78,8 @@
                                         </mask>
                                     </variation>
                                 </imageView>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q3d-Wb-QtR" userLabel="whiteMask">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="190"/>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Q3d-Wb-QtR" userLabel="whiteMask">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
                                     <color key="backgroundColor" white="1" alpha="0.38" colorSpace="calibratedWhite"/>
                                     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>

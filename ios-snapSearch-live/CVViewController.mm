@@ -162,6 +162,12 @@ using namespace cv;
     }
 }
 
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self.resultLabel resignFirstResponder];
+    return YES;
+}
+
 - (void) animateView:(BOOL) up
 {
     const int movementDistance = 200;
