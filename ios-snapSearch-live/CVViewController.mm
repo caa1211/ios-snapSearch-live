@@ -471,6 +471,8 @@ typedef enum OCR_LANG_MODE : NSInteger {
     AudioServicesCreateSystemSoundID((__bridge CFURLRef)buttonURL, &soundID);
     AudioServicesPlaySystemSound(soundID);
     
+    //[self cameraFocusAtTarget];
+    
     dispatch_async(self.cropImageQueue, ^{
         [self.recognizeTargetView fillInnerImage];
         [self cropByTarget:^(UIImage *image) {
@@ -492,11 +494,32 @@ typedef enum OCR_LANG_MODE : NSInteger {
 - (IBAction)onZoomChange:(id)sender {
    [self cameraZoom:self.zoomSlider.value];
 }
+
+-(void) cameraFocusAtTarget
+{
+    CGFloat x = self.recognizeTargetView.center.x / self.cameraImageView.bounds.size.width;
+    CGFloat y = self.recognizeTargetView.center.y / self.cameraImageView.bounds.size.height;
+    
+    CGPoint point = CGPointMake(x, y);
+    if ([self.videoDevice isFocusPointOfInterestSupported] && [self.videoDevice isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
+        NSError *error;
+        if ([self.videoDevice lockForConfiguration:&error]) {
+            [self.videoDevice setFocusPointOfInterest:point];
+            [self.videoDevice setFocusMode:AVCaptureFocusModeAutoFocus];
+            [self.videoDevice unlockForConfiguration];
+        } else {
+            NSLog(@"Error in Focus Mode");
+        }
+    }
+}
+
 - (IBAction)onCameraViewTap:(UITapGestureRecognizer *)sender {
 
     if (self.isEditing) {
         [self.resultLabel resignFirstResponder];
     }
+
+    [self cameraFocusAtTarget];
 }
 
 - (IBAction)onPan:(UIPanGestureRecognizer *)sender {
