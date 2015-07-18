@@ -36,10 +36,29 @@
                                 <outletCollection property="gestureRecognizers" destination="hVg-3h-Nf5" appends="YES" id="TgZ-eG-4VB"/>
                             </connections>
                         </imageView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kYb-HP-uOc" userLabel="recognizeTarget" customClass="RecognizeTargetView">
+                            <rect key="frame" x="80" y="182" width="160" height="68"/>
+                            <color key="backgroundColor" red="0.78944116709183676" green="0.31350613243489356" blue="0.37101554385157198" alpha="0.14999999999999999" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="160" id="AfX-o6-qb2"/>
+                                <constraint firstAttribute="height" constant="68" id="PnF-yI-2MV"/>
+                            </constraints>
+                        </view>
+                        <slider opaque="NO" alpha="0.5499999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1.3" minValue="1" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="TUO-mp-4rj">
+                            <rect key="frame" x="-30" y="230" width="120" height="31"/>
+                            <color key="tintColor" red="0.90642936862244894" green="0.87855990165361508" blue="0.30338905858189041" alpha="0.67000000000000004" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="116" id="6B6-sI-sUz"/>
+                                <constraint firstAttribute="height" constant="30" id="nGF-bn-ANo"/>
+                            </constraints>
+                            <connections>
+                                <action selector="onZoomChange:" destination="-1" eventType="valueChanged" id="P9M-Uy-3w5"/>
+                            </connections>
+                        </slider>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z3a-gI-tZ7" userLabel="ctrlView">
-                            <rect key="frame" x="0.0" y="378" width="320" height="190"/>
+                            <rect key="frame" x="0.0" y="378" width="320" height="300"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="e82-yb-AJF" userLabel="mask" customClass="FXBlurView">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e82-yb-AJF" userLabel="mask" customClass="FXBlurView">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="190"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="tintColor" red="0.71486367979999998" green="0.50738970179999998" blue="0.37992521849999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -52,13 +71,14 @@
                                     </constraints>
                                     <variation key="default">
                                         <mask key="constraints">
+                                            <exclude reference="DTK-hg-c7c"/>
                                             <exclude reference="OWb-LN-nzc"/>
                                             <exclude reference="bHW-C0-sX2"/>
                                             <exclude reference="cQ0-Ps-Uj8"/>
                                         </mask>
                                     </variation>
                                 </imageView>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Q3d-Wb-QtR" userLabel="whiteMask">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q3d-Wb-QtR" userLabel="whiteMask">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="190"/>
                                     <color key="backgroundColor" white="1" alpha="0.38" colorSpace="calibratedWhite"/>
                                     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -71,9 +91,10 @@
                                     </constraints>
                                     <variation key="default">
                                         <mask key="constraints">
-                                            <exclude reference="vUC-Zz-niy"/>
                                             <exclude reference="EEH-B4-sAF"/>
                                             <exclude reference="Wek-AH-LJr"/>
+                                            <exclude reference="a98-2A-vzA"/>
+                                            <exclude reference="vUC-Zz-niy"/>
                                         </mask>
                                     </variation>
                                 </imageView>
@@ -109,10 +130,10 @@
                                         <action selector="onLang:" destination="-1" eventType="touchUpInside" id="wpg-dU-NYU"/>
                                     </connections>
                                 </button>
-                                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Snap Search" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m2x-YL-X2V">
-                                    <rect key="frame" x="0.0" y="36" width="320" height="46"/>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Snap Search" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m2x-YL-X2V">
+                                    <rect key="frame" x="0.0" y="38" width="320" height="42"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="46" id="rNy-Um-AAf"/>
+                                        <constraint firstAttribute="height" constant="42" id="rNy-Um-AAf"/>
                                     </constraints>
                                     <color key="textColor" red="0.27136833179999997" green="0.32720822700000002" blue="0.2032341919" alpha="1" colorSpace="calibratedRGB"/>
                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
@@ -121,14 +142,17 @@
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
+                                <constraint firstAttribute="height" constant="300" id="0DW-Ay-7Am"/>
                                 <constraint firstAttribute="trailing" secondItem="RUx-UT-LTj" secondAttribute="trailing" id="1dl-4e-d49"/>
                                 <constraint firstItem="e82-yb-AJF" firstAttribute="top" secondItem="Z3a-gI-tZ7" secondAttribute="top" id="6DA-iO-0jt"/>
                                 <constraint firstAttribute="width" constant="320" id="AEe-Q5-kEs"/>
                                 <constraint firstItem="Q3d-Wb-QtR" firstAttribute="top" secondItem="Z3a-gI-tZ7" secondAttribute="top" id="Cde-BP-Jl4"/>
+                                <constraint firstAttribute="height" constant="300" id="G3e-xi-iQd"/>
                                 <constraint firstItem="e82-yb-AJF" firstAttribute="leading" secondItem="Z3a-gI-tZ7" secondAttribute="leading" id="JjL-qU-rQW"/>
                                 <constraint firstAttribute="bottom" secondItem="Q3d-Wb-QtR" secondAttribute="bottom" id="T5j-xX-neL"/>
                                 <constraint firstItem="gVm-sA-7vZ" firstAttribute="top" secondItem="Z3a-gI-tZ7" secondAttribute="top" id="TXQ-Mn-Yl1"/>
-                                <constraint firstAttribute="height" constant="190" id="bRF-iH-0ur"/>
+                                <constraint firstAttribute="height" constant="300" id="bRF-iH-0ur"/>
+                                <constraint firstItem="m2x-YL-X2V" firstAttribute="top" secondItem="Z3a-gI-tZ7" secondAttribute="top" constant="38" id="cMd-Hs-ebt"/>
                                 <constraint firstAttribute="bottom" secondItem="e82-yb-AJF" secondAttribute="bottom" id="elN-h1-ltt"/>
                                 <constraint firstAttribute="trailing" secondItem="e82-yb-AJF" secondAttribute="trailing" id="ilW-f1-z9g"/>
                                 <constraint firstItem="gVm-sA-7vZ" firstAttribute="leading" secondItem="Z3a-gI-tZ7" secondAttribute="leading" id="jpQ-Of-gaV"/>
@@ -139,6 +163,13 @@
                                 <constraint firstItem="RUx-UT-LTj" firstAttribute="top" secondItem="Z3a-gI-tZ7" secondAttribute="top" id="teF-8y-c6e"/>
                                 <constraint firstAttribute="centerX" secondItem="m2x-YL-X2V" secondAttribute="centerX" id="ygS-A2-4V1"/>
                             </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="G3e-xi-iQd"/>
+                                    <exclude reference="bRF-iH-0ur"/>
+                                    <exclude reference="m5v-eW-1K6"/>
+                                </mask>
+                            </variation>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IJ0-XX-Vxh" customClass="BFPaperButton">
                             <rect key="frame" x="120" y="338" width="80" height="80"/>
@@ -162,25 +193,6 @@
                                 <action selector="onRecognize:" destination="-1" eventType="touchUpInside" id="e52-W3-iYe"/>
                             </connections>
                         </button>
-                        <slider opaque="NO" alpha="0.5499999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1.3" minValue="1" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="TUO-mp-4rj">
-                            <rect key="frame" x="-30" y="230" width="120" height="31"/>
-                            <color key="tintColor" red="0.90642936862244894" green="0.87855990165361508" blue="0.30338905858189041" alpha="0.67000000000000004" colorSpace="calibratedRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="116" id="6B6-sI-sUz"/>
-                                <constraint firstAttribute="height" constant="30" id="nGF-bn-ANo"/>
-                            </constraints>
-                            <connections>
-                                <action selector="onZoomChange:" destination="-1" eventType="valueChanged" id="P9M-Uy-3w5"/>
-                            </connections>
-                        </slider>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kYb-HP-uOc" userLabel="recognizeTarget" customClass="RecognizeTargetView">
-                            <rect key="frame" x="80" y="182" width="160" height="68"/>
-                            <color key="backgroundColor" red="0.78944116709183676" green="0.31350613243489356" blue="0.37101554385157198" alpha="0.14999999999999999" colorSpace="calibratedRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="160" id="AfX-o6-qb2"/>
-                                <constraint firstAttribute="height" constant="68" id="PnF-yI-2MV"/>
-                            </constraints>
-                        </view>
                     </subviews>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -190,7 +202,7 @@
                         <constraint firstAttribute="width" constant="320" id="Ivm-SX-yN7"/>
                         <constraint firstItem="Z3a-gI-tZ7" firstAttribute="leading" secondItem="1mM-fw-mVK" secondAttribute="leading" id="L1G-85-rNf"/>
                         <constraint firstAttribute="centerX" secondItem="IJ0-XX-Vxh" secondAttribute="centerX" id="QdO-PO-gFU"/>
-                        <constraint firstAttribute="bottom" secondItem="Z3a-gI-tZ7" secondAttribute="bottom" id="T0A-oY-TiU"/>
+                        <constraint firstAttribute="bottom" secondItem="Z3a-gI-tZ7" secondAttribute="bottom" constant="-110" id="T0A-oY-TiU"/>
                         <constraint firstItem="TUO-mp-4rj" firstAttribute="top" secondItem="1mM-fw-mVK" secondAttribute="top" constant="230" id="TDR-G0-14W"/>
                         <constraint firstAttribute="width" secondItem="hLC-EA-fBG" secondAttribute="width" id="WFA-gc-EAB"/>
                         <constraint firstItem="Z3a-gI-tZ7" firstAttribute="top" secondItem="IJ0-XX-Vxh" secondAttribute="bottom" constant="-40" id="XtV-Pr-r0z"/>

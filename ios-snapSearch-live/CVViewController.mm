@@ -109,6 +109,7 @@ using namespace cv;
 
     self.editButton.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:25];
     [self.editButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-pencil-square-o"] forState:UIControlStateNormal];
+    
     [self setupEffectButtons];
     
     //self.resultLabel.text = @"";
@@ -131,21 +132,26 @@ using namespace cv;
     [self.resultLabel setBackgroundColor:[UIColor clearColor]];
     self.resultLabel.delegate = self;
     
-//    self.resultLabel.layer.shadowColor = CGColorRetain([UIColor colorWithRed:1.0 green:1.0
-//                                                                        blue:1.0 alpha:1.0].CGColor);
-//    self.resultLabel.layer.shadowOffset = CGSizeMake(0.0, 0.0);
-//    self.resultLabel.layer.shadowRadius = 1;
-//    self.resultLabel.layer.shadowOpacity = 1;
-//    self.resultLabel.layer.shouldRasterize = YES;
-    
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    [self.editButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-crosshairs"] forState:UIControlStateNormal];
+    [self.editButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-check"] forState:UIControlStateNormal];
+    [self openEditMode:YES];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     [self.editButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-pencil-square-o"] forState:UIControlStateNormal];
+    [self openEditMode:NO];
+}
+
+- (void) openEditMode:(BOOL)isediting {
+    [self animateView:isediting];
+    self.grayBtn.hidden = isediting;
+    self.invertBtn.hidden = isediting;
+    self.zoomSlider.hidden = isediting;
+    self.recognizeTargetView.hidden = isediting;
+    self.langButton.hidden = isediting;
+    self.recognizeButton.hidden = isediting;
 }
 
 - (IBAction)onEdit:(id)sender {
@@ -154,6 +160,25 @@ using namespace cv;
     }else{
        [self.view endEditing:YES];
     }
+}
+
+- (void) animateView:(BOOL) up
+{
+    const int movementDistance = 200;
+    const float movementDuration = 0.3f;
+
+    int movement = (up ? -movementDistance : movementDistance);
+    int labelMovement = (up ? 10 : -10);
+    int cameralMovement = (up ? -100 : 100);
+    
+    [UIView beginAnimations: @"anim" context: nil];
+    [UIView setAnimationBeginsFromCurrentState: YES];
+    [UIView setAnimationDuration: movementDuration];
+    
+    self.ctrlView.frame = CGRectOffset(self.ctrlView.frame, 0, movement);
+    self.resultLabel.frame = CGRectOffset(self.resultLabel.frame, 0, labelMovement);
+    self.cameraImageView.frame = CGRectOffset(self.cameraImageView.frame, 0, cameralMovement);
+    [UIView commitAnimations];
 }
 
 - (IBAction)onLang:(id)sender {
@@ -169,7 +194,6 @@ using namespace cv;
 }
 
 -(void) setupEffectButtons {
-
     self.grayBtn = [[DKCircleButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
     //230
     self.grayBtn.center = CGPointMake(30, 100);
@@ -192,7 +216,7 @@ using namespace cv;
     
     [self.invertBtn addTarget:self action:@selector(tapOnButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.invertBtn];
-
+    
     [self updateButtonStatus:self.grayBtn];
     [self updateButtonStatus:self.invertBtn];
 }
