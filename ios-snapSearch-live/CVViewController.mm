@@ -30,7 +30,7 @@ using namespace cv;
 @property (retain, nonatomic) CvVideoCamera* videoCamera;
 @property (retain, nonatomic) AVCaptureDevice *videoDevice;
 @property (retain, nonatomic) UIImage* currentImage;
-@property (weak, nonatomic) IBOutlet UIView *recognizeWrapper;
+@property (weak, nonatomic) IBOutlet UIScrollView *recognizeWrapper;
 
 @property (weak, nonatomic) IBOutlet UILabel *resultLabel2;
 @property (weak, nonatomic) IBOutlet UITextField *resultLabel;
@@ -138,10 +138,15 @@ using namespace cv;
 //    self.resultLabel.layer.shadowOpacity = 1;
 //    self.resultLabel.layer.shouldRasterize = YES;
     
+    
+    [self.recognizeWrapper setContentSize:(CGSizeMake(320, 2000))];
+   // [self.recognizeWrapper setContentOffset:  CGPointMake(0, 300)];
+    
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     [self.editButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-crosshairs"] forState:UIControlStateNormal];
+    //[self animateCtrlView:YES];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
@@ -156,7 +161,23 @@ using namespace cv;
     }
 }
 
+//- (void) animateCtrlView:(BOOL) up
+//{
+//    const int movementDistance = 200; // tweak as needed
+//    const float movementDuration = 0.3f; // tweak as needed
+//    
+//    int movement = (up ? -movementDistance : movementDistance);
+//    
+//    [UIView beginAnimations: @"anim" context: nil];
+//    [UIView setAnimationBeginsFromCurrentState: YES];
+//    [UIView setAnimationDuration: movementDuration];
+//    self.view.frame = CGRectOffset(self.view.frame, 0, movement);
+//    [UIView commitAnimations];
+//}
+
+
 - (IBAction)onLang:(id)sender {
+    //  [self.recognizeWrapper setContentOffset:  CGPointMake(0, 10)];
      NSLog(@"==========onLang=================");
 }
 
@@ -164,8 +185,9 @@ using namespace cv;
     NSLog(@"=============onSetting==============");
 }
 
-- (void)viewDidLayoutSubviews {
-    //[self setupEffectButtons];
+- (void)viewWillLayoutSubviews {
+    self.ctrlView.frame = CGRectMake(0, self.view.frame.size.height - 250, self.ctrlView.frame.size.width, self.ctrlView.frame.size.height);
+    
 }
 
 -(void) setupEffectButtons {
