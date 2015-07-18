@@ -20,6 +20,16 @@
 
 using namespace cv;
 
+
+typedef enum OCR_LANG_MODE : NSInteger {
+    OCR_LANG_MODE_ENG=0,
+    OCR_LANG_MODE_NUM,
+    OCR_LANG_MODE_CHT,
+    OCR_LANG_MODE_JPN,
+    OCR_LANG_MODE_ALL
+}OCR_LANG_MODE;
+
+
 @interface CVViewController () <CvVideoCameraDelegate, G8TesseractDelegate, UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet BFPaperButton *recognizeButton;
 @property (weak, nonatomic) IBOutlet RecognizeTargetView *recognizeTargetView;
@@ -52,15 +62,40 @@ using namespace cv;
 @property (weak, nonatomic) IBOutlet UIButton *editButton;
 @property (weak, nonatomic) IBOutlet UIButton *langButton;
 
+@property (assign, nonatomic) OCR_LANG_MODE ocrLang;
+@property(strong, nonatomic) NSArray *langArray;
 @end
 
 @implementation CVViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+  
+    self.langArray = [NSArray arrayWithObjects:
+                      @{
+                        @"ocr": @"eng",
+                        @"title": @"English"
+                        },
+                      @{
+                        @"ocr": @"eng",
+                        @"title": @"Number"
+                        },
+                      @{
+                        @"ocr": @"chi_tra",
+                        @"title": @"Chinese"
+                        },
+                      @{
+                        @"ocr": @"jpn",
+                        @"title": @"Japan"
+                        }
+                      , nil];
+    
+    [self.langButton setTitle: self.langArray[self.ocrLang][@"title"] forState:UIControlStateNormal];
+    
     self.isGray = YES;
     self.isInvert = YES;
     self.title = @"Snap Search";
+    self.ocrLang = OCR_LANG_MODE_ENG;
     
     UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-cog"] style:UIBarButtonItemStylePlain target:self action:@selector(onSetting:)];
     [settingButton setTintColor:[UIColor whiteColor]];
@@ -188,7 +223,11 @@ using namespace cv;
 }
 
 - (IBAction)onLang:(id)sender {
-     NSLog(@"==========onLang=================");
+    int langInteger = (int)self.ocrLang;
+    int allLang = (int)OCR_LANG_MODE_ALL;
+    langInteger = (langInteger +1) % allLang;
+    self.ocrLang = (OCR_LANG_MODE)langInteger;
+    [self.langButton setTitle: self.langArray[langInteger][@"title"] forState:UIControlStateNormal];
 }
 
 -(void) onSetting:(id) sender{
@@ -374,7 +413,9 @@ using namespace cv;
 
 - (void) doRecognition:(UIImage*)image complete:(void(^)(NSString *recognizedText))complete{
     UIImage *bwImage = [image g8_blackAndWhite];
-    G8RecognitionOperation *operation = [[G8RecognitionOperation alloc]initWithLanguage:@"eng"];
+    
+    NSString *ocrKey = self.langArray[self.ocrLang][@"ocr"];
+    G8RecognitionOperation *operation = [[G8RecognitionOperation alloc]initWithLanguage:ocrKey];
     operation.tesseract.maximumRecognitionTime = 10.0;
     //operation.tesseract.engineMode = G8OCREngineModeTesseractOnly;
     //operation.tesseract.pageSegmentationMode = G8PageSegmentationModeSingleLine;
@@ -382,7 +423,11 @@ using namespace cv;
     operation.delegate = self;
     operation.tesseract.image = bwImage;
     //operation.tesseract.charWhitelist = @"0123456789";
-    operation.tesseract.charWhitelist = @"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    if(self.ocrLang == OCR_LANG_MODE_ENG){
+        operation.tesseract.charWhitelist = @"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    }else if(self.ocrLang == OCR_LANG_MODE_NUM){
+        operation.tesseract.charWhitelist = @"0123456789";
+    }
     //operation.tesseract.charBlacklist = @".|\\/,';:`~-_^";
     
     operation.recognitionCompleteBlock = ^(G8Tesseract *tesseract) {
@@ -466,9 +511,7 @@ using namespace cv;
 #pragma mark - G8Tesseract
 
 - (void)progressImageRecognitionForTesseract:(G8Tesseract *)tesseract {
-
-    //NSLog(@"progress: %lu", (unsigned long)tesseract.progress);
-    
+    NSLog(@"progress: %lu", (unsigned long)tesseract.progress);
     dispatch_sync(dispatch_get_main_queue(), ^{
         [self.recognizeTargetView updateProgress:(unsigned long)tesseract.progress / 100.0];
    });

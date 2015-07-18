@@ -3,14 +3,6 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "-[CVViewController doRecognition:]:CVViewController.mm">
-         <PersistentStrings>
-            <PersistentString
-               value = "image.size">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "-[CVViewController setupActionButtons]:CVViewController.mm">
          <PersistentStrings>
             <PersistentString
@@ -29,6 +21,25 @@
             </PersistentString>
             <PersistentString
                value = "self.recognizeTargetView.innerImageView.image">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CVViewController doRecognition:]:CVViewController.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = "image.size">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CVViewController onLang:]:CVViewController.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = " self.langArray[langInteger][@&quot;title&quot;]">
+            </PersistentString>
+            <PersistentString
+               value = " self.langArray[langInteger]">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

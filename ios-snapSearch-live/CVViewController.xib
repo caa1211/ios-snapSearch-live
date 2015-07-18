@@ -105,7 +105,7 @@
                                         <constraint firstAttribute="height" constant="84" id="ciB-fD-gha"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                    <inset key="contentEdgeInsets" minX="0.0" minY="-30" maxX="-110" maxY="0.0"/>
+                                    <inset key="contentEdgeInsets" minX="0.0" minY="-40" maxX="-110" maxY="0.0"/>
                                     <state key="normal" title="Edit">
                                         <color key="titleColor" red="0.92549026012420654" green="0.79607850313186646" blue="0.66274511814117432" alpha="1" colorSpace="deviceRGB"/>
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -121,7 +121,7 @@
                                         <constraint firstAttribute="height" constant="84" id="xQK-qk-B6Y"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                    <inset key="contentEdgeInsets" minX="-110" minY="-30" maxX="0.0" maxY="0.0"/>
+                                    <inset key="contentEdgeInsets" minX="-70" minY="-40" maxX="0.0" maxY="0.0"/>
                                     <state key="normal" title="Eng">
                                         <color key="titleColor" red="0.92549026010000002" green="0.79607850309999995" blue="0.66274511810000003" alpha="1" colorSpace="deviceRGB"/>
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
