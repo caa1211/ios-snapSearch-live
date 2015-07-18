@@ -114,22 +114,6 @@
                                         <action selector="onEdit:" destination="-1" eventType="touchUpInside" id="ro2-ox-SYP"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gVm-sA-7vZ">
-                                    <rect key="frame" x="0.0" y="0.0" width="161" height="84"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="161" id="Ip6-yg-jcs"/>
-                                        <constraint firstAttribute="height" constant="84" id="xQK-qk-B6Y"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                    <inset key="contentEdgeInsets" minX="-70" minY="-40" maxX="0.0" maxY="0.0"/>
-                                    <state key="normal" title="Eng">
-                                        <color key="titleColor" red="0.92549026010000002" green="0.79607850309999995" blue="0.66274511810000003" alpha="1" colorSpace="deviceRGB"/>
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="onLang:" destination="-1" eventType="touchUpInside" id="wpg-dU-NYU"/>
-                                    </connections>
-                                </button>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Snap Search" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m2x-YL-X2V">
                                     <rect key="frame" x="0.0" y="38" width="320" height="42"/>
                                     <constraints>
@@ -150,12 +134,10 @@
                                 <constraint firstAttribute="height" constant="300" id="G3e-xi-iQd"/>
                                 <constraint firstItem="e82-yb-AJF" firstAttribute="leading" secondItem="Z3a-gI-tZ7" secondAttribute="leading" id="JjL-qU-rQW"/>
                                 <constraint firstAttribute="bottom" secondItem="Q3d-Wb-QtR" secondAttribute="bottom" id="T5j-xX-neL"/>
-                                <constraint firstItem="gVm-sA-7vZ" firstAttribute="top" secondItem="Z3a-gI-tZ7" secondAttribute="top" id="TXQ-Mn-Yl1"/>
                                 <constraint firstAttribute="height" constant="300" id="bRF-iH-0ur"/>
                                 <constraint firstItem="m2x-YL-X2V" firstAttribute="top" secondItem="Z3a-gI-tZ7" secondAttribute="top" constant="38" id="cMd-Hs-ebt"/>
                                 <constraint firstAttribute="bottom" secondItem="e82-yb-AJF" secondAttribute="bottom" id="elN-h1-ltt"/>
                                 <constraint firstAttribute="trailing" secondItem="e82-yb-AJF" secondAttribute="trailing" id="ilW-f1-z9g"/>
-                                <constraint firstItem="gVm-sA-7vZ" firstAttribute="leading" secondItem="Z3a-gI-tZ7" secondAttribute="leading" id="jpQ-Of-gaV"/>
                                 <constraint firstItem="Q3d-Wb-QtR" firstAttribute="leading" secondItem="Z3a-gI-tZ7" secondAttribute="leading" id="lOR-pc-8Xj"/>
                                 <constraint firstAttribute="bottom" secondItem="m2x-YL-X2V" secondAttribute="bottom" constant="108" id="m5v-eW-1K6"/>
                                 <constraint firstItem="m2x-YL-X2V" firstAttribute="width" secondItem="Z3a-gI-tZ7" secondAttribute="width" id="s9H-Kj-SqA"/>
@@ -193,6 +175,26 @@
                                 <action selector="onRecognize:" destination="-1" eventType="touchUpInside" id="e52-W3-iYe"/>
                             </connections>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gVm-sA-7vZ">
+                            <rect key="frame" x="252" y="75" width="60" height="31"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="60" id="Ip6-yg-jcs"/>
+                                <constraint firstAttribute="height" constant="31" id="xQK-qk-B6Y"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                            <state key="normal" title="English">
+                                <color key="titleColor" red="0.92549026010000002" green="0.79607850309999995" blue="0.66274511810000003" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="Ip6-yg-jcs"/>
+                                </mask>
+                            </variation>
+                            <connections>
+                                <action selector="onLang:" destination="-1" eventType="touchUpInside" id="wpg-dU-NYU"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -200,6 +202,7 @@
                         <constraint firstAttribute="centerY" secondItem="kYb-HP-uOc" secondAttribute="centerY" constant="68" id="GEx-hp-Cq8"/>
                         <constraint firstItem="TUO-mp-4rj" firstAttribute="leading" secondItem="1mM-fw-mVK" secondAttribute="leading" constant="-28" id="GbQ-1i-sgU"/>
                         <constraint firstAttribute="width" constant="320" id="Ivm-SX-yN7"/>
+                        <constraint firstAttribute="trailing" secondItem="gVm-sA-7vZ" secondAttribute="trailing" constant="8" id="IwF-BV-mpk"/>
                         <constraint firstItem="Z3a-gI-tZ7" firstAttribute="leading" secondItem="1mM-fw-mVK" secondAttribute="leading" id="L1G-85-rNf"/>
                         <constraint firstAttribute="centerX" secondItem="IJ0-XX-Vxh" secondAttribute="centerX" id="QdO-PO-gFU"/>
                         <constraint firstAttribute="bottom" secondItem="Z3a-gI-tZ7" secondAttribute="bottom" constant="-110" id="T0A-oY-TiU"/>
@@ -212,6 +215,7 @@
                         <constraint firstAttribute="bottom" secondItem="hLC-EA-fBG" secondAttribute="bottom" id="gzO-yp-u9d"/>
                         <constraint firstAttribute="trailing" secondItem="hLC-EA-fBG" secondAttribute="trailing" id="pfY-BP-Cfo"/>
                         <constraint firstItem="hLC-EA-fBG" firstAttribute="top" secondItem="1mM-fw-mVK" secondAttribute="top" id="qHF-Zd-M9M"/>
+                        <constraint firstItem="gVm-sA-7vZ" firstAttribute="top" secondItem="1mM-fw-mVK" secondAttribute="top" constant="75" id="vot-ty-pjO"/>
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">

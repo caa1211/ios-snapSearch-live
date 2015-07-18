@@ -35,7 +35,7 @@
 //    [self addSubview:ecBtn];
     
     BFPaperButton *mapBtn = [[BFPaperButton alloc] initWithFrame:CGRectMake(0, 0, parentRect.size.width/2, parentRect.size.height/2) raised:NO];
-    mapBtn.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:30];
+    mapBtn.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:34];
     [mapBtn setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-map-marker"] forState:UIControlStateNormal];
     mapBtn.backgroundColor = [UIColor colorWithRed:0.447 green:0.580 blue:0.555 alpha:1.000];
     [mapBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

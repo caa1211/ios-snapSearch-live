@@ -147,7 +147,7 @@ typedef enum OCR_LANG_MODE : NSInteger {
     
     [self setupEffectButtons];
     
-    //self.resultLabel.text = @"";
+    self.resultLabel.text = @"";
     
     //fa-dot-circle-o
     [self.recognizeButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-bullseye"] forState:UIControlStateNormal];
@@ -209,7 +209,7 @@ typedef enum OCR_LANG_MODE : NSInteger {
     const float movementDuration = 0.3f;
 
     int movement = (up ? -movementDistance : movementDistance);
-    int labelMovement = (up ? 10 : -10);
+    int labelMovement = (up ? 20 : -20);
     int cameralMovement = (up ? -100 : 100);
     
     [UIView beginAnimations: @"anim" context: nil];
