@@ -424,7 +424,7 @@ typedef enum OCR_LANG_MODE : NSInteger {
     operation.tesseract.image = bwImage;
     //operation.tesseract.charWhitelist = @"0123456789";
     if(self.ocrLang == OCR_LANG_MODE_ENG){
-        operation.tesseract.charWhitelist = @"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        //operation.tesseract.charWhitelist = @"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     }else if(self.ocrLang == OCR_LANG_MODE_NUM){
         operation.tesseract.charWhitelist = @"0123456789";
     }
@@ -511,7 +511,7 @@ typedef enum OCR_LANG_MODE : NSInteger {
 #pragma mark - G8Tesseract
 
 - (void)progressImageRecognitionForTesseract:(G8Tesseract *)tesseract {
-    NSLog(@"progress: %lu", (unsigned long)tesseract.progress);
+    //NSLog(@"progress: %lu", (unsigned long)tesseract.progress);
     dispatch_sync(dispatch_get_main_queue(), ^{
         [self.recognizeTargetView updateProgress:(unsigned long)tesseract.progress / 100.0];
    });
