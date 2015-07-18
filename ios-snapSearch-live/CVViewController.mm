@@ -92,6 +92,7 @@ using namespace cv;
     self.cameraViewMask.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
     self.cameraViewMask.layer.shadowRadius = 2.0f;
     self.cameraViewMask.layer.shadowOpacity = 1.0f;
+    self.cameraViewMask.underlyingView = self.cameraImageView;
     
     NSArray * devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
     for ( AVCaptureDevice * device in devices )
