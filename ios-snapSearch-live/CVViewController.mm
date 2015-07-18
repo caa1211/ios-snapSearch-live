@@ -20,7 +20,7 @@
 
 using namespace cv;
 
-@interface CVViewController () <CvVideoCameraDelegate, G8TesseractDelegate>
+@interface CVViewController () <CvVideoCameraDelegate, G8TesseractDelegate, UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet BFPaperButton *recognizeButton;
 @property (weak, nonatomic) IBOutlet RecognizeTargetView *recognizeTargetView;
 
@@ -32,7 +32,10 @@ using namespace cv;
 @property (retain, nonatomic) UIImage* currentImage;
 @property (weak, nonatomic) IBOutlet UIView *recognizeWrapper;
 
-@property (weak, nonatomic) IBOutlet UILabel *resultLabel;
+@property (weak, nonatomic) IBOutlet UILabel *resultLabel2;
+@property (weak, nonatomic) IBOutlet UITextField *resultLabel;
+
+
 @property (nonatomic, strong) NSOperationQueue *operationQueue;
 @property(strong, nonatomic) dispatch_queue_t cropImageQueue;
 
@@ -107,7 +110,8 @@ using namespace cv;
     [self.editButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-pencil-square-o"] forState:UIControlStateNormal];
     [self setupEffectButtons];
     
-    self.resultLabel.text = @"";
+    //self.resultLabel.text = @"";
+    
     //fa-dot-circle-o
     [self.recognizeButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-bullseye"] forState:UIControlStateNormal];
     self.recognizeButton.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:88];
@@ -115,15 +119,40 @@ using namespace cv;
     self.recognizeButton.backgroundColor = [UIColor colorWithRed:1.000 green:0.984 blue:0.990 alpha:1.000];
     self.recognizeButton.cornerRadius = self.recognizeButton.frame.size.width / 2;
     self.recognizeButton.rippleFromTapLocation = NO;
+    self.recognizeButton.isRaised = YES;
     self.recognizeButton.rippleBeyondBounds = YES;
     self.recognizeButton.loweredShadowOffset = CGSizeMake(0, 0);
     self.recognizeButton.liftedShadowOffset = CGSizeMake(0, 0);
     self.recognizeButton.tapCircleColor = [UIColor colorWithRed:1.000 green:0.672 blue:0.532 alpha:0.300];
     self.recognizeButton.tapCircleDiameter = MAX(self.recognizeButton.frame.size.width, self.recognizeButton.frame.size.height) * 8;
+    
+    self.resultLabel.borderStyle = UITextBorderStyleNone;
+    [self.resultLabel setBackgroundColor:[UIColor clearColor]];
+    self.resultLabel.delegate = self;
+    
+//    self.resultLabel.layer.shadowColor = CGColorRetain([UIColor colorWithRed:1.0 green:1.0
+//                                                                        blue:1.0 alpha:1.0].CGColor);
+//    self.resultLabel.layer.shadowOffset = CGSizeMake(0.0, 0.0);
+//    self.resultLabel.layer.shadowRadius = 1;
+//    self.resultLabel.layer.shadowOpacity = 1;
+//    self.resultLabel.layer.shouldRasterize = YES;
+    
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    [self.editButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-crosshairs"] forState:UIControlStateNormal];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    [self.editButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-pencil-square-o"] forState:UIControlStateNormal];
 }
 
 - (IBAction)onEdit:(id)sender {
-     NSLog(@"=========onEdit==================");
+    if(self.resultLabel.editing == NO){
+      [self.resultLabel becomeFirstResponder];
+    }else{
+       [self.view endEditing:YES];
+    }
 }
 
 - (IBAction)onLang:(id)sender {
