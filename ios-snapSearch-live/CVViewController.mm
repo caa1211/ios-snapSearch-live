@@ -14,10 +14,14 @@
 #import <DKCircleButton.h>
 #import "RecognizeTargetView.h"
 #import "NSString+FontAwesome.h"
+#import <BFPaperButton.h>
+#import <UIColor+BFPaperColors.h>
+#import "NSString+FontAwesome.h"
 
 using namespace cv;
 
 @interface CVViewController () <CvVideoCameraDelegate, G8TesseractDelegate>
+@property (weak, nonatomic) IBOutlet BFPaperButton *recognizeButton;
 @property (weak, nonatomic) IBOutlet RecognizeTargetView *recognizeTargetView;
 
 @property (weak, nonatomic) IBOutlet UISlider *zoomSlider;
@@ -103,6 +107,22 @@ using namespace cv;
     [self.editButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-pencil-square-o"] forState:UIControlStateNormal];
     
     [self setupEffectButtons];
+    
+    self.resultLabel.text = @"";
+    
+    //fa-dot-circle-o
+    [self.recognizeButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-bullseye"] forState:UIControlStateNormal];
+    self.recognizeButton.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:88];
+    [self.recognizeButton setTitleColor:[UIColor colorWithRed:0.908 green:0.472 blue:0.324 alpha:1.000] forState:UIControlStateNormal];
+    self.recognizeButton.backgroundColor = [UIColor colorWithRed:1.000 green:0.984 blue:0.990 alpha:1.000];
+    self.recognizeButton.cornerRadius = self.recognizeButton.frame.size.width / 2;
+    self.recognizeButton.rippleFromTapLocation = NO;
+    self.recognizeButton.rippleBeyondBounds = YES;
+    self.recognizeButton.loweredShadowOffset = CGSizeMake(0, 0);
+    self.recognizeButton.liftedShadowOffset = CGSizeMake(0, 0);
+    self.recognizeButton.tapCircleColor = [UIColor colorWithRed:1.000 green:0.672 blue:0.532 alpha:0.300];
+    self.recognizeButton.tapCircleDiameter = MAX(self.recognizeButton.frame.size.width, self.recognizeButton.frame.size.height) * 8;
+   
 }
 
 -(void) onSetting:(id) sender{
@@ -116,8 +136,8 @@ using namespace cv;
 -(void) setupEffectButtons {
 
     self.grayBtn = [[DKCircleButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
-    
-    self.grayBtn.center = CGPointMake(30, 230);
+    //230
+    self.grayBtn.center = CGPointMake(30, 100);
     self.grayBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     [self.grayBtn setTitleColor:[UIColor colorWithWhite:1 alpha:1.0] forState:UIControlStateNormal];
     self.grayBtn.animateTap = NO;
@@ -126,8 +146,9 @@ using namespace cv;
     [self.grayBtn addTarget:self action:@selector(tapOnButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.grayBtn];
     
+    //280
     self.invertBtn = [[DKCircleButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
-    self.invertBtn.center = CGPointMake(30, 280);
+    self.invertBtn.center = CGPointMake(30, 150);
     self.invertBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     [self.invertBtn setTitleColor:[UIColor colorWithWhite:1 alpha:1.0] forState:UIControlStateNormal];
     self.invertBtn.tag = 2;

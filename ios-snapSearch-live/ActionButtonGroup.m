@@ -52,7 +52,7 @@
     
     BFPaperButton *copyBtn = [[BFPaperButton alloc] initWithFrame:CGRectMake(parentRect.size.width/2, parentRect.size.height/2, parentRect.size.width/2, parentRect.size.height/2) raised:NO];
     copyBtn.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:28];
-    [copyBtn setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-clipboard"] forState:UIControlStateNormal];
+    [copyBtn setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-files-o"] forState:UIControlStateNormal];
     copyBtn.backgroundColor = [UIColor colorWithRed:0.223 green:0.361 blue:0.399 alpha:1.000];
     [copyBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [copyBtn addTarget:self action:@selector(onCopyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
