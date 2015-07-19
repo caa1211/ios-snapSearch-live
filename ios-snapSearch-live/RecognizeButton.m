@@ -38,18 +38,17 @@
     self.loweredShadowOffset = CGSizeMake(0, -1);
     self.liftedShadowOffset = CGSizeMake(0, 0);
     self.tapCircleDiameter = MAX(self.frame.size.width, self.frame.size.height) * 8;
+    self.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:88];
+    [self setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-bullseye"] forState:UIControlStateNormal];
 }
 
 -(void)setToCancelStyle {
-    [self setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-times-circle-o"] forState:UIControlStateNormal];
-    self.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:88];
-    [self setTitleColor:[UIColor colorWithRed:0.388 green:0.456 blue:0.547 alpha:1.000] forState:UIControlStateNormal];
+    //[self setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-times-circle-o"] forState:UIControlStateNormal];
+    [self setTitleColor:[UIColor colorWithRed:0.223 green:0.402 blue:0.547 alpha:1.000] forState:UIControlStateNormal];
     self.tapCircleColor = [UIColor colorWithRed:0.964 green:0.951 blue:1.000 alpha:0.300];
 }
 
 -(void)setToRecognizeStyle {
-    [self setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-bullseye"] forState:UIControlStateNormal];
-    self.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:88];
     [self setTitleColor:[UIColor colorWithRed:0.908 green:0.472 blue:0.324 alpha:1.000] forState:UIControlStateNormal];
     self.tapCircleColor = [UIColor colorWithRed:1.000 green:0.672 blue:0.532 alpha:0.300];
 }

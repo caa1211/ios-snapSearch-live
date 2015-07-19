@@ -19,6 +19,7 @@
 		AD3BB2011B5B495B005E4D06 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD3BB1FF1B5B495B005E4D06 /* WebViewController.m */; };
 		AD3BB2021B5B495B005E4D06 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD3BB2001B5B495B005E4D06 /* WebViewController.xib */; };
 		AD3BB2051B5C039A005E4D06 /* RecognizeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = AD3BB2041B5C039A005E4D06 /* RecognizeButton.m */; };
+		AD46DBAD1B5C2C340050BAC8 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AD46DBAC1B5C2C340050BAC8 /* icon.png */; };
 		AD80D9DF1B584C5B00827B6C /* snap.wav in Resources */ = {isa = PBXBuildFile; fileRef = AD80D9DE1B584C5B00827B6C /* snap.wav */; };
 		AD80D9E71B59672100827B6C /* NSString+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = AD80D9E61B59672100827B6C /* NSString+FontAwesome.m */; };
 		AD80D9E81B596A2900827B6C /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD80D9E41B5965D200827B6C /* FontAwesome.ttf */; };
@@ -72,11 +73,12 @@
 		AD3BB2001B5B495B005E4D06 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebViewController.xib; sourceTree = "<group>"; };
 		AD3BB2031B5C039A005E4D06 /* RecognizeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecognizeButton.h; sourceTree = "<group>"; };
 		AD3BB2041B5C039A005E4D06 /* RecognizeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecognizeButton.m; sourceTree = "<group>"; };
+		AD46DBAC1B5C2C340050BAC8 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		AD80D9DE1B584C5B00827B6C /* snap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = snap.wav; sourceTree = "<group>"; };
 		AD80D9E41B5965D200827B6C /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
 		AD80D9E51B59672100827B6C /* NSString+FontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FontAwesome.h"; sourceTree = "<group>"; };
 		AD80D9E61B59672100827B6C /* NSString+FontAwesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FontAwesome.m"; sourceTree = "<group>"; };
-		AD94996C1B57A10100541B59 /* ios-snapSearch-live.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-snapSearch-live.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD94996C1B57A10100541B59 /* Snap Search.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Snap Search.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD9499701B57A10100541B59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AD9499711B57A10100541B59 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AD9499731B57A10100541B59 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -200,7 +202,7 @@
 		AD94996D1B57A10100541B59 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AD94996C1B57A10100541B59 /* ios-snapSearch-live.app */,
+				AD94996C1B57A10100541B59 /* Snap Search.app */,
 				AD9499851B57A10200541B59 /* ios-snapSearch-liveTests.xctest */,
 			);
 			name = Products;
@@ -226,6 +228,7 @@
 			children = (
 				AD80D9E41B5965D200827B6C /* FontAwesome.ttf */,
 				ADD50EC41B5815D200E984A7 /* bg5.jpg */,
+				AD46DBAC1B5C2C340050BAC8 /* icon.png */,
 				ADD50EC61B58175100E984A7 /* Solid_black.png */,
 				AD80D9DE1B584C5B00827B6C /* snap.wav */,
 				AD9499701B57A10100541B59 /* Info.plist */,
@@ -298,7 +301,7 @@
 			);
 			name = "ios-snapSearch-live";
 			productName = "ios-snapSearch-live";
-			productReference = AD94996C1B57A10100541B59 /* ios-snapSearch-live.app */;
+			productReference = AD94996C1B57A10100541B59 /* Snap Search.app */;
 			productType = "com.apple.product-type.application";
 		};
 		AD9499841B57A10200541B59 /* ios-snapSearch-liveTests */ = {
@@ -369,6 +372,7 @@
 				AD1BF22B1B57BE97007B0A2C /* CVViewController.xib in Resources */,
 				AD1BF2341B57F74C007B0A2C /* tessdata in Resources */,
 				AD9499801B57A10100541B59 /* LaunchScreen.xib in Resources */,
+				AD46DBAD1B5C2C340050BAC8 /* icon.png in Resources */,
 				AD3BB2021B5B495B005E4D06 /* WebViewController.xib in Resources */,
 				AD80D9DF1B584C5B00827B6C /* snap.wav in Resources */,
 				AD94997D1B57A10100541B59 /* Images.xcassets in Resources */,
@@ -546,7 +550,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FC12FE9E5995E87549F039CC /* Pods-ios-snapSearch-live.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -556,7 +560,7 @@
 				INFOPLIST_FILE = "ios-snapSearch-live/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Snap Search";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -565,7 +569,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EC365631FD5C1C71610A25C8 /* Pods-ios-snapSearch-live.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -575,7 +579,7 @@
 				INFOPLIST_FILE = "ios-snapSearch-live/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Snap Search";
 			};
 			name = Release;
 		};

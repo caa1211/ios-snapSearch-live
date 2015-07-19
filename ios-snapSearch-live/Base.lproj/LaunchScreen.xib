@@ -8,34 +8,78 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0nW-8X-zny">
+                    <rect key="frame" x="0.0" y="436.5" width="375" height="226"/>
+                    <color key="backgroundColor" red="0.28627452254295349" green="0.42745101451873779" blue="0.45490199327468872" alpha="1" colorSpace="deviceRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="226" id="MQt-7f-k9F"/>
+                    </constraints>
+                </view>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Copyright (c) 2015 Carter Chang. All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-xW-0ye">
-                    <rect key="frame" x="20" y="439" width="441" height="21"/>
+                    <rect key="frame" x="20" y="626" width="336" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" white="1" alpha="0.5" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ios-snapSearch-live" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
-                    <rect key="frame" x="20" y="140" width="441" height="43"/>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Snap Search" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
+                    <rect key="frame" x="20" y="202" width="336" height="43"/>
+                    <fontDescription key="fontDescription" name="Optima-Bold" family="Optima" pointSize="38"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="0.32000000000000001" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="taK-Uk-g7V">
+                    <rect key="frame" x="-2" y="0.0" width="378" height="133"/>
+                    <color key="backgroundColor" red="0.37884720042888176" green="0.66932397959183676" blue="0.66061244029088406" alpha="0.28000000000000003" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="133" id="mne-gq-d20"/>
+                    </constraints>
+                </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="9fG-bA-Vv9">
+                    <rect key="frame" x="124" y="277" width="126" height="103"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="126" id="PEH-wV-bbS"/>
+                        <constraint firstAttribute="height" constant="103" id="oRR-xA-fnQ"/>
+                    </constraints>
+                </imageView>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.36079273683905377" green="0.52048788265306123" blue="0.52048788265306123" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="0nW-8X-zny" secondAttribute="trailing" id="1sO-cM-IWD"/>
+                <constraint firstItem="taK-Uk-g7V" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="2fy-Ws-haB"/>
+                <constraint firstItem="0nW-8X-zny" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="3jr-OS-Yhw"/>
                 <constraint firstItem="kId-c2-rCX" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="bottom" multiplier="1/3" constant="1" id="5cJ-9S-tgC"/>
+                <constraint firstAttribute="trailing" secondItem="0nW-8X-zny" secondAttribute="trailing" id="8Il-sp-s6n"/>
+                <constraint firstAttribute="bottom" secondItem="0nW-8X-zny" secondAttribute="bottom" id="G2X-F6-A1i"/>
                 <constraint firstAttribute="centerX" secondItem="kId-c2-rCX" secondAttribute="centerX" id="Koa-jz-hwk"/>
                 <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="Kzo-t9-V3l"/>
                 <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="MfP-vx-nX0"/>
+                <constraint firstAttribute="bottom" secondItem="0nW-8X-zny" secondAttribute="bottom" id="YSM-wg-hie"/>
                 <constraint firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="ZEH-qu-HZ9"/>
+                <constraint firstItem="taK-Uk-g7V" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="cwM-PG-l3N"/>
+                <constraint firstItem="0nW-8X-zny" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fHi-gP-S80"/>
                 <constraint firstItem="kId-c2-rCX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="fvb-Df-36g"/>
+                <constraint firstItem="0nW-8X-zny" firstAttribute="top" secondItem="9fG-bA-Vv9" secondAttribute="bottom" constant="61" id="iF4-Wo-P6a"/>
+                <constraint firstItem="9fG-bA-Vv9" firstAttribute="top" secondItem="kId-c2-rCX" secondAttribute="bottom" constant="26" id="oCV-T0-VKg"/>
+                <constraint firstAttribute="trailing" secondItem="taK-Uk-g7V" secondAttribute="trailing" id="pGb-Ci-Vid"/>
+                <constraint firstAttribute="centerX" secondItem="9fG-bA-Vv9" secondAttribute="centerX" id="z38-FC-7E1"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="431" y="293"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="8Il-sp-s6n"/>
+                    <exclude reference="G2X-F6-A1i"/>
+                    <exclude reference="YSM-wg-hie"/>
+                    <exclude reference="fHi-gP-S80"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="430.5" y="292.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="icon.png" width="1024" height="1024"/>
+    </resources>
 </document>
