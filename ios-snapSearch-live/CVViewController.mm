@@ -553,14 +553,14 @@ typedef enum EFFECT_MODE : NSInteger {
             dispatch_sync(dispatch_get_main_queue(), ^{
                 [self.recognizeTargetView setInnerImage:image];
                 [self ocrStarting];
-           
-            
-            [self doRecognition:image complete:^(NSString *recognizedText) {
-                [self ocrFinished:recognizedText];
-                //Finish OCR ----
-            }];
                 
-                 });
+                
+                [self doRecognition:image complete:^(NSString *recognizedText) {
+                    [self ocrFinished:recognizedText];
+                    //Finish OCR ----
+                }];
+                
+            });
         }];
     });
 }
@@ -580,26 +580,18 @@ typedef enum EFFECT_MODE : NSInteger {
 
 
 - (void) turnTorchOn: (bool) on {
-    
-//    // check if flashlight available
-//    Class captureDeviceClass = NSClassFromString(@"AVCaptureDevice");
-//    if (captureDeviceClass != nil) {
-//        AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-        if ([self.videoDevice hasTorch] && [self.videoDevice hasFlash]){
-            
-            [self.videoDevice lockForConfiguration:nil];
-            if (on) {
-                [self.videoDevice setTorchMode:AVCaptureTorchModeOn];
-                [self.videoDevice setFlashMode:AVCaptureFlashModeOn];
-                //torchIsOn = YES; //define as a variable/property if you need to know status
-            } else {
-                [self.videoDevice setTorchMode:AVCaptureTorchModeOff];
-                [self.videoDevice setFlashMode:AVCaptureFlashModeOff];
-                //torchIsOn = NO;
-            }
-            [self.videoDevice unlockForConfiguration];
+    if ([self.videoDevice hasTorch] && [self.videoDevice hasFlash]){
+        
+        [self.videoDevice lockForConfiguration:nil];
+        if (on) {
+            [self.videoDevice setTorchMode:AVCaptureTorchModeOn];
+            [self.videoDevice setFlashMode:AVCaptureFlashModeOn];
+        } else {
+            [self.videoDevice setTorchMode:AVCaptureTorchModeOff];
+            [self.videoDevice setFlashMode:AVCaptureFlashModeOff];
         }
-  //  }
+        [self.videoDevice unlockForConfiguration];
+    }
 }
 
 -(void) cameraFocusAtTarget
