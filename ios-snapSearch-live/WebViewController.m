@@ -23,12 +23,20 @@
     return self;
 }
 
+- (IBAction)onSwipe:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:self.url];
     [_webView loadRequest:urlRequest];
+    
+    UISwipeGestureRecognizer * swiperight=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(onSwipe:)];
+    swiperight.direction=UISwipeGestureRecognizerDirectionRight;
+    [self.view addGestureRecognizer:swiperight];
 }
 
 - (void)didReceiveMemoryWarning {
