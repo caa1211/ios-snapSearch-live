@@ -156,7 +156,7 @@ typedef enum OCR_LANG_MODE : NSInteger {
     
     [self setupEffectButtons];
     
-    self.resultLabel.text = @"";
+    //self.resultLabel.text = @"";
     
     [self.recognizeButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-bullseye"] forState:UIControlStateNormal];
     self.recognizeButton.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:88];
@@ -206,6 +206,11 @@ typedef enum OCR_LANG_MODE : NSInteger {
         NSString *tempStr = [[NSString alloc] init];
         tempStr = [self.resultLabel.text substringFromIndex:1];
         self.resultLabel.text = tempStr;
+
+        // Movie cursor to the left
+        UITextPosition *beginPos = self.resultLabel.beginningOfDocument;
+        UITextRange *selection = [self.resultLabel textRangeFromPosition:beginPos toPosition:beginPos];
+        [self.resultLabel setSelectedTextRange:selection];
     }
 }
 
