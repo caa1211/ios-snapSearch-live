@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9F2FFC835A3ECB2AC8B56A46"
+               BlueprintIdentifier = "624DB31946FB5DF047A426AD"
                BuildableName = "libPods-ios-snapSearch-live-UIColor+BFPaperColors.a"
                BlueprintName = "Pods-ios-snapSearch-live-UIColor+BFPaperColors"
                ReferencedContainer = "container:Pods.xcodeproj">

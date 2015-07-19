@@ -12,6 +12,7 @@
 #import "NSString+FontAwesome.h"
 #import "CVViewController.h"
 #import "WebViewController.h"
+#import "UIView+Toast.h"
 
 @interface ActionButtonGroup()
 @property(nonatomic, strong) CVViewController *viewController;
@@ -122,6 +123,7 @@ typedef NS_ENUM(NSInteger, SEARCH_MODE) {
     NSString *copyStringverse = [self.viewController recognizedResult];
     UIPasteboard *pb = [UIPasteboard generalPasteboard];
     [pb setString:copyStringverse];
+    [self makeToast:@"Copied to the clipboard" duration: 0.5 position:[NSValue valueWithCGPoint:CGPointMake(self.bounds.size.width/2, -25)]];
 }
 
 -(void) onDictBtnClick:(id)sender {
