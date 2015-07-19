@@ -71,6 +71,11 @@ typedef enum EFFECT_MODE : NSInteger {
 @property (weak, nonatomic) IBOutlet UIButton *clipFirstCharacter;
 @property(strong, nonatomic) NSArray *langArray;
 @property(assign, nonatomic) BOOL signCancelRecognize;
+
+@property (weak, nonatomic) IBOutlet UIButton *editMoveLeft;
+@property (weak, nonatomic) IBOutlet UIButton *editMoveRight;
+@property (weak, nonatomic) IBOutlet UILabel *editTitleLabel;
+
 @end
 
 @implementation CVViewController
@@ -105,6 +110,7 @@ typedef enum EFFECT_MODE : NSInteger {
     [self.langButton setTitle: self.langArray[self.ocrLang][@"title"] forState:UIControlStateNormal];
 
     self.title = @"Snap Search";
+    
     self.ocrLang = OCR_LANG_MODE_ENG;
     self.isEditing = NO;
     
@@ -167,6 +173,8 @@ typedef enum EFFECT_MODE : NSInteger {
     [self.resultLabel setBackgroundColor:[UIColor clearColor]];
     self.resultLabel.delegate = self;
     
+    [self.editMoveLeft setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-angle-double-right"] forState:UIControlStateNormal];
+    [self.editMoveRight setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-angle-double-left"] forState:UIControlStateNormal];
 }
 
 - (IBAction)onLang:(id)sender {
@@ -434,6 +442,19 @@ typedef enum EFFECT_MODE : NSInteger {
 
 #pragma mark - edit
 
+- (IBAction)onEditMoveLeft:(id)sender {
+    UITextRange *selectedRange = [self.resultLabel selectedTextRange];
+    UITextPosition *newPosition = [self.resultLabel positionFromPosition:selectedRange.start offset:1];
+    UITextRange *newRange = [self.resultLabel textRangeFromPosition:newPosition toPosition:newPosition];
+    [self.resultLabel setSelectedTextRange:newRange];
+}
+
+- (IBAction)onEditMoveRight:(id)sender {
+    UITextRange *selectedRange = [self.resultLabel selectedTextRange];
+    UITextPosition *newPosition = [self.resultLabel positionFromPosition:selectedRange.start offset:-1];
+    UITextRange *newRange = [self.resultLabel textRangeFromPosition:newPosition toPosition:newPosition];
+    [self.resultLabel setSelectedTextRange:newRange];
+}
 
 - (UIImage *) imageWithColor:(UIColor *)color
 {
@@ -471,6 +492,7 @@ typedef enum EFFECT_MODE : NSInteger {
     self.langButton.hidden = isediting;
     self.recognizeButton.hidden = isediting;
     self.isEditing = isediting;
+    self.flashBtn.hidden = isediting;
     [self.clipFirstCharacter setHidden:!isediting];
 }
 
@@ -503,12 +525,12 @@ typedef enum EFFECT_MODE : NSInteger {
 
 - (void) animateView:(BOOL) up
 {
-    const int movementDistance = 200;
+    const int movementDistance = 220;
     const float movementDuration = 0.3f;
     
     int movement = (up ? -movementDistance : movementDistance);
     int labelMovement = (up ? 20 : -20);
-    int cameralMovement = (up ? -100 : 100);
+    int cameralMovement = (up ? -130 : 130);
     
     [UIView beginAnimations: @"anim" context: nil];
     [UIView setAnimationBeginsFromCurrentState: YES];

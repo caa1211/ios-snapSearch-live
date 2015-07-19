@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AD94996B1B57A10100541B59"
-               BuildableName = "ios-snapSearch-live.app"
+               BuildableName = "Snap Search.app"
                BlueprintName = "ios-snapSearch-live"
                ReferencedContainer = "container:ios-snapSearch-live.xcodeproj">
             </BuildableReference>
@@ -57,7 +57,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AD94996B1B57A10100541B59"
-            BuildableName = "ios-snapSearch-live.app"
+            BuildableName = "Snap Search.app"
             BlueprintName = "ios-snapSearch-live"
             ReferencedContainer = "container:ios-snapSearch-live.xcodeproj">
          </BuildableReference>
@@ -77,7 +77,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AD94996B1B57A10100541B59"
-            BuildableName = "ios-snapSearch-live.app"
+            BuildableName = "Snap Search.app"
             BlueprintName = "ios-snapSearch-live"
             ReferencedContainer = "container:ios-snapSearch-live.xcodeproj">
          </BuildableReference>
@@ -96,7 +96,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AD94996B1B57A10100541B59"
-            BuildableName = "ios-snapSearch-live.app"
+            BuildableName = "Snap Search.app"
             BlueprintName = "ios-snapSearch-live"
             ReferencedContainer = "container:ios-snapSearch-live.xcodeproj">
          </BuildableReference>
