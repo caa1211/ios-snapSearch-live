@@ -41,10 +41,14 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kYb-HP-uOc" userLabel="recognizeTarget" customClass="RecognizeTargetView">
                             <rect key="frame" x="80" y="182" width="160" height="68"/>
                             <color key="backgroundColor" red="0.78944116709183676" green="0.31350613243489356" blue="0.37101554385157198" alpha="0.14999999999999999" colorSpace="calibratedRGB"/>
+                            <gestureRecognizers/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="160" id="AfX-o6-qb2"/>
                                 <constraint firstAttribute="height" constant="68" id="PnF-yI-2MV"/>
                             </constraints>
+                            <connections>
+                                <outletCollection property="gestureRecognizers" destination="K3Y-1w-hjf" appends="YES" id="Xu9-Z3-yDe"/>
+                            </connections>
                         </view>
                         <slider opaque="NO" alpha="0.5499999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1.3" minValue="1" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="TUO-mp-4rj">
                             <rect key="frame" x="-30" y="230" width="120" height="31"/>
@@ -270,15 +274,15 @@
                 <action selector="onPan:" destination="-1" id="PoY-b3-K1v"/>
             </connections>
         </panGestureRecognizer>
-        <panGestureRecognizer minimumNumberOfTouches="1" id="N8o-eq-wBY">
-            <connections>
-                <action selector="onPan:" destination="-1" id="vqg-4p-3wB"/>
-            </connections>
-        </panGestureRecognizer>
         <tapGestureRecognizer id="nZy-Rh-0Cu">
             <connections>
                 <action selector="onCameraViewTap:" destination="-1" id="afP-lJ-hpt"/>
             </connections>
         </tapGestureRecognizer>
+        <panGestureRecognizer minimumNumberOfTouches="1" id="K3Y-1w-hjf">
+            <connections>
+                <action selector="onPan:" destination="-1" id="7kW-z9-2OA"/>
+            </connections>
+        </panGestureRecognizer>
     </objects>
 </document>

@@ -122,7 +122,7 @@ typedef enum OCR_LANG_MODE : NSInteger {
     self.videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionBack;
     self.videoCamera.defaultAVCaptureVideoOrientation = AVCaptureVideoOrientationPortrait;
     self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPresetHigh;
-    self.videoCamera.defaultFPS = 30;
+    self.videoCamera.defaultFPS = 20;
     self.videoCamera.grayscaleMode = NO;
     self.videoCamera.delegate = self;
     
