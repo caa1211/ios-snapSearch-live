@@ -129,7 +129,7 @@ typedef enum OCR_LANG_MODE : NSInteger {
     self.cameraViewMask.dynamic = YES;
     self.cameraViewMask.blurRadius = 20;
     self.cameraViewMask.layer.shadowColor = [[UIColor blackColor] CGColor];
-    self.cameraViewMask.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
+    self.cameraViewMask.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
     self.cameraViewMask.layer.shadowRadius = 2.0f;
     self.cameraViewMask.layer.shadowOpacity = 1.0f;
     self.cameraViewMask.underlyingView = self.cameraImageView;
@@ -268,7 +268,7 @@ typedef enum OCR_LANG_MODE : NSInteger {
     [self.grayBtn setTitle:NSLocalizedString(@"G", nil) forState:UIControlStateNormal];
     self.grayBtn.tag = 1;
     [self.grayBtn addTarget:self action:@selector(tapOnButton:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.grayBtn];
+    [self.view insertSubview:self.grayBtn atIndex:1];
     
     //280
     self.invertBtn = [[DKCircleButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
@@ -280,14 +280,13 @@ typedef enum OCR_LANG_MODE : NSInteger {
     [self.invertBtn setTitle:NSLocalizedString(@"I", nil) forState:UIControlStateNormal];
     
     [self.invertBtn addTarget:self action:@selector(tapOnButton:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.invertBtn];
+    [self.view insertSubview:self.invertBtn atIndex:2];
     
     [self updateButtonStatus:self.grayBtn];
     [self updateButtonStatus:self.invertBtn];
 }
 
 -(void)updateButtonStatus:(DKCircleButton *)btn{
-    
     if (btn == self.invertBtn && self.isInvert) {
         btn.backgroundColor = [UIColor colorWithRed:0.817 green:0.773 blue:0.344 alpha:0.590];
     }else if(btn == self.grayBtn && self.isGray){
@@ -589,18 +588,17 @@ typedef enum OCR_LANG_MODE : NSInteger {
         
         int invertX = self.startPanLoc.x > self.recognizeTargetView.center.x ? 1: -1;
         int invertY = self.startPanLoc.y > self.recognizeTargetView.center.y ? 1: -1;
-        CGFloat offsetX = invertX*(loc.x - self.startPanLoc.x)/8; //loc.x - self.startPanLoc.x > 1 ? 3: -3;
-        CGFloat offsetY = invertY*(loc.y - self.startPanLoc.y)/8; //loc.y - self.startPanLoc.y> 1 ? 3:-3;
+        CGFloat offsetX = invertX*(loc.x - self.startPanLoc.x)/5;
+        CGFloat offsetY = invertY*(loc.y - self.startPanLoc.y)/5;
  
-        CGRect newFrame = self.recognizeTargetView.frame;
-        CGPoint center =  self.recognizeTargetView.center;
+        CGRect newFrame = self.recognizeTargetView.bounds;
         newFrame.size.width = MIN(newFrame.size.width + offsetX, 290);
         newFrame.size.height = MIN(newFrame.size.height + offsetY, 250);
         newFrame.size.width = MAX(newFrame.size.width + offsetX, 100);
         newFrame.size.height = MAX(newFrame.size.height + offsetY, 40);
         
-        self.recognizeTargetView.frame = newFrame;
-        self.recognizeTargetView.center = center;
+        self.recognizeTargetView.bounds = newFrame;
+        //self.recognizeTargetView.center = center;
         
         if (newFrame.size.height < 80){
             self.recognizeTargetView.layer.cornerRadius = 35 * newFrame.size.height/80;

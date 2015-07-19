@@ -38,18 +38,17 @@
                                 <outletCollection property="gestureRecognizers" destination="nZy-Rh-0Cu" appends="YES" id="7TX-3r-QmV"/>
                             </connections>
                         </imageView>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kYb-HP-uOc" userLabel="recognizeTarget" customClass="RecognizeTargetView">
-                            <rect key="frame" x="80" y="182" width="160" height="68"/>
-                            <color key="backgroundColor" red="0.78944116709183676" green="0.31350613243489356" blue="0.37101554385157198" alpha="0.14999999999999999" colorSpace="calibratedRGB"/>
-                            <gestureRecognizers/>
+                        <slider opaque="NO" alpha="0.5499999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1.3" minValue="1" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="TUO-mp-4rj">
+                            <rect key="frame" x="-30" y="230" width="120" height="31"/>
+                            <color key="tintColor" red="0.90642936862244894" green="0.87855990165361508" blue="0.30338905858189041" alpha="0.67000000000000004" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="160" id="AfX-o6-qb2"/>
-                                <constraint firstAttribute="height" constant="68" id="PnF-yI-2MV"/>
+                                <constraint firstAttribute="width" constant="116" id="6B6-sI-sUz"/>
+                                <constraint firstAttribute="height" constant="30" id="nGF-bn-ANo"/>
                             </constraints>
                             <connections>
-                                <outletCollection property="gestureRecognizers" destination="K3Y-1w-hjf" appends="YES" id="Xu9-Z3-yDe"/>
+                                <action selector="onZoomChange:" destination="-1" eventType="valueChanged" id="P9M-Uy-3w5"/>
                             </connections>
-                        </view>
+                        </slider>
                         <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gVm-sA-7vZ">
                             <rect key="frame" x="252" y="75" width="60" height="31"/>
                             <constraints>
@@ -70,17 +69,18 @@
                                 <action selector="onLang:" destination="-1" eventType="touchUpInside" id="wpg-dU-NYU"/>
                             </connections>
                         </button>
-                        <slider opaque="NO" alpha="0.5499999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1.3" minValue="1" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="TUO-mp-4rj">
-                            <rect key="frame" x="-30" y="230" width="120" height="31"/>
-                            <color key="tintColor" red="0.90642936862244894" green="0.87855990165361508" blue="0.30338905858189041" alpha="0.67000000000000004" colorSpace="calibratedRGB"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kYb-HP-uOc" userLabel="recognizeTarget" customClass="RecognizeTargetView">
+                            <rect key="frame" x="80" y="182" width="160" height="68"/>
+                            <color key="backgroundColor" red="0.78944116709183676" green="0.31350613243489356" blue="0.37101554385157198" alpha="0.14999999999999999" colorSpace="calibratedRGB"/>
+                            <gestureRecognizers/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="116" id="6B6-sI-sUz"/>
-                                <constraint firstAttribute="height" constant="30" id="nGF-bn-ANo"/>
+                                <constraint firstAttribute="width" constant="160" id="AfX-o6-qb2"/>
+                                <constraint firstAttribute="height" constant="68" id="PnF-yI-2MV"/>
                             </constraints>
                             <connections>
-                                <action selector="onZoomChange:" destination="-1" eventType="valueChanged" id="P9M-Uy-3w5"/>
+                                <outletCollection property="gestureRecognizers" destination="K3Y-1w-hjf" appends="YES" id="Xu9-Z3-yDe"/>
                             </connections>
-                        </slider>
+                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z3a-gI-tZ7" userLabel="ctrlView">
                             <rect key="frame" x="0.0" y="378" width="320" height="300"/>
                             <subviews>

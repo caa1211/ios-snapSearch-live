@@ -37,7 +37,7 @@
 
 -(void) startProgressbar {
     self.defaultBackgroundColor = self.view.backgroundColor;
-    [self.view setBackgroundColor:[UIColor colorWithRed:0.698 green:0.868 blue:1.000 alpha:0.680]];
+    [self.view setBackgroundColor:[UIColor colorWithRed:0.872 green:0.630 blue:0.453 alpha:0.680]];
     CGRect progresMaskRect = CGRectMake(0, 0, self.innerImageView.bounds.size.width, self.innerImageView.bounds.size.height);
     CAShapeLayer* lay = [CAShapeLayer layer];
     CGMutablePathRef path = CGPathCreateMutable();
