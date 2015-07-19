@@ -106,8 +106,61 @@
  
  
  
+ //- (UIImage*) createInvertMask:(UIImage *)maskImage withTargetImage:(UIImage *) image {
+ //    CGImageRef maskRef = maskImage.CGImage;
+ //    CGBitmapInfo bitmapInfo = kCGImageAlphaNone;
+ //    CGColorRenderingIntent renderingIntent = kCGRenderingIntentDefault;
+ //    CGImageRef mask = CGImageCreate(CGImageGetWidth(maskRef),
+ //                                    CGImageGetHeight(maskRef),
+ //                                    CGImageGetBitsPerComponent(maskRef),
+ //                                    CGImageGetBitsPerPixel(maskRef),
+ //                                    CGImageGetBytesPerRow(maskRef),
+ //                                    CGColorSpaceCreateDeviceGray(),
+ //                                    bitmapInfo,
+ //                                    CGImageGetDataProvider(maskRef),
+ //                                    nil, NO,
+ //                                    renderingIntent);
+ //    CGImageRef masked = CGImageCreateWithMask([image CGImage], mask);
+ //    CGImageRelease(mask);
+ //    CGImageRelease(maskRef);
+ //    return [UIImage imageWithCGImage:masked];
+ //}
+ //
+ //
+ //-(UIImage*) maskImage:(UIImage *)image withMask:(UIImage *)maskImage {
+ //    CGImageRef maskRef = maskImage.CGImage;
+ //    CGImageRef mask = CGImageMaskCreate(CGImageGetWidth(maskRef),
+ //                                        CGImageGetHeight(maskRef),
+ //                                        CGImageGetBitsPerComponent(maskRef),
+ //                                        CGImageGetBitsPerPixel(maskRef),
+ //                                        CGImageGetBytesPerRow(maskRef),
+ //                                        CGImageGetDataProvider(maskRef), NULL, false);
+ //
+ //    CGImageRef masked = CGImageCreateWithMask([image CGImage], mask);
+ //    return [UIImage imageWithCGImage:masked];
+ //}
+
  
  
+ - (void) doRecognitionNoOperation:(UIImage*)image complete:(void(^)(NSString *recognizedText))complete{
+ NSString *ocrKey = self.langArray[self.ocrLang][@"ocr"];
+ G8Tesseract *tesseract = [[G8Tesseract alloc] initWithLanguage:ocrKey];
+ tesseract.maximumRecognitionTime = 10.0;
+ if(self.ocrLang == OCR_LANG_MODE_ENG){
+ //operation.tesseract.charWhitelist = @"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+ }else if(self.ocrLang == OCR_LANG_MODE_NUM){
+ tesseract.charWhitelist = @"0123456789";
+ }else if (self.ocrLang == OCR_LANG_MODE_CHT){
+ tesseract.maximumRecognitionTime = 30.0;
+ }else if (self.ocrLang == OCR_LANG_MODE_JPN){
+ tesseract.maximumRecognitionTime = 30.0;
+ }
+ tesseract.image = image;
+ [tesseract recognize];
+ NSString *recognizedText = tesseract.recognizedText;
+ complete(recognizedText);
+ }
  
+
  
 */

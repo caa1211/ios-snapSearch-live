@@ -54,7 +54,7 @@
                             </variation>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="pan to resize" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0vL-Iw-dL4">
-                            <rect key="frame" x="108" y="89" width="104.5" height="25"/>
+                            <rect key="frame" x="112" y="89" width="104.5" height="25"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="25" id="bbU-fd-bUZ"/>
                                 <constraint firstAttribute="height" constant="21" id="kS7-dg-Y5z"/>
@@ -93,8 +93,8 @@
                                 <action selector="onZoomChange:" destination="-1" eventType="valueChanged" id="P9M-Uy-3w5"/>
                             </connections>
                         </slider>
-                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gVm-sA-7vZ">
-                            <rect key="frame" x="252" y="75" width="60" height="31"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gVm-sA-7vZ">
+                            <rect key="frame" x="254" y="75" width="58" height="31"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="60" id="Ip6-yg-jcs"/>
                                 <constraint firstAttribute="height" constant="31" id="xQK-qk-B6Y"/>
@@ -229,7 +229,7 @@
                                 </mask>
                             </variation>
                         </view>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IJ0-XX-Vxh" customClass="BFPaperButton">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IJ0-XX-Vxh" customClass="RecognizeButton">
                             <rect key="frame" x="120" y="338" width="80" height="80"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
@@ -256,6 +256,7 @@
                     <constraints>
                         <constraint firstAttribute="centerX" secondItem="kYb-HP-uOc" secondAttribute="centerX" id="6nJ-n5-xS4"/>
                         <constraint firstItem="O3r-OW-q0g" firstAttribute="leading" secondItem="1mM-fw-mVK" secondAttribute="leading" constant="61" id="7xJ-UP-OWh"/>
+                        <constraint firstItem="O3r-OW-q0g" firstAttribute="leading" secondItem="0vL-Iw-dL4" secondAttribute="leading" id="Awh-Fn-UMa"/>
                         <constraint firstAttribute="centerY" secondItem="kYb-HP-uOc" secondAttribute="centerY" constant="68" id="GEx-hp-Cq8"/>
                         <constraint firstItem="TUO-mp-4rj" firstAttribute="leading" secondItem="1mM-fw-mVK" secondAttribute="leading" constant="-28" id="GbQ-1i-sgU"/>
                         <constraint firstAttribute="width" constant="320" id="Ivm-SX-yN7"/>
@@ -281,6 +282,7 @@
                     <variation key="default">
                         <mask key="constraints">
                             <exclude reference="7xJ-UP-OWh"/>
+                            <exclude reference="TT6-d1-Fn3"/>
                             <exclude reference="gc2-lQ-dno"/>
                         </mask>
                     </variation>

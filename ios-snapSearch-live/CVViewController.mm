@@ -19,7 +19,7 @@
 #import "NSString+FontAwesome.h"
 #import "CVTools.h"
 #import "UIView+Toast.h"
-
+#import "RecognizeButton.h"
 using namespace cv;
 
 typedef enum OCR_LANG_MODE : NSInteger {
@@ -37,7 +37,7 @@ typedef enum EFFECT_MODE : NSInteger {
 }EFFECT_MODE;
 
 @interface CVViewController () <CvVideoCameraDelegate, G8TesseractDelegate, UITextFieldDelegate>
-@property (weak, nonatomic) IBOutlet BFPaperButton *recognizeButton;
+@property (weak, nonatomic) IBOutlet RecognizeButton *recognizeButton;
 @property (weak, nonatomic) IBOutlet RecognizeTargetView *recognizeTargetView;
 
 @property (weak, nonatomic) IBOutlet UISlider *zoomSlider;
@@ -162,94 +162,10 @@ typedef enum EFFECT_MODE : NSInteger {
     [self setupEffectButtons];
     
     self.resultLabel.text = @"";
-    
-    [self.recognizeButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-bullseye"] forState:UIControlStateNormal];
-    self.recognizeButton.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:88];
-    [self.recognizeButton setTitleColor:[UIColor colorWithRed:0.908 green:0.472 blue:0.324 alpha:1.000] forState:UIControlStateNormal];
-    self.recognizeButton.backgroundColor = [UIColor colorWithRed:1.000 green:0.984 blue:0.990 alpha:1.000];
-    self.recognizeButton.cornerRadius = self.recognizeButton.frame.size.width / 2;
-    self.recognizeButton.rippleFromTapLocation = NO;
-    self.recognizeButton.isRaised = YES;
-    self.recognizeButton.rippleBeyondBounds = YES;
-    self.recognizeButton.loweredShadowOffset = CGSizeMake(0, -1);
-    self.recognizeButton.liftedShadowOffset = CGSizeMake(0, 0);
-    self.recognizeButton.tapCircleColor = [UIColor colorWithRed:1.000 green:0.672 blue:0.532 alpha:0.300];
-    self.recognizeButton.tapCircleDiameter = MAX(self.recognizeButton.frame.size.width, self.recognizeButton.frame.size.height) * 8;
-    
     self.resultLabel.borderStyle = UITextBorderStyleNone;
     [self.resultLabel setBackgroundColor:[UIColor clearColor]];
     self.resultLabel.delegate = self;
     
-}
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    [self.editButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-check"] forState:UIControlStateNormal];
-    [self openEditMode:YES];
-    self.resultLabel.borderStyle = UITextBorderStyleRoundedRect;
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-    [self.editButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-pencil-square-o"] forState:UIControlStateNormal];
-    [self openEditMode:NO];
-    self.resultLabel.borderStyle = UITextBorderStyleNone;
-}
-
-- (void) openEditMode:(BOOL)isediting {
-    [self animateView:isediting];
-    self.grayBtn.hidden = isediting;
-    self.invertBtn.hidden = isediting;
-    self.zoomSlider.hidden = isediting;
-    self.recognizeTargetView.hidden = isediting;
-    self.langButton.hidden = isediting;
-    self.recognizeButton.hidden = isediting;
-    self.isEditing = isediting;
-    [self.clipFirstCharacter setHidden:!isediting];
-}
-
-- (IBAction)onClipFirstCharacter:(id)sender {
-    if([self.resultLabel.text length] != 0){
-        NSString *tempStr = [[NSString alloc] init];
-        tempStr = [self.resultLabel.text substringFromIndex:1];
-        self.resultLabel.text = tempStr;
-
-        // Movie cursor to the left
-        UITextPosition *beginPos = self.resultLabel.beginningOfDocument;
-        UITextRange *selection = [self.resultLabel textRangeFromPosition:beginPos toPosition:beginPos];
-        [self.resultLabel setSelectedTextRange:selection];
-    }
-}
-
-- (IBAction)onEdit:(id)sender {
-    if(self.resultLabel.editing == NO){
-      [self.resultLabel becomeFirstResponder];
-    }else{
-       [self.view endEditing:YES];
-    }
-}
-
--(BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [self.resultLabel resignFirstResponder];
-    return YES;
-}
-
-- (void) animateView:(BOOL) up
-{
-    const int movementDistance = 200;
-    const float movementDuration = 0.3f;
-
-    int movement = (up ? -movementDistance : movementDistance);
-    int labelMovement = (up ? 20 : -20);
-    int cameralMovement = (up ? -100 : 100);
-    
-    [UIView beginAnimations: @"anim" context: nil];
-    [UIView setAnimationBeginsFromCurrentState: YES];
-    [UIView setAnimationDuration: movementDuration];
-    
-    self.ctrlView.frame = CGRectOffset(self.ctrlView.frame, 0, movement);
-    self.resultLabel.frame = CGRectOffset(self.resultLabel.frame, 0, labelMovement);
-    self.cameraImageView.frame = CGRectOffset(self.cameraImageView.frame, 0, cameralMovement);
-    [UIView commitAnimations];
 }
 
 - (IBAction)onLang:(id)sender {
@@ -272,118 +188,6 @@ typedef enum EFFECT_MODE : NSInteger {
     [self startCamera];
 }
 
--(DKCircleButton *) buildEffectButtonWithTitle:(NSString*)title in:(CGPoint)pos tag:(EFFECT_MODE)tag{
-    DKCircleButton *btn = [[DKCircleButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
-    btn.center = pos;
-    btn.titleLabel.font = [UIFont systemFontOfSize:16];
-    [btn setTitleColor:[UIColor colorWithWhite:0 alpha:0.2] forState:UIControlStateNormal];
-    [btn setBackgroundImage:[self imageWithColor:[UIColor colorWithRed:0.817 green:0.773 blue:0.344 alpha:0.590]] forState:UIControlStateSelected];
-    [btn setTitleColor:[UIColor colorWithWhite:1 alpha:1.0] forState:UIControlStateNormal];
-    
-    btn.tag = tag;
-    btn.animateTap = YES;
-    [btn setTitle:title forState:UIControlStateNormal];
-
-    [btn setSelected:YES];
-    [btn addTarget:self action:@selector(tapOnEffectButton:) forControlEvents:UIControlEventTouchUpInside];
-    
-    return btn;
-}
-
--(void) setupEffectButtons {
-    self.grayBtn = [self buildEffectButtonWithTitle:@"G" in:CGPointMake(30, 288) tag:EFFECT_MODE_GRAY];
-    self.invertBtn = [self buildEffectButtonWithTitle:@"I" in:CGPointMake(30, 340) tag:EFFECT_MODE_INVERT];
-    self.flashBtn = [self buildEffectButtonWithTitle:@"F" in:CGPointMake(30, 100) tag:EFFECT_MODE_FLASH];
-    self.flashBtn.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:20];
-    [self.flashBtn setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-bolt"] forState:UIControlStateNormal];
-    [self.flashBtn setSelected:NO];
-    
-    [self.view addSubview:self.grayBtn];
-    [self.view addSubview:self.invertBtn];
-    [self.view addSubview:self.flashBtn];
-}
-
-- (UIImage *) imageWithColor:(UIColor *)color
-{
-    CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
-    UIGraphicsBeginImageContext(rect.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGContextSetFillColorWithColor(context, [color CGColor]);
-    CGContextFillRect(context, rect);
-    
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return image;
-}
-
--(void) tapOnEffectButton:(id)sender{
-    UIButton* btn = (UIButton*)sender;
-    btn.selected = !btn.selected;
-    if ((EFFECT_MODE)btn.tag == EFFECT_MODE_FLASH) {
-        [self turnTorchOn:btn.selected];
-    }
-}
-
-- (UIImage*) createInvertMask:(UIImage *)maskImage withTargetImage:(UIImage *) image {
-    
-    CGImageRef maskRef = maskImage.CGImage;
-    
-    CGBitmapInfo bitmapInfo = kCGImageAlphaNone;
-    CGColorRenderingIntent renderingIntent = kCGRenderingIntentDefault;
-    
-    CGImageRef mask = CGImageCreate(CGImageGetWidth(maskRef),
-                                    CGImageGetHeight(maskRef),
-                                    CGImageGetBitsPerComponent(maskRef),
-                                    CGImageGetBitsPerPixel(maskRef),
-                                    CGImageGetBytesPerRow(maskRef),
-                                    CGColorSpaceCreateDeviceGray(),
-                                    bitmapInfo,
-                                    CGImageGetDataProvider(maskRef),
-                                    nil, NO,
-                                    renderingIntent);
-    
-    
-    CGImageRef masked = CGImageCreateWithMask([image CGImage], mask);
-    
-    CGImageRelease(mask);
-    CGImageRelease(maskRef);
-    
-    return [UIImage imageWithCGImage:masked];
-}
-
-
--(UIImage*) maskImage:(UIImage *)image withMask:(UIImage *)maskImage {
-    
-    CGImageRef maskRef = maskImage.CGImage;
-    CGImageRef mask = CGImageMaskCreate(CGImageGetWidth(maskRef),
-                                        CGImageGetHeight(maskRef),
-                                        CGImageGetBitsPerComponent(maskRef),
-                                        CGImageGetBitsPerPixel(maskRef),
-                                        CGImageGetBytesPerRow(maskRef),
-                                        CGImageGetDataProvider(maskRef), NULL, false);
-    
-    CGImageRef masked = CGImageCreateWithMask([image CGImage], mask);
-    return [UIImage imageWithCGImage:masked];
-}
-
--(void) cameraZoom:(float)zoom {
-    NSError *error = nil;
-    if ([self.videoDevice lockForConfiguration:&error]) {
-        self.videoDevice.videoZoomFactor = zoom;
-        [self.videoDevice unlockForConfiguration];
-    }else {
-        NSLog(@"error: %@", error);
-    }
-}
-
--(void) startCamera {
-    [self.videoCamera start];
-    [self cameraZoom:self.zoomSlider.value];
-}
-
-
 - (void)processImage:(cv::Mat&)image
 {
     // OpenCV convert to scanable mode
@@ -402,6 +206,8 @@ typedef enum EFFECT_MODE : NSInteger {
 }
 
 - (void) cropByTarget:(void(^)(UIImage *image))completion{
+    // This function should be run in background thread
+    
     UIImage *image = self.currentImage;
     CGRect wrapperRect = self.recognizeWrapper.frame;
     CGRect frameRect = self.recognizeTargetView.frame;
@@ -420,7 +226,6 @@ typedef enum EFFECT_MODE : NSInteger {
     
     CGImageRelease(imageRef);
     
-   
     // textDetection
 //    cv::Mat mat = [self cvMatFromUIImage:cropedImg];
 //    std::vector<cv::Rect> letterBBoxes= [self detectLetters:mat];
@@ -434,17 +239,58 @@ typedef enum EFFECT_MODE : NSInteger {
     cropedImg = [CVTools UIImageFromCVMat:[self imageScanableProcessing:[CVTools cvMatFromUIImage:cropedImg]]];
     
     if (completion!=nil) {
-       // dispatch_sync(dispatch_get_main_queue(), ^{
-            completion(cropedImg);
-       // });
+        completion(cropedImg);
     }
 
 }
 
+- (IBAction)onPan:(UIPanGestureRecognizer *)sender {
+    if (self.isRecognizing) {
+        return;
+    }
+    
+    CGPoint loc = [sender locationInView:self.cameraImageView];
+    if(sender.state == UIGestureRecognizerStateBegan){
+        self.startPanLoc = loc;
+    }else if(sender.state == UIGestureRecognizerStateChanged){
+        
+        int invertX = self.startPanLoc.x > self.recognizeTargetView.center.x ? 1: -1;
+        int invertY = self.startPanLoc.y > self.recognizeTargetView.center.y ? 1: -1;
+        CGFloat offsetX = invertX*(loc.x - self.startPanLoc.x)/5;
+        CGFloat offsetY = invertY*(loc.y - self.startPanLoc.y)/5;
+ 
+        CGRect newFrame = self.recognizeTargetView.bounds;
+        newFrame.size.width = MIN(newFrame.size.width + offsetX, 290);
+        newFrame.size.height = MIN(newFrame.size.height + offsetY, 250);
+        newFrame.size.width = MAX(newFrame.size.width + offsetX, 100);
+        newFrame.size.height = MAX(newFrame.size.height + offsetY, 40);
+        
+        self.recognizeTargetView.bounds = newFrame;
+        //self.recognizeTargetView.center = center;
+        
+        if (newFrame.size.height < 80){
+            self.recognizeTargetView.layer.cornerRadius = 35 * newFrame.size.height/80;
+        }
+   
+    }else if(sender.state == UIGestureRecognizerStateEnded){
+        [self.recognizeTargetView fillInnerImage];
+    }
+}
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark - OCR
+
+
 - (void) doRecognition:(UIImage*)image complete:(void(^)(NSString *recognizedText))complete{
     
     // Mark below for avoiding BSXPCMessage error
-    //UIImage *bwImage =[image g8_blackAndWhite];    
+    //UIImage *bwImage =[image g8_blackAndWhite];
     
     NSString *ocrKey = self.langArray[self.ocrLang][@"ocr"];
     G8RecognitionOperation *operation = [[G8RecognitionOperation alloc]initWithLanguage:ocrKey];
@@ -481,36 +327,9 @@ typedef enum EFFECT_MODE : NSInteger {
     [self.operationQueue addOperation:operation];
 }
 
-
-- (void) doRecognitionNoOperation:(UIImage*)image complete:(void(^)(NSString *recognizedText))complete{
-    NSString *ocrKey = self.langArray[self.ocrLang][@"ocr"];
-    G8Tesseract *tesseract = [[G8Tesseract alloc] initWithLanguage:ocrKey];
-    tesseract.maximumRecognitionTime = 10.0;
-    if(self.ocrLang == OCR_LANG_MODE_ENG){
-        //operation.tesseract.charWhitelist = @"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    }else if(self.ocrLang == OCR_LANG_MODE_NUM){
-        tesseract.charWhitelist = @"0123456789";
-    }else if (self.ocrLang == OCR_LANG_MODE_CHT){
-        tesseract.maximumRecognitionTime = 30.0;
-    }else if (self.ocrLang == OCR_LANG_MODE_JPN){
-        tesseract.maximumRecognitionTime = 30.0;
-    }
-    tesseract.image = image;
-    [tesseract recognize];
-    NSString *recognizedText = tesseract.recognizedText;
-    complete(recognizedText);
-}
-
-
 -(void) ocrStarting{
     [self.recognizeTargetView startProgressbar];
-    
-    // Disable Style
-    [self.recognizeButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-times-circle-o"] forState:UIControlStateNormal];
-    self.recognizeButton.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:88];
-    [self.recognizeButton setTitleColor:[UIColor colorWithRed:0.388 green:0.456 blue:0.547 alpha:1.000] forState:UIControlStateNormal];
-    self.recognizeButton.tapCircleColor = [UIColor colorWithRed:0.964 green:0.951 blue:1.000 alpha:0.300];
-    
+    self.recognizeButton.recognizeMode = NO;
     self.signCancelRecognize = NO;
 }
 
@@ -518,19 +337,13 @@ typedef enum EFFECT_MODE : NSInteger {
     [self.recognizeTargetView updateProgress: 1];
     [self.recognizeTargetView finishProgress];
     self.isRecognizing = NO;
+    self.recognizeButton.recognizeMode = YES;
     
-    // Enable Style
-    [self.recognizeButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-bullseye"] forState:UIControlStateNormal];
-    self.recognizeButton.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:88];
-    [self.recognizeButton setTitleColor:[UIColor colorWithRed:0.908 green:0.472 blue:0.324 alpha:1.000] forState:UIControlStateNormal];
-    self.recognizeButton.tapCircleColor = [UIColor colorWithRed:1.000 green:0.672 blue:0.532 alpha:0.300];
-
     if (!self.signCancelRecognize) {
         self.resultLabel.text = recognizedText;
     }else{
         [self.actionBtnGroup makeToast:@"cancel recognizing" duration: 0.5 position:[NSValue valueWithCGPoint:CGPointMake(self.actionBtnGroup.bounds.size.width/2, -25)]];
     }
-    
     self.signCancelRecognize = NO;
 }
 
@@ -540,7 +353,6 @@ typedef enum EFFECT_MODE : NSInteger {
         self.signCancelRecognize = YES;
         return;
     }
-    
     
     self.isRecognizing = YES;
     AudioServicesPlaySystemSound(self.clickSoundID);
@@ -569,17 +381,165 @@ typedef enum EFFECT_MODE : NSInteger {
     return self.resultLabel.text;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)progressImageRecognitionForTesseract:(G8Tesseract *)tesseract {
+    // NSLog(@"progress: %lu", (unsigned long)tesseract.progress);
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        [self.recognizeTargetView updateProgress: (unsigned long)tesseract.progress / 100.0];
+    });
+}
+
+- (BOOL)shouldCancelImageRecognitionForTesseract:(G8Tesseract *)tesseract {
+    return self.signCancelRecognize;
+}
+
+
+#pragma mark - effect buttons
+
+-(DKCircleButton *) effectButtonWithTitle:(NSString*)title in:(CGPoint)pos tag:(EFFECT_MODE)tag{
+    DKCircleButton *btn = [[DKCircleButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    btn.center = pos;
+    btn.titleLabel.font = [UIFont systemFontOfSize:16];
+    [btn setTitleColor:[UIColor colorWithWhite:0 alpha:0.2] forState:UIControlStateNormal];
+    [btn setBackgroundImage:[self imageWithColor:[UIColor colorWithRed:0.817 green:0.773 blue:0.344 alpha:0.590]] forState:UIControlStateSelected];
+    [btn setTitleColor:[UIColor colorWithWhite:1 alpha:1.0] forState:UIControlStateNormal];
+    btn.tag = tag;
+    btn.animateTap = YES;
+    [btn setTitle:title forState:UIControlStateNormal];
+    [btn setSelected:YES];
+    [btn addTarget:self action:@selector(tapOnEffectButton:) forControlEvents:UIControlEventTouchUpInside];
+    return btn;
+}
+
+-(void) setupEffectButtons {
+    self.grayBtn = [self effectButtonWithTitle:@"G" in:CGPointMake(30, 288) tag:EFFECT_MODE_GRAY];
+    self.invertBtn = [self effectButtonWithTitle:@"I" in:CGPointMake(30, 340) tag:EFFECT_MODE_INVERT];
+    self.flashBtn = [self effectButtonWithTitle:@"flash" in:CGPointMake(30, 100) tag:EFFECT_MODE_FLASH];
+    self.flashBtn.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:20];
+    [self.flashBtn setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-bolt"] forState:UIControlStateNormal];
+    [self.flashBtn setSelected:NO];
+    
+    [self.view addSubview:self.grayBtn];
+    [self.view addSubview:self.invertBtn];
+    [self.view addSubview:self.flashBtn];
+}
+
+-(void) tapOnEffectButton:(id)sender{
+    UIButton* btn = (UIButton*)sender;
+    btn.selected = !btn.selected;
+    if ((EFFECT_MODE)btn.tag == EFFECT_MODE_FLASH) {
+        [self cameraTurnTorchOn:btn.selected];
+    }
+}
+
+#pragma mark - edit
+
+
+- (UIImage *) imageWithColor:(UIColor *)color
+{
+    CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    [self.editButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-check"] forState:UIControlStateNormal];
+    [self openEditMode:YES];
+    self.resultLabel.borderStyle = UITextBorderStyleRoundedRect;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    [self.editButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-pencil-square-o"] forState:UIControlStateNormal];
+    [self openEditMode:NO];
+    self.resultLabel.borderStyle = UITextBorderStyleNone;
+}
+
+- (void) openEditMode:(BOOL)isediting {
+    [self animateView:isediting];
+    self.grayBtn.hidden = isediting;
+    self.invertBtn.hidden = isediting;
+    self.zoomSlider.hidden = isediting;
+    self.recognizeTargetView.hidden = isediting;
+    self.langButton.hidden = isediting;
+    self.recognizeButton.hidden = isediting;
+    self.isEditing = isediting;
+    [self.clipFirstCharacter setHidden:!isediting];
+}
+
+- (IBAction)onClipFirstCharacter:(id)sender {
+    if([self.resultLabel.text length] != 0){
+        NSString *tempStr = [[NSString alloc] init];
+        tempStr = [self.resultLabel.text substringFromIndex:1];
+        self.resultLabel.text = tempStr;
+        
+        // Movie cursor to the left
+        UITextPosition *beginPos = self.resultLabel.beginningOfDocument;
+        UITextRange *selection = [self.resultLabel textRangeFromPosition:beginPos toPosition:beginPos];
+        [self.resultLabel setSelectedTextRange:selection];
+    }
+}
+
+- (IBAction)onEdit:(id)sender {
+    if(self.resultLabel.editing == NO){
+        [self.resultLabel becomeFirstResponder];
+    }else{
+        [self.view endEditing:YES];
+    }
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self.resultLabel resignFirstResponder];
+    return YES;
+}
+
+- (void) animateView:(BOOL) up
+{
+    const int movementDistance = 200;
+    const float movementDuration = 0.3f;
+    
+    int movement = (up ? -movementDistance : movementDistance);
+    int labelMovement = (up ? 20 : -20);
+    int cameralMovement = (up ? -100 : 100);
+    
+    [UIView beginAnimations: @"anim" context: nil];
+    [UIView setAnimationBeginsFromCurrentState: YES];
+    [UIView setAnimationDuration: movementDuration];
+    
+    self.ctrlView.frame = CGRectOffset(self.ctrlView.frame, 0, movement);
+    self.resultLabel.frame = CGRectOffset(self.resultLabel.frame, 0, labelMovement);
+    self.cameraImageView.frame = CGRectOffset(self.cameraImageView.frame, 0, cameralMovement);
+    [UIView commitAnimations];
+}
+
+
+#pragma mark - Camera
+
+-(void) startCamera {
+    [self.videoCamera start];
+    [self cameraZoom:self.zoomSlider.value];
 }
 
 - (IBAction)onZoomChange:(id)sender {
-   [self cameraZoom:self.zoomSlider.value];
+    [self cameraZoom:self.zoomSlider.value];
 }
 
+- (IBAction)onCameraViewTap:(UITapGestureRecognizer *)sender {
+    if (self.isEditing) {
+        [self.resultLabel resignFirstResponder];
+    }
+    
+    [self cameraFocusAtTarget];
+}
 
-- (void) turnTorchOn: (bool) on {
+- (void) cameraTurnTorchOn: (bool) on {
     if ([self.videoDevice hasTorch] && [self.videoDevice hasFlash]){
         
         [self.videoDevice lockForConfiguration:nil];
@@ -594,12 +554,20 @@ typedef enum EFFECT_MODE : NSInteger {
     }
 }
 
+-(void) cameraZoom:(float)zoom {
+    NSError *error = nil;
+    if ([self.videoDevice lockForConfiguration:&error]) {
+        self.videoDevice.videoZoomFactor = zoom;
+        [self.videoDevice unlockForConfiguration];
+    }else {
+        NSLog(@"error: %@", error);
+    }
+}
+
 -(void) cameraFocusAtTarget
 {
-
     CGFloat x = self.recognizeTargetView.center.x / self.view.bounds.size.width;
     CGFloat y = self.recognizeTargetView.center.y / self.view.bounds.size.height;
-    
     CGPoint point = CGPointMake(x, y);
     if ([self.videoDevice isFocusPointOfInterestSupported] && [self.videoDevice isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
         NSError *error;
@@ -613,61 +581,9 @@ typedef enum EFFECT_MODE : NSInteger {
     }
 }
 
-- (IBAction)onCameraViewTap:(UITapGestureRecognizer *)sender {
-
-    if (self.isEditing) {
-        [self.resultLabel resignFirstResponder];
-    }
-
-    [self cameraFocusAtTarget];
-}
-
-- (IBAction)onPan:(UIPanGestureRecognizer *)sender {
-    if (self.isRecognizing) {
-        return;
-    }
-    
-    CGPoint loc = [sender locationInView:self.cameraImageView];
-    if(sender.state == UIGestureRecognizerStateBegan){
-        self.startPanLoc = loc;
-    }else if(sender.state == UIGestureRecognizerStateChanged){
-        
-        int invertX = self.startPanLoc.x > self.recognizeTargetView.center.x ? 1: -1;
-        int invertY = self.startPanLoc.y > self.recognizeTargetView.center.y ? 1: -1;
-        CGFloat offsetX = invertX*(loc.x - self.startPanLoc.x)/5;
-        CGFloat offsetY = invertY*(loc.y - self.startPanLoc.y)/5;
- 
-        CGRect newFrame = self.recognizeTargetView.bounds;
-        newFrame.size.width = MIN(newFrame.size.width + offsetX, 290);
-        newFrame.size.height = MIN(newFrame.size.height + offsetY, 250);
-        newFrame.size.width = MAX(newFrame.size.width + offsetX, 100);
-        newFrame.size.height = MAX(newFrame.size.height + offsetY, 40);
-        
-        self.recognizeTargetView.bounds = newFrame;
-        //self.recognizeTargetView.center = center;
-        
-        if (newFrame.size.height < 80){
-            self.recognizeTargetView.layer.cornerRadius = 35 * newFrame.size.height/80;
-        }
-   
-    }else if(sender.state == UIGestureRecognizerStateEnded){
-        [self.recognizeTargetView fillInnerImage];
-    }
-}
-#pragma mark - G8Tesseract
-
-- (void)progressImageRecognitionForTesseract:(G8Tesseract *)tesseract {
-    // NSLog(@"progress: %lu", (unsigned long)tesseract.progress);
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        [self.recognizeTargetView updateProgress: (unsigned long)tesseract.progress / 100.0];
-    });
-}
-
-- (BOOL)shouldCancelImageRecognitionForTesseract:(G8Tesseract *)tesseract {
-    return self.signCancelRecognize;
-}
 
 #pragma mark - openCV
+
 - (cv::Mat) imageScanableProcessing:(cv::Mat)image{
     cv::Mat image_copy;
     cvtColor(image, image_copy, CV_BGRA2BGR);
@@ -687,4 +603,7 @@ typedef enum EFFECT_MODE : NSInteger {
     }
     return image;
 }
+
+
+
 @end
