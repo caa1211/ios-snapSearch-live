@@ -50,6 +50,26 @@
                                 <outletCollection property="gestureRecognizers" destination="K3Y-1w-hjf" appends="YES" id="Xu9-Z3-yDe"/>
                             </connections>
                         </view>
+                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gVm-sA-7vZ">
+                            <rect key="frame" x="252" y="75" width="60" height="31"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="60" id="Ip6-yg-jcs"/>
+                                <constraint firstAttribute="height" constant="31" id="xQK-qk-B6Y"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                            <state key="normal" title="English">
+                                <color key="titleColor" red="0.92549026010000002" green="0.79607850309999995" blue="0.66274511810000003" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="Ip6-yg-jcs"/>
+                                </mask>
+                            </variation>
+                            <connections>
+                                <action selector="onLang:" destination="-1" eventType="touchUpInside" id="wpg-dU-NYU"/>
+                            </connections>
+                        </button>
                         <slider opaque="NO" alpha="0.5499999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1.3" minValue="1" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="TUO-mp-4rj">
                             <rect key="frame" x="-30" y="230" width="120" height="31"/>
                             <color key="tintColor" red="0.90642936862244894" green="0.87855990165361508" blue="0.30338905858189041" alpha="0.67000000000000004" colorSpace="calibratedRGB"/>
@@ -197,26 +217,6 @@
                             </variation>
                             <connections>
                                 <action selector="onRecognize:" destination="-1" eventType="touchUpInside" id="e52-W3-iYe"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gVm-sA-7vZ">
-                            <rect key="frame" x="252" y="75" width="60" height="31"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="60" id="Ip6-yg-jcs"/>
-                                <constraint firstAttribute="height" constant="31" id="xQK-qk-B6Y"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                            <state key="normal" title="English">
-                                <color key="titleColor" red="0.92549026010000002" green="0.79607850309999995" blue="0.66274511810000003" alpha="1" colorSpace="deviceRGB"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <variation key="default">
-                                <mask key="constraints">
-                                    <exclude reference="Ip6-yg-jcs"/>
-                                </mask>
-                            </variation>
-                            <connections>
-                                <action selector="onLang:" destination="-1" eventType="touchUpInside" id="wpg-dU-NYU"/>
                             </connections>
                         </button>
                     </subviews>

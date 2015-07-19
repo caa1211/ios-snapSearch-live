@@ -166,7 +166,7 @@ typedef enum OCR_LANG_MODE : NSInteger {
     self.recognizeButton.rippleFromTapLocation = NO;
     self.recognizeButton.isRaised = YES;
     self.recognizeButton.rippleBeyondBounds = YES;
-    self.recognizeButton.loweredShadowOffset = CGSizeMake(0, 0);
+    self.recognizeButton.loweredShadowOffset = CGSizeMake(0, -1);
     self.recognizeButton.liftedShadowOffset = CGSizeMake(0, 0);
     self.recognizeButton.tapCircleColor = [UIColor colorWithRed:1.000 green:0.672 blue:0.532 alpha:0.300];
     self.recognizeButton.tapCircleDiameter = MAX(self.recognizeButton.frame.size.width, self.recognizeButton.frame.size.height) * 8;

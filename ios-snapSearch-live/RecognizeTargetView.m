@@ -25,7 +25,7 @@
         self.layer.cornerRadius = 35;
         self.layer.masksToBounds = YES;
         self.layer.borderWidth = 4.0f;
-        self.layer.borderColor = CGColorRetain([UIColor colorWithRed:0.437 green:0.401 blue:0.421 alpha:0.200].CGColor);
+        self.layer.borderColor = CGColorRetain([UIColor colorWithRed:0.782 green:0.718 blue:0.753 alpha:0.500].CGColor);
         
         return self;
     }
@@ -37,7 +37,7 @@
 
 -(void) startProgressbar {
     self.defaultBackgroundColor = self.view.backgroundColor;
-    [self.view setBackgroundColor:[UIColor colorWithRed:0.167 green:0.379 blue:0.368 alpha:0.360]];
+    [self.view setBackgroundColor:[UIColor colorWithRed:0.698 green:0.868 blue:1.000 alpha:0.680]];
     CGRect progresMaskRect = CGRectMake(0, 0, self.innerImageView.bounds.size.width, self.innerImageView.bounds.size.height);
     CAShapeLayer* lay = [CAShapeLayer layer];
     CGMutablePathRef path = CGPathCreateMutable();
