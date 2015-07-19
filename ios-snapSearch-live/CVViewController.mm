@@ -42,9 +42,7 @@ typedef enum OCR_LANG_MODE : NSInteger {
 @property (retain, nonatomic) UIImage* currentImage;
 @property (weak, nonatomic) IBOutlet UIView *recognizeWrapper;
 
-@property (weak, nonatomic) IBOutlet UILabel *resultLabel2;
 @property (weak, nonatomic) IBOutlet UITextField *resultLabel;
-
 
 @property (nonatomic, strong) NSOperationQueue *operationQueue;
 @property(strong, nonatomic) dispatch_queue_t cropImageQueue;
@@ -155,7 +153,6 @@ typedef enum OCR_LANG_MODE : NSInteger {
     
     self.resultLabel.text = @"";
     
-    //fa-dot-circle-o
     [self.recognizeButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-bullseye"] forState:UIControlStateNormal];
     self.recognizeButton.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:88];
     [self.recognizeButton setTitleColor:[UIColor colorWithRed:0.908 green:0.472 blue:0.324 alpha:1.000] forState:UIControlStateNormal];
@@ -481,6 +478,9 @@ typedef enum OCR_LANG_MODE : NSInteger {
     });
 }
 
+- (NSString*) recognizedResult{
+    return self.resultLabel.text;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -3,13 +3,24 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "-[CVViewController setupActionButtons]:CVViewController.mm">
+         contextName = "-[ActionButtonGroup onECBtnClick:]:ActionButtonGroup.m">
          <PersistentStrings>
             <PersistentString
-               value = "self.actionBtnGroup.frame">
+               value = "self.nextResponder">
             </PersistentString>
             <PersistentString
-               value = "parentRect.size.width/2">
+               value = "sender.superView">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[WebViewController viewDidLoad]:WebViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "_url">
+            </PersistentString>
+            <PersistentString
+               value = "self.url">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -40,6 +51,28 @@
             </PersistentString>
             <PersistentString
                value = " self.langArray[langInteger]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[WebViewController initWithUrl:]:WebViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "urlStr">
+            </PersistentString>
+            <PersistentString
+               value = "self.url">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CVViewController setupActionButtons]:CVViewController.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.actionBtnGroup.frame">
+            </PersistentString>
+            <PersistentString
+               value = "parentRect.size.width/2">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

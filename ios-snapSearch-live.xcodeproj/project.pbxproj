@@ -16,6 +16,8 @@
 		AD3BB1B81B59A568005E4D06 /* RecognizeTargetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD3BB1B71B59A568005E4D06 /* RecognizeTargetView.xib */; };
 		AD3BB1F11B59BE21005E4D06 /* emptyCode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD3BB1F01B59BE21005E4D06 /* emptyCode.cpp */; };
 		AD3BB1F71B5B42A2005E4D06 /* CVTools.mm in Sources */ = {isa = PBXBuildFile; fileRef = AD3BB1F61B5B42A2005E4D06 /* CVTools.mm */; };
+		AD3BB2011B5B495B005E4D06 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD3BB1FF1B5B495B005E4D06 /* WebViewController.m */; };
+		AD3BB2021B5B495B005E4D06 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD3BB2001B5B495B005E4D06 /* WebViewController.xib */; };
 		AD80D9DF1B584C5B00827B6C /* snap.wav in Resources */ = {isa = PBXBuildFile; fileRef = AD80D9DE1B584C5B00827B6C /* snap.wav */; };
 		AD80D9E71B59672100827B6C /* NSString+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = AD80D9E61B59672100827B6C /* NSString+FontAwesome.m */; };
 		AD80D9E81B596A2900827B6C /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD80D9E41B5965D200827B6C /* FontAwesome.ttf */; };
@@ -64,6 +66,9 @@
 		AD3BB1F01B59BE21005E4D06 /* emptyCode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = emptyCode.cpp; sourceTree = "<group>"; };
 		AD3BB1F51B5B42A2005E4D06 /* CVTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVTools.h; sourceTree = "<group>"; };
 		AD3BB1F61B5B42A2005E4D06 /* CVTools.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CVTools.mm; sourceTree = "<group>"; };
+		AD3BB1FE1B5B495B005E4D06 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		AD3BB1FF1B5B495B005E4D06 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
+		AD3BB2001B5B495B005E4D06 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebViewController.xib; sourceTree = "<group>"; };
 		AD80D9DE1B584C5B00827B6C /* snap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = snap.wav; sourceTree = "<group>"; };
 		AD80D9E41B5965D200827B6C /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
 		AD80D9E51B59672100827B6C /* NSString+FontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FontAwesome.h"; sourceTree = "<group>"; };
@@ -161,6 +166,19 @@
 			name = Tools;
 			sourceTree = "<group>";
 		};
+		AD3BB1FD1B5B4933005E4D06 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				AD1BF2271B57BE97007B0A2C /* CVViewController.h */,
+				AD1BF2281B57BE97007B0A2C /* CVViewController.mm */,
+				AD1BF2291B57BE97007B0A2C /* CVViewController.xib */,
+				AD3BB1FE1B5B495B005E4D06 /* WebViewController.h */,
+				AD3BB1FF1B5B495B005E4D06 /* WebViewController.m */,
+				AD3BB2001B5B495B005E4D06 /* WebViewController.xib */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
 		AD9499631B57A10100541B59 = {
 			isa = PBXGroup;
 			children = (
@@ -186,12 +204,10 @@
 		AD94996E1B57A10100541B59 /* ios-snapSearch-live */ = {
 			isa = PBXGroup;
 			children = (
+				AD3BB1FD1B5B4933005E4D06 /* View Controllers */,
 				AD3BB1F31B59C038005E4D06 /* Tools */,
 				AD3BB1F21B59C008005E4D06 /* Views */,
 				AD9499731B57A10100541B59 /* AppDelegate.h */,
-				AD1BF2271B57BE97007B0A2C /* CVViewController.h */,
-				AD1BF2281B57BE97007B0A2C /* CVViewController.mm */,
-				AD1BF2291B57BE97007B0A2C /* CVViewController.xib */,
 				AD9499741B57A10100541B59 /* AppDelegate.m */,
 				AD94997C1B57A10100541B59 /* Images.xcassets */,
 				AD94997E1B57A10100541B59 /* LaunchScreen.xib */,
@@ -348,6 +364,7 @@
 				AD1BF22B1B57BE97007B0A2C /* CVViewController.xib in Resources */,
 				AD1BF2341B57F74C007B0A2C /* tessdata in Resources */,
 				AD9499801B57A10100541B59 /* LaunchScreen.xib in Resources */,
+				AD3BB2021B5B495B005E4D06 /* WebViewController.xib in Resources */,
 				AD80D9DF1B584C5B00827B6C /* snap.wav in Resources */,
 				AD94997D1B57A10100541B59 /* Images.xcassets in Resources */,
 			);
@@ -401,6 +418,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD3BB1F11B59BE21005E4D06 /* emptyCode.cpp in Sources */,
+				AD3BB2011B5B495B005E4D06 /* WebViewController.m in Sources */,
 				AD80D9E71B59672100827B6C /* NSString+FontAwesome.m in Sources */,
 				AD9499981B57A13700541B59 /* CameraViewController.m in Sources */,
 				AD3BB1B61B59A2CF005E4D06 /* RecognizeTargetView.m in Sources */,

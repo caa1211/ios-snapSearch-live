@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface CVViewController : UIViewController
-
+- (NSString*) recognizedResult;
 @end

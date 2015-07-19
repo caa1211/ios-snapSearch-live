@@ -10,6 +10,19 @@
 #import <BFPaperButton.h>
 #import <UIColor+BFPaperColors.h>
 #import "NSString+FontAwesome.h"
+#import "CVViewController.h"
+#import "WebViewController.h"
+
+@interface ActionButtonGroup()
+@property(nonatomic, strong) CVViewController *viewController;
+@property(nonatomic, strong) NSArray *urlArray;
+@end
+
+typedef NS_ENUM(NSInteger, SEARCH_MODE) {
+    SEARCH_MODE_EC=0,
+    SEARCH_MODE_SEARCH,
+    SEARCH_MODE_DICTIONARY
+};
 
 @implementation ActionButtonGroup
 
@@ -25,6 +38,13 @@
     self.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
     self.layer.shadowRadius = 2.0f;
     self.layer.shadowOpacity = 0.5;
+     self.urlArray = @[@"https://tw.search.bid.yahoo.com/search/auction/product?p=",
+                       @"https://search.yahoo.com/search?p=",
+                       @"http://www.thefreedictionary.com/"
+                       //@"http://dictionary.reference.com/browse/"
+                       ];
+    
+    self.viewController = (CVViewController *)[self viewController];
     
     BFPaperButton *ecBtn = [[BFPaperButton alloc] initWithFrame:CGRectMake(0, 0, parentRect.size.width/2, parentRect.size.height/2) raised:NO];
     ecBtn.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:28];
@@ -65,30 +85,53 @@
     [copyBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [copyBtn addTarget:self action:@selector(onCopyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:copyBtn];
+    
 }
 
--(void) onMapBtnClick:(id)sender{
+- (void) onMapBtnClick:(id)sender{
     NSLog(@"==========onMapBtnClick================");
 }
 
+- (NSString *) linkGenerator:(SEARCH_MODE)mode {
+    NSString *text = [self.viewController recognizedResult];
+    NSString *baseUrl = self.urlArray[(NSInteger)mode];
+    NSString *urlStr = [baseUrl stringByAppendingString:text];
+    return urlStr;
+}
+
+
+- (UIViewController *)viewController {
+    UIResponder *responder = self;
+    while (![responder isKindOfClass:[UIViewController class]]) {
+        responder = [responder nextResponder];
+        if (nil == responder) {
+            break;
+        }
+    }
+    return (UIViewController *)responder;
+}
+
+
+
 -(void) onECBtnClick:(id)sender {
-    //[self bringSubviewToFront:sender];
-    NSLog(@"==========onECBtnClick================");
+    WebViewController *webVC = [[WebViewController alloc] initWithUrl:[self linkGenerator:SEARCH_MODE_EC]];
+   [self.viewController.navigationController pushViewController:webVC animated:YES];
 }
 
 -(void) onCopyBtnClick:(id)sender {
-   // [self bringSubviewToFront:sender];
-    NSLog(@"===========onCopyBtnClick===============");
+    NSString *copyStringverse = [self.viewController recognizedResult];
+    UIPasteboard *pb = [UIPasteboard generalPasteboard];
+    [pb setString:copyStringverse];
 }
 
 -(void) onDictBtnClick:(id)sender {
-   // [self bringSubviewToFront:sender];
-    NSLog(@"===========onDictBtnClick================");
+    WebViewController *webVC = [[WebViewController alloc] initWithUrl:[self linkGenerator:SEARCH_MODE_DICTIONARY]];
+    [self.viewController.navigationController pushViewController:webVC animated:YES];
 }
 
 -(void) onSearchBtnClick:(id)sender {
-   // [self bringSubviewToFront:sender];
-    NSLog(@"===========onSearchBtnClick================");
+    WebViewController *webVC = [[WebViewController alloc] initWithUrl:[self linkGenerator:SEARCH_MODE_SEARCH]];
+    [self.viewController.navigationController pushViewController:webVC animated:YES];
 }
 
 @end
