@@ -39,11 +39,20 @@ typedef NS_ENUM(NSInteger, SEARCH_MODE) {
     self.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
     self.layer.shadowRadius = 2.0f;
     self.layer.shadowOpacity = 0.5;
-     self.urlArray = @[@"https://tw.search.bid.yahoo.com/search/auction/product?p=",
-                       @"https://search.yahoo.com/search?p=",
-                       @"http://www.thefreedictionary.com/"
-                       //@"http://dictionary.reference.com/browse/"
-                       ];
+    self.urlArray = @[@{
+                          @"url": @"https://tw.search.bid.yahoo.com/search/auction/product?p="
+                          },
+                      @{
+                          @"url": @"https://search.yahoo.com/search?p="
+                          },
+                      //                       @{
+                      //                           @"url": @"http://www.thefreedictionary.com/",
+                      //                           @"params": @"?s=t"
+                      //                        },
+                      @{
+                          @"url": @"http://dictionary.reference.com/browse/",
+                          @"params": @"?s=t"
+                          }];
     
     self.viewController = (CVViewController *)[self viewController];
     
@@ -95,8 +104,12 @@ typedef NS_ENUM(NSInteger, SEARCH_MODE) {
 
 - (NSString *) linkGenerator:(SEARCH_MODE)mode {
     NSString *text = [self.viewController recognizedResult];
-    NSString *baseUrl = self.urlArray[(NSInteger)mode];
+    NSString *baseUrl = self.urlArray[(NSInteger)mode][@"url"];
     NSString *urlStr = [baseUrl stringByAppendingString:text];
+    NSString *params = self.urlArray[(NSInteger)mode][@"params"];
+    if(params != nil){
+        urlStr = [urlStr stringByAppendingString:params];
+    }
     return urlStr;
 }
 
@@ -123,7 +136,7 @@ typedef NS_ENUM(NSInteger, SEARCH_MODE) {
     NSString *copyStringverse = [self.viewController recognizedResult];
     UIPasteboard *pb = [UIPasteboard generalPasteboard];
     [pb setString:copyStringverse];
-    [self makeToast:@"Copied to the clipboard" duration: 0.5 position:[NSValue valueWithCGPoint:CGPointMake(self.bounds.size.width/2, -25)]];
+    [self makeToast:@"copied to your clipboard" duration: 0.5 position:[NSValue valueWithCGPoint:CGPointMake(self.bounds.size.width/2, -25)]];
 }
 
 -(void) onDictBtnClick:(id)sender {

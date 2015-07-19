@@ -18,6 +18,7 @@
 #import <UIColor+BFPaperColors.h>
 #import "NSString+FontAwesome.h"
 #import "CVTools.h"
+#import "UIView+Toast.h"
 
 using namespace cv;
 
@@ -29,6 +30,11 @@ typedef enum OCR_LANG_MODE : NSInteger {
     OCR_LANG_MODE_ALL
 }OCR_LANG_MODE;
 
+typedef enum EFFECT_MODE : NSInteger {
+    EFFECT_MODE_GRAY=0,
+    EFFECT_MODE_INVERT,
+    EFFECT_MODE_FLASH
+}EFFECT_MODE;
 
 @interface CVViewController () <CvVideoCameraDelegate, G8TesseractDelegate, UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet BFPaperButton *recognizeButton;
@@ -52,10 +58,10 @@ typedef enum OCR_LANG_MODE : NSInteger {
 @property (weak, nonatomic) IBOutlet UIView *ctrlView;
 @property (assign, nonatomic) BOOL isRecognizing;
 
-@property (assign, nonatomic) BOOL isGray;
-@property (assign, nonatomic) BOOL isInvert;
 @property (retain, nonatomic) DKCircleButton *grayBtn;
 @property (retain, nonatomic) DKCircleButton *invertBtn;
+@property (retain, nonatomic) DKCircleButton *flashBtn;
+
 @property (weak, nonatomic) IBOutlet UIView *actionBtnGroup;
 @property (weak, nonatomic) IBOutlet UIButton *editButton;
 @property (weak, nonatomic) IBOutlet UIButton *langButton;
@@ -64,6 +70,7 @@ typedef enum OCR_LANG_MODE : NSInteger {
 @property (assign, nonatomic) SystemSoundID clickSoundID;
 @property (weak, nonatomic) IBOutlet UIButton *clipFirstCharacter;
 @property(strong, nonatomic) NSArray *langArray;
+@property(assign, nonatomic) BOOL signCancelRecognize;
 @end
 
 @implementation CVViewController
@@ -96,9 +103,7 @@ typedef enum OCR_LANG_MODE : NSInteger {
                       , nil];
     
     [self.langButton setTitle: self.langArray[self.ocrLang][@"title"] forState:UIControlStateNormal];
-    
-    self.isGray = YES;
-    self.isInvert = YES;
+
     self.title = @"Snap Search";
     self.ocrLang = OCR_LANG_MODE_ENG;
     self.isEditing = NO;
@@ -156,7 +161,7 @@ typedef enum OCR_LANG_MODE : NSInteger {
     
     [self setupEffectButtons];
     
-    //self.resultLabel.text = @"";
+    self.resultLabel.text = @"";
     
     [self.recognizeButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-bullseye"] forState:UIControlStateNormal];
     self.recognizeButton.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:88];
@@ -248,11 +253,15 @@ typedef enum OCR_LANG_MODE : NSInteger {
 }
 
 - (IBAction)onLang:(id)sender {
+    if (self.isRecognizing) {
+        return;
+    }
     int langInteger = (int)self.ocrLang;
     int allLang = (int)OCR_LANG_MODE_ALL;
     langInteger = (langInteger +1) % allLang;
     self.ocrLang = (OCR_LANG_MODE)langInteger;
     [self.langButton setTitle: self.langArray[langInteger][@"title"] forState:UIControlStateNormal];
+    
 }
 
 -(void) onSetting:(id) sender{
@@ -263,55 +272,58 @@ typedef enum OCR_LANG_MODE : NSInteger {
     [self startCamera];
 }
 
+-(DKCircleButton *) buildEffectButtonWithTitle:(NSString*)title in:(CGPoint)pos tag:(EFFECT_MODE)tag{
+    DKCircleButton *btn = [[DKCircleButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    btn.center = pos;
+    btn.titleLabel.font = [UIFont systemFontOfSize:16];
+    [btn setTitleColor:[UIColor colorWithWhite:0 alpha:0.2] forState:UIControlStateNormal];
+    [btn setBackgroundImage:[self imageWithColor:[UIColor colorWithRed:0.817 green:0.773 blue:0.344 alpha:0.590]] forState:UIControlStateSelected];
+    [btn setTitleColor:[UIColor colorWithWhite:1 alpha:1.0] forState:UIControlStateNormal];
+    
+    btn.tag = tag;
+    btn.animateTap = YES;
+    [btn setTitle:title forState:UIControlStateNormal];
+
+    [btn setSelected:YES];
+    [btn addTarget:self action:@selector(tapOnEffectButton:) forControlEvents:UIControlEventTouchUpInside];
+    
+    return btn;
+}
+
 -(void) setupEffectButtons {
-    self.grayBtn = [[DKCircleButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
-    //230
-    self.grayBtn.center = CGPointMake(30, 100);
-    self.grayBtn.titleLabel.font = [UIFont systemFontOfSize:16];
-    [self.grayBtn setTitleColor:[UIColor colorWithWhite:1 alpha:1.0] forState:UIControlStateNormal];
-    self.grayBtn.animateTap = NO;
-    [self.grayBtn setTitle:NSLocalizedString(@"G", nil) forState:UIControlStateNormal];
-    self.grayBtn.tag = 1;
-    [self.grayBtn addTarget:self action:@selector(tapOnButton:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view insertSubview:self.grayBtn atIndex:1];
+    self.grayBtn = [self buildEffectButtonWithTitle:@"G" in:CGPointMake(30, 288) tag:EFFECT_MODE_GRAY];
+    self.invertBtn = [self buildEffectButtonWithTitle:@"I" in:CGPointMake(30, 340) tag:EFFECT_MODE_INVERT];
+    self.flashBtn = [self buildEffectButtonWithTitle:@"F" in:CGPointMake(30, 100) tag:EFFECT_MODE_FLASH];
+    self.flashBtn.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:20];
+    [self.flashBtn setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-bolt"] forState:UIControlStateNormal];
+    [self.flashBtn setSelected:NO];
     
-    //280
-    self.invertBtn = [[DKCircleButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
-    self.invertBtn.center = CGPointMake(30, 150);
-    self.invertBtn.titleLabel.font = [UIFont systemFontOfSize:16];
-    [self.invertBtn setTitleColor:[UIColor colorWithWhite:1 alpha:1.0] forState:UIControlStateNormal];
-    self.invertBtn.tag = 2;
-    self.invertBtn.animateTap = NO;
-    [self.invertBtn setTitle:NSLocalizedString(@"I", nil) forState:UIControlStateNormal];
-    
-    [self.invertBtn addTarget:self action:@selector(tapOnButton:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view insertSubview:self.invertBtn atIndex:2];
-    
-    [self updateButtonStatus:self.grayBtn];
-    [self updateButtonStatus:self.invertBtn];
+    [self.view addSubview:self.grayBtn];
+    [self.view addSubview:self.invertBtn];
+    [self.view addSubview:self.flashBtn];
 }
 
--(void)updateButtonStatus:(DKCircleButton *)btn{
-    if (btn == self.invertBtn && self.isInvert) {
-        btn.backgroundColor = [UIColor colorWithRed:0.817 green:0.773 blue:0.344 alpha:0.590];
-    }else if(btn == self.grayBtn && self.isGray){
-        btn.backgroundColor = [UIColor colorWithRed:0.817 green:0.773 blue:0.344 alpha:0.590];
-    }else {
-        btn.backgroundColor = [UIColor colorWithWhite:0 alpha:0.4];
-    }
+- (UIImage *) imageWithColor:(UIColor *)color
+{
+    CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
 }
 
-
--(void) tapOnButton:(id)sender{
-    DKCircleButton *btn = (DKCircleButton *)sender;
-    if (btn.tag == 1){
-        self.isGray = self.isGray == YES ? NO: YES;
-      
-    }else if(btn.tag == 2) {
-        self.isInvert = self.isInvert == YES ? NO: YES;
+-(void) tapOnEffectButton:(id)sender{
+    UIButton* btn = (UIButton*)sender;
+    btn.selected = !btn.selected;
+    if ((EFFECT_MODE)btn.tag == EFFECT_MODE_FLASH) {
+        [self turnTorchOn:btn.selected];
     }
-    
-    [self updateButtonStatus:btn];
 }
 
 - (UIImage*) createInvertMask:(UIImage *)maskImage withTargetImage:(UIImage *) image {
@@ -493,26 +505,39 @@ typedef enum OCR_LANG_MODE : NSInteger {
 -(void) ocrStarting{
     [self.recognizeTargetView startProgressbar];
     
-    [self.recognizeButton setTitleColor:[UIColor colorWithRed:0.741 green:0.761 blue:0.806 alpha:1.000] forState:UIControlStateNormal];
+    // Disable Style
+    [self.recognizeButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-times-circle-o"] forState:UIControlStateNormal];
+    self.recognizeButton.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:88];
+    [self.recognizeButton setTitleColor:[UIColor colorWithRed:0.388 green:0.456 blue:0.547 alpha:1.000] forState:UIControlStateNormal];
     self.recognizeButton.tapCircleColor = [UIColor colorWithRed:0.964 green:0.951 blue:1.000 alpha:0.300];
-    self.recognizeButton.isRaised = NO;
-    self.recognizeButton.rippleBeyondBounds = NO;
+    
+    self.signCancelRecognize = NO;
 }
 
--(void) ocrFinished{
+-(void) ocrFinished:(NSString *)recognizedText{
     [self.recognizeTargetView updateProgress: 1];
     [self.recognizeTargetView finishProgress];
     self.isRecognizing = NO;
     
+    // Enable Style
+    [self.recognizeButton setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-bullseye"] forState:UIControlStateNormal];
+    self.recognizeButton.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:88];
     [self.recognizeButton setTitleColor:[UIColor colorWithRed:0.908 green:0.472 blue:0.324 alpha:1.000] forState:UIControlStateNormal];
     self.recognizeButton.tapCircleColor = [UIColor colorWithRed:1.000 green:0.672 blue:0.532 alpha:0.300];
-    self.recognizeButton.isRaised = YES;
-    self.recognizeButton.rippleBeyondBounds = YES;
+
+    if (!self.signCancelRecognize) {
+        self.resultLabel.text = recognizedText;
+    }else{
+        [self.actionBtnGroup makeToast:@"cancel recognizing" duration: 0.5 position:[NSValue valueWithCGPoint:CGPointMake(self.actionBtnGroup.bounds.size.width/2, -25)]];
+    }
+    
+    self.signCancelRecognize = NO;
 }
 
 - (IBAction)onRecognize:(id)sender {
     
     if (self.isRecognizing) {
+        self.signCancelRecognize = YES;
         return;
     }
     
@@ -531,8 +556,7 @@ typedef enum OCR_LANG_MODE : NSInteger {
            
             
             [self doRecognition:image complete:^(NSString *recognizedText) {
-                self.resultLabel.text = recognizedText;
-                [self ocrFinished];
+                [self ocrFinished:recognizedText];
                 //Finish OCR ----
             }];
                 
@@ -554,10 +578,35 @@ typedef enum OCR_LANG_MODE : NSInteger {
    [self cameraZoom:self.zoomSlider.value];
 }
 
+
+- (void) turnTorchOn: (bool) on {
+    
+//    // check if flashlight available
+//    Class captureDeviceClass = NSClassFromString(@"AVCaptureDevice");
+//    if (captureDeviceClass != nil) {
+//        AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+        if ([self.videoDevice hasTorch] && [self.videoDevice hasFlash]){
+            
+            [self.videoDevice lockForConfiguration:nil];
+            if (on) {
+                [self.videoDevice setTorchMode:AVCaptureTorchModeOn];
+                [self.videoDevice setFlashMode:AVCaptureFlashModeOn];
+                //torchIsOn = YES; //define as a variable/property if you need to know status
+            } else {
+                [self.videoDevice setTorchMode:AVCaptureTorchModeOff];
+                [self.videoDevice setFlashMode:AVCaptureFlashModeOff];
+                //torchIsOn = NO;
+            }
+            [self.videoDevice unlockForConfiguration];
+        }
+  //  }
+}
+
 -(void) cameraFocusAtTarget
 {
-    CGFloat x = self.recognizeTargetView.center.x / self.cameraImageView.bounds.size.width;
-    CGFloat y = self.recognizeTargetView.center.y / self.cameraImageView.bounds.size.height;
+
+    CGFloat x = self.recognizeTargetView.center.x / self.view.bounds.size.width;
+    CGFloat y = self.recognizeTargetView.center.y / self.view.bounds.size.height;
     
     CGPoint point = CGPointMake(x, y);
     if ([self.videoDevice isFocusPointOfInterestSupported] && [self.videoDevice isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
@@ -622,13 +671,8 @@ typedef enum OCR_LANG_MODE : NSInteger {
     });
 }
 
-- (UIImage *)preprocessedImageForTesseract:(G8Tesseract *)tesseract sourceImage:(UIImage *)sourceImage{
-     NSLog(@"-----preprocessedImageForTesseract");
-    return sourceImage;
-}
-
 - (BOOL)shouldCancelImageRecognitionForTesseract:(G8Tesseract *)tesseract {
-    return NO;
+    return self.signCancelRecognize;
 }
 
 #pragma mark - openCV
@@ -638,13 +682,13 @@ typedef enum OCR_LANG_MODE : NSInteger {
     image = image_copy;
     
     
-    if (self.isInvert) {
+    if (self.invertBtn.selected) {
         // Invert image
         bitwise_not(image, image_copy);
         image = image_copy;
     }
     
-    if (self.isGray) {
+    if (self.grayBtn.selected) {
         // Gray image (Need to markout gray image before enable DetectLetters)
         cvtColor(image, image_copy, CV_RGBA2GRAY);
         image = image_copy;
