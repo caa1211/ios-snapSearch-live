@@ -1,0 +1,1 @@
+PODS_IOS_SNAPSEARCH_LIVE_TOAST_OTHER_LDFLAGS = -framework "QuartzCore"
