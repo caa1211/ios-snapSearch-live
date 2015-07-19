@@ -417,13 +417,10 @@ typedef enum OCR_LANG_MODE : NSInteger {
     // Apply openCV effect
     cropedImg = [CVTools UIImageFromCVMat:[self imageScanableProcessing:[CVTools cvMatFromUIImage:cropedImg]]];
     
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        [self.recognizeTargetView setInnerImage:cropedImg];
-        [self.recognizeTargetView startProgressbar];
-    });
-    
     if (completion!=nil) {
-        completion(cropedImg);
+       // dispatch_sync(dispatch_get_main_queue(), ^{
+            completion(cropedImg);
+       // });
     }
 
 }
@@ -446,6 +443,10 @@ typedef enum OCR_LANG_MODE : NSInteger {
         //operation.tesseract.charWhitelist = @"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     }else if(self.ocrLang == OCR_LANG_MODE_NUM){
         operation.tesseract.charWhitelist = @"0123456789";
+    }else if (self.ocrLang == OCR_LANG_MODE_CHT){
+        operation.tesseract.maximumRecognitionTime = 30.0;
+    }else if (self.ocrLang == OCR_LANG_MODE_JPN){
+        operation.tesseract.maximumRecognitionTime = 30.0;
     }
     //operation.tesseract.charBlacklist = @".|\\/,';:`~-_^";
     
@@ -465,11 +466,52 @@ typedef enum OCR_LANG_MODE : NSInteger {
 }
 
 
+- (void) doRecognitionNoOperation:(UIImage*)image complete:(void(^)(NSString *recognizedText))complete{
+    NSString *ocrKey = self.langArray[self.ocrLang][@"ocr"];
+    G8Tesseract *tesseract = [[G8Tesseract alloc] initWithLanguage:ocrKey];
+    tesseract.maximumRecognitionTime = 10.0;
+    if(self.ocrLang == OCR_LANG_MODE_ENG){
+        //operation.tesseract.charWhitelist = @"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    }else if(self.ocrLang == OCR_LANG_MODE_NUM){
+        tesseract.charWhitelist = @"0123456789";
+    }else if (self.ocrLang == OCR_LANG_MODE_CHT){
+        tesseract.maximumRecognitionTime = 30.0;
+    }else if (self.ocrLang == OCR_LANG_MODE_JPN){
+        tesseract.maximumRecognitionTime = 30.0;
+    }
+    tesseract.image = image;
+    [tesseract recognize];
+    NSString *recognizedText = tesseract.recognizedText;
+    complete(recognizedText);
+}
+
+
+-(void) ocrStarting{
+    [self.recognizeTargetView startProgressbar];
+    
+    [self.recognizeButton setTitleColor:[UIColor colorWithRed:0.741 green:0.761 blue:0.806 alpha:1.000] forState:UIControlStateNormal];
+    self.recognizeButton.tapCircleColor = [UIColor colorWithRed:0.964 green:0.951 blue:1.000 alpha:0.300];
+    self.recognizeButton.isRaised = NO;
+    self.recognizeButton.rippleBeyondBounds = NO;
+}
+
+-(void) ocrFinished{
+    [self.recognizeTargetView updateProgress: 1];
+    [self.recognizeTargetView finishProgress];
+    self.isRecognizing = NO;
+    
+    [self.recognizeButton setTitleColor:[UIColor colorWithRed:0.908 green:0.472 blue:0.324 alpha:1.000] forState:UIControlStateNormal];
+    self.recognizeButton.tapCircleColor = [UIColor colorWithRed:1.000 green:0.672 blue:0.532 alpha:0.300];
+    self.recognizeButton.isRaised = YES;
+    self.recognizeButton.rippleBeyondBounds = YES;
+}
+
 - (IBAction)onRecognize:(id)sender {
     
     if (self.isRecognizing) {
         return;
     }
+    
     
     self.isRecognizing = YES;
     AudioServicesPlaySystemSound(self.clickSoundID);
@@ -477,12 +519,20 @@ typedef enum OCR_LANG_MODE : NSInteger {
     dispatch_async(self.cropImageQueue, ^{
         [self.recognizeTargetView fillInnerImage];
         [self cropByTarget:^(UIImage *image) {
+            
+            //Start OCR -----
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                [self.recognizeTargetView setInnerImage:image];
+                [self ocrStarting];
+           
+            
             [self doRecognition:image complete:^(NSString *recognizedText) {
                 self.resultLabel.text = recognizedText;
-                [self.recognizeTargetView updateProgress: 1];
-                [self.recognizeTargetView finishProgress];
-                self.isRecognizing = NO;
+                [self ocrFinished];
+                //Finish OCR ----
             }];
+                
+                 });
         }];
     });
 }
@@ -563,10 +613,10 @@ typedef enum OCR_LANG_MODE : NSInteger {
 #pragma mark - G8Tesseract
 
 - (void)progressImageRecognitionForTesseract:(G8Tesseract *)tesseract {
-     NSLog(@"progress: %lu", (unsigned long)tesseract.progress);
+    // NSLog(@"progress: %lu", (unsigned long)tesseract.progress);
     dispatch_sync(dispatch_get_main_queue(), ^{
         [self.recognizeTargetView updateProgress: (unsigned long)tesseract.progress / 100.0];
-   });
+    });
 }
 
 - (UIImage *)preprocessedImageForTesseract:(G8Tesseract *)tesseract sourceImage:(UIImage *)sourceImage{

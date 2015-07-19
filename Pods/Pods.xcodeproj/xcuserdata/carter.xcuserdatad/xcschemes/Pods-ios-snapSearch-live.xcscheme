@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5B5EDAAD2DFD9E55627FE7E7"
+               BlueprintIdentifier = "983C4269A8640023AB4B0F82"
                BuildableName = "libPods-ios-snapSearch-live.a"
                BlueprintName = "Pods-ios-snapSearch-live"
                ReferencedContainer = "container:Pods.xcodeproj">

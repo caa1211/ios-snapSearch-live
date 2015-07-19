@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "002FCDF8DAE57E752B4BA0FB"
+               BlueprintIdentifier = "D09700AA8FD0012B1B67CCCE"
                BuildableName = "libPods-ios-snapSearch-live-DKCircleButton.a"
                BlueprintName = "Pods-ios-snapSearch-live-DKCircleButton"
                ReferencedContainer = "container:Pods.xcodeproj">

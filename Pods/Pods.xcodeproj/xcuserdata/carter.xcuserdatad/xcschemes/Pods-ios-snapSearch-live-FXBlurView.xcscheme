@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "92B73C8474B0AE8200054658"
+               BlueprintIdentifier = "1DBEBC69A1EDCD16DD5D5092"
                BuildableName = "libPods-ios-snapSearch-live-FXBlurView.a"
                BlueprintName = "Pods-ios-snapSearch-live-FXBlurView"
                ReferencedContainer = "container:Pods.xcodeproj">
