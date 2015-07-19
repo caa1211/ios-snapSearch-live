@@ -21,12 +21,11 @@
         NSString *className = NSStringFromClass([self class]);
         self.view = [[[NSBundle mainBundle] loadNibNamed:className owner:self options:nil] firstObject];
         [self addSubview:self.view];
-        
         self.layer.cornerRadius = 35;
         self.layer.masksToBounds = YES;
         self.layer.borderWidth = 4.0f;
         self.layer.borderColor = CGColorRetain([UIColor colorWithRed:0.845 green:0.863 blue:0.860 alpha:0.580].CGColor);
-        
+        self.defaultBackgroundColor = self.view.backgroundColor;
         return self;
     }
     return nil;
@@ -36,8 +35,10 @@
 }
 
 -(void) startProgressbar {
-    self.defaultBackgroundColor = self.view.backgroundColor;
-    [self.view setBackgroundColor:[UIColor colorWithRed:0.872 green:0.630 blue:0.453 alpha:0.680]];
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.view setBackgroundColor:[UIColor colorWithRed:0.872 green:0.630 blue:0.453 alpha:0.680]];
+        [self.innerImageView setAlpha:1.0];
+    }];
     CGRect progresMaskRect = CGRectMake(0, 0, self.innerImageView.bounds.size.width, self.innerImageView.bounds.size.height);
     CAShapeLayer* lay = [CAShapeLayer layer];
     CGMutablePathRef path = CGPathCreateMutable();
@@ -67,20 +68,13 @@
 }
 
 -(void) setInnerImage:(UIImage *)image {
-    self.innerImageView.image = image;
-    
     [self.innerImageView setAlpha:0.0];
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
-    [self.innerImageView setAlpha:1.0];
-    [UIView commitAnimations];
+    self.innerImageView.image = image;
 }
-
 
 -(void) finishProgress {
     self.innerImageView.image = nil;
     self.innerImageView.layer.mask = nil;
-
     [UIView animateWithDuration:0.5 animations:^{
        [self.view setBackgroundColor:self.defaultBackgroundColor];
     }];
