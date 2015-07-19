@@ -127,12 +127,13 @@ typedef enum EFFECT_MODE : NSInteger {
     self.videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionBack;
     self.videoCamera.defaultAVCaptureVideoOrientation = AVCaptureVideoOrientationPortrait;
     self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPresetHigh;
-    self.videoCamera.defaultFPS = 20;
+    self.videoCamera.defaultFPS = 25;
     self.videoCamera.grayscaleMode = NO;
     self.videoCamera.delegate = self;
     
     self.cameraViewMask.dynamic = YES;
     self.cameraViewMask.blurRadius = 20;
+    self.cameraViewMask.updateInterval = 30/60;
     self.cameraViewMask.layer.shadowColor = [[UIColor blackColor] CGColor];
     self.cameraViewMask.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
     self.cameraViewMask.layer.shadowRadius = 2.0f;

@@ -54,7 +54,7 @@
 }
 
 -(void)progressAnimation:(int) movement {
-    NSTimeInterval duration = 0.2;
+    NSTimeInterval duration = 0.1;
     [CATransaction begin];
     [CATransaction setValue:[NSNumber numberWithFloat:duration] forKey:kCATransactionAnimationDuration];
     self.innerImageView.layer.mask.position = CGPointMake(movement, 0);
@@ -68,6 +68,12 @@
 
 -(void) setInnerImage:(UIImage *)image {
     self.innerImageView.image = image;
+    
+    [self.innerImageView setAlpha:0.0];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.3];
+    [self.innerImageView setAlpha:1.0];
+    [UIView commitAnimations];
 }
 
 
