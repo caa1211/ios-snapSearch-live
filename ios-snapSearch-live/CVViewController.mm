@@ -17,9 +17,9 @@
 #import <BFPaperButton.h>
 #import <UIColor+BFPaperColors.h>
 #import "NSString+FontAwesome.h"
+#import "CVTools.h"
 
 using namespace cv;
-
 
 typedef enum OCR_LANG_MODE : NSInteger {
     OCR_LANG_MODE_ENG=0,
@@ -379,7 +379,7 @@ typedef enum OCR_LANG_MODE : NSInteger {
     }
     */
     
-    self.currentImage = [self UIImageFromCVMat:image];
+    self.currentImage = [CVTools UIImageFromCVMat:image];
     //[self cropByTarget:nil];
 }
 
@@ -413,11 +413,9 @@ typedef enum OCR_LANG_MODE : NSInteger {
 
     
     // Apply openCV effect
-    cropedImg = [self UIImageFromCVMat:[self imageScanableProcessing:[self cvMatFromUIImage:cropedImg]]];
+    cropedImg = [CVTools UIImageFromCVMat:[self imageScanableProcessing:[CVTools cvMatFromUIImage:cropedImg]]];
     
     dispatch_sync(dispatch_get_main_queue(), ^{
-        //self.targetImageView.image = cropedImg;
-
         [self.recognizeTargetView setInnerImage:cropedImg];
         [self.recognizeTargetView setupProgressbar:cropedImg];
         
@@ -440,7 +438,7 @@ typedef enum OCR_LANG_MODE : NSInteger {
     
     operation.delegate = self;
     operation.tesseract.image = bwImage;
-    //operation.tesseract.charWhitelist = @"0123456789";
+    
     if(self.ocrLang == OCR_LANG_MODE_ENG){
         //operation.tesseract.charWhitelist = @"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     }else if(self.ocrLang == OCR_LANG_MODE_NUM){
@@ -470,9 +468,7 @@ typedef enum OCR_LANG_MODE : NSInteger {
     NSURL *buttonURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"snap" ofType:@"wav"]];
     AudioServicesCreateSystemSoundID((__bridge CFURLRef)buttonURL, &soundID);
     AudioServicesPlaySystemSound(soundID);
-    
-    //[self cameraFocusAtTarget];
-    
+
     dispatch_async(self.cropImageQueue, ^{
         [self.recognizeTargetView fillInnerImage];
         [self cropByTarget:^(UIImage *image) {
@@ -564,17 +560,13 @@ typedef enum OCR_LANG_MODE : NSInteger {
    });
 }
 
-#pragma mark - CV tools
-
+#pragma mark - openCV
 - (cv::Mat) imageScanableProcessing:(cv::Mat)image{
-    
     cv::Mat image_copy;
+    cvtColor(image, image_copy, CV_BGRA2BGR);
+    image = image_copy;
     
-
-        cvtColor(image, image_copy, CV_BGRA2BGR);
-        image = image_copy;
-
-   
+    
     if (self.isInvert) {
         // Invert image
         bitwise_not(image, image_copy);
@@ -586,99 +578,6 @@ typedef enum OCR_LANG_MODE : NSInteger {
         cvtColor(image, image_copy, CV_RGBA2GRAY);
         image = image_copy;
     }
-
-    
     return image;
 }
-
-
-
-#pragma mark - OpenCV tools
-
--(std::vector<cv::Rect>) detectLetters:(cv::Mat)img{
-    std::vector<cv::Rect> boundRect;
-    cv::Mat img_gray, img_sobel, img_threshold, element;
-    cvtColor(img, img_gray, CV_BGR2GRAY);
-    cv::Sobel(img_gray, img_sobel, CV_8U, 1, 0, 3, 1, 0, cv::BORDER_DEFAULT);
-    cv::threshold(img_sobel, img_threshold, 0, 255, CV_THRESH_OTSU+CV_THRESH_BINARY);
-    element = getStructuringElement(cv::MORPH_RECT, cv::Size(17, 3) );
-    cv::morphologyEx(img_threshold, img_threshold, CV_MOP_CLOSE, element);
-    std::vector< std::vector< cv::Point> > contours;
-    cv::findContours(img_threshold, contours, 0, 1);
-    std::vector<std::vector<cv::Point> > contours_poly( contours.size() );
-    for( int i = 0; i < contours.size(); i++ ){
-        if (contours[i].size()>100)
-        {
-            cv::approxPolyDP( cv::Mat(contours[i]), contours_poly[i], 3, true );
-            cv::Rect appRect( boundingRect( cv::Mat(contours_poly[i]) ));
-            if (appRect.width>appRect.height)
-                boundRect.push_back(appRect);
-        }
-    }
-    return boundRect;
-}
-
-
-// Ref: http://docs.opencv.org/doc/tutorials/ios/image_manipulation/image_manipulation.html
--(UIImage *)UIImageFromCVMat:(cv::Mat)cvMat
-{
-    NSData *data = [NSData dataWithBytes:cvMat.data length:cvMat.elemSize()*cvMat.total()];
-    CGColorSpaceRef colorSpace;
-    
-    if (cvMat.elemSize() == 1) {
-        colorSpace = CGColorSpaceCreateDeviceGray();
-    } else {
-        colorSpace = CGColorSpaceCreateDeviceRGB();
-    }
-    
-    CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)data);
-    
-    // Creating CGImage from cv::Mat
-    CGImageRef imageRef = CGImageCreate(cvMat.cols,                                 //width
-                                        cvMat.rows,                                 //height
-                                        8,                                          //bits per component
-                                        8 * cvMat.elemSize(),                       //bits per pixel
-                                        cvMat.step[0],                            //bytesPerRow
-                                        colorSpace,                                 //colorspace
-                                        kCGImageAlphaNone|kCGBitmapByteOrderDefault,// bitmap info
-                                        provider,                                   //CGDataProviderRef
-                                        NULL,                                       //decode
-                                        false,                                      //should interpolate
-                                        kCGRenderingIntentDefault                   //intent
-                                        );
-    
-    
-    // Getting UIImage from CGImage
-    UIImage *finalImage = [UIImage imageWithCGImage:imageRef];
-    CGImageRelease(imageRef);
-    CGDataProviderRelease(provider);
-    CGColorSpaceRelease(colorSpace);
-    
-    return finalImage;
-}
-
-// Ref: http://docs.opencv.org/doc/tutorials/ios/image_manipulation/image_manipulation.html
-- (cv::Mat)cvMatFromUIImage:(UIImage *)image
-{
-    CGColorSpaceRef colorSpace = CGImageGetColorSpace(image.CGImage);
-    CGFloat cols = image.size.width;
-    CGFloat rows = image.size.height;
-    
-    cv::Mat cvMat(rows, cols, CV_8UC4); // 8 bits per component, 4 channels (color channels + alpha)
-    
-    CGContextRef contextRef = CGBitmapContextCreate(cvMat.data,                 // Pointer to  data
-                                                    cols,                       // Width of bitmap
-                                                    rows,                       // Height of bitmap
-                                                    8,                          // Bits per component
-                                                    cvMat.step[0],              // Bytes per row
-                                                    colorSpace,                 // Colorspace
-                                                    kCGImageAlphaNoneSkipLast |
-                                                    kCGBitmapByteOrderDefault); // Bitmap info flags
-    
-    CGContextDrawImage(contextRef, CGRectMake(0, 0, cols, rows), image.CGImage);
-    CGContextRelease(contextRef);
-    
-    return cvMat;
-}
-
 @end
