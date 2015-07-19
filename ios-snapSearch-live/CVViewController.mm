@@ -61,6 +61,7 @@ typedef enum OCR_LANG_MODE : NSInteger {
 @property (weak, nonatomic) IBOutlet UIButton *langButton;
 @property (assign, nonatomic) BOOL isEditing;
 @property (assign, nonatomic) OCR_LANG_MODE ocrLang;
+@property (assign, nonatomic) SystemSoundID clickSoundID;
 @property (weak, nonatomic) IBOutlet UIButton *clipFirstCharacter;
 @property(strong, nonatomic) NSArray *langArray;
 @end
@@ -69,7 +70,12 @@ typedef enum OCR_LANG_MODE : NSInteger {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-  
+    
+    SystemSoundID soundID;
+    NSURL *buttonURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"snap" ofType:@"wav"]];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)buttonURL, &soundID);
+    self.clickSoundID = soundID;
+    
     self.langArray = [NSArray arrayWithObjects:
                       @{
                         @"ocr": @"eng",
@@ -119,7 +125,6 @@ typedef enum OCR_LANG_MODE : NSInteger {
     self.videoCamera.defaultFPS = 30;
     self.videoCamera.grayscaleMode = NO;
     self.videoCamera.delegate = self;
-    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(startCamera) userInfo:nil repeats:NO];
     
     self.cameraViewMask.dynamic = YES;
     self.cameraViewMask.blurRadius = 20;
@@ -250,7 +255,7 @@ typedef enum OCR_LANG_MODE : NSInteger {
 }
 
 - (void)viewDidLayoutSubviews {
-    //[self setupEffectButtons];
+    [self startCamera];
 }
 
 -(void) setupEffectButtons {
@@ -414,8 +419,7 @@ typedef enum OCR_LANG_MODE : NSInteger {
     
     dispatch_sync(dispatch_get_main_queue(), ^{
         [self.recognizeTargetView setInnerImage:cropedImg];
-        [self.recognizeTargetView setupProgressbar:cropedImg];
-        
+        [self.recognizeTargetView startProgressbar];
     });
     
     if (completion!=nil) {
@@ -425,7 +429,9 @@ typedef enum OCR_LANG_MODE : NSInteger {
 }
 
 - (void) doRecognition:(UIImage*)image complete:(void(^)(NSString *recognizedText))complete{
-    UIImage *bwImage = [image g8_blackAndWhite];
+    
+    // Mark below for avoiding BSXPCMessage error
+    //UIImage *bwImage =[image g8_blackAndWhite];    
     
     NSString *ocrKey = self.langArray[self.ocrLang][@"ocr"];
     G8RecognitionOperation *operation = [[G8RecognitionOperation alloc]initWithLanguage:ocrKey];
@@ -434,7 +440,7 @@ typedef enum OCR_LANG_MODE : NSInteger {
     //operation.tesseract.pageSegmentationMode = G8PageSegmentationModeSingleLine;
     
     operation.delegate = self;
-    operation.tesseract.image = bwImage;
+    operation.tesseract.image = image;
     
     if(self.ocrLang == OCR_LANG_MODE_ENG){
         //operation.tesseract.charWhitelist = @"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -443,7 +449,12 @@ typedef enum OCR_LANG_MODE : NSInteger {
     }
     //operation.tesseract.charBlacklist = @".|\\/,';:`~-_^";
     
+    NSLog(@"operation  out");
+    
     operation.recognitionCompleteBlock = ^(G8Tesseract *tesseract) {
+        
+        NSLog(@"operation  done");
+        
         // Fetch the recognized text
         NSString *recognizedText = tesseract.recognizedText;
         NSLog(@"recognizedText= %@", recognizedText);
@@ -461,16 +472,14 @@ typedef enum OCR_LANG_MODE : NSInteger {
     }
     
     self.isRecognizing = YES;
-    SystemSoundID soundID;
-    NSURL *buttonURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"snap" ofType:@"wav"]];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)buttonURL, &soundID);
-    AudioServicesPlaySystemSound(soundID);
-
+    AudioServicesPlaySystemSound(self.clickSoundID);
+    
     dispatch_async(self.cropImageQueue, ^{
         [self.recognizeTargetView fillInnerImage];
         [self cropByTarget:^(UIImage *image) {
             [self doRecognition:image complete:^(NSString *recognizedText) {
                 self.resultLabel.text = recognizedText;
+                [self.recognizeTargetView updateProgress: 1];
                 [self.recognizeTargetView finishProgress];
                 self.isRecognizing = NO;
             }];
@@ -554,10 +563,19 @@ typedef enum OCR_LANG_MODE : NSInteger {
 #pragma mark - G8Tesseract
 
 - (void)progressImageRecognitionForTesseract:(G8Tesseract *)tesseract {
-    //NSLog(@"progress: %lu", (unsigned long)tesseract.progress);
+     NSLog(@"progress: %lu", (unsigned long)tesseract.progress);
     dispatch_sync(dispatch_get_main_queue(), ^{
-        [self.recognizeTargetView updateProgress:(unsigned long)tesseract.progress / 100.0];
+        [self.recognizeTargetView updateProgress: (unsigned long)tesseract.progress / 100.0];
    });
+}
+
+- (UIImage *)preprocessedImageForTesseract:(G8Tesseract *)tesseract sourceImage:(UIImage *)sourceImage{
+     NSLog(@"-----preprocessedImageForTesseract");
+    return sourceImage;
+}
+
+- (BOOL)shouldCancelImageRecognitionForTesseract:(G8Tesseract *)tesseract {
+    return NO;
 }
 
 #pragma mark - openCV

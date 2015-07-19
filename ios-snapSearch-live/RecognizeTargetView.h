@@ -15,7 +15,7 @@
 
 -(void) fillInnerImage;
 -(void) setInnerImage:(UIImage *)image;
--(void) setupProgressbar:(UIImage *)image;
+-(void) startProgressbar;
 -(void) updateProgress:(CGFloat)percent;
 -(void) finishProgress;
 @end

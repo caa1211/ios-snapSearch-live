@@ -9,7 +9,7 @@
 #import "RecognizeTargetView.h"
 
 @interface RecognizeTargetView ()
-
+@property(nonatomic, strong) UIColor* defaultBackgroundColor;
 @end
 
 @implementation RecognizeTargetView
@@ -25,7 +25,7 @@
         self.layer.cornerRadius = 35;
         self.layer.masksToBounds = YES;
         self.layer.borderWidth = 4.0f;
-        self.layer.borderColor = CGColorRetain([UIColor colorWithRed:0.901 green:0.858 blue:0.859 alpha:1.000].CGColor);
+        self.layer.borderColor = CGColorRetain([UIColor colorWithRed:0.437 green:0.401 blue:0.421 alpha:0.200].CGColor);
         
         return self;
     }
@@ -33,6 +33,33 @@
 }
 
 - (void)layoutSubviews {
+}
+
+-(void) startProgressbar {
+    self.defaultBackgroundColor = self.view.backgroundColor;
+    [self.view setBackgroundColor:[UIColor colorWithRed:0.397 green:0.420 blue:0.628 alpha:0.240]];
+    CGRect progresMaskRect = CGRectMake(0, 0, self.innerImageView.bounds.size.width, self.innerImageView.bounds.size.height);
+    CAShapeLayer* lay = [CAShapeLayer layer];
+    CGMutablePathRef path = CGPathCreateMutable();
+    CGPathAddRect(path, nil, progresMaskRect);
+    lay.path = path;
+    CGPathRelease(path);
+    lay.fillRule = kCAFillRuleEvenOdd;
+    self.innerImageView.layer.mask = lay;
+}
+
+-(void) updateProgress:(CGFloat)percent {
+    int movement = percent * self.innerImageView.frame.size.width;
+    [self progressAnimation:movement];
+}
+
+-(void)progressAnimation:(int) movement {
+    NSTimeInterval duration = 0.2;
+    [CATransaction begin];
+    [CATransaction setValue:[NSNumber numberWithFloat:duration] forKey:kCATransactionAnimationDuration];
+    self.innerImageView.layer.mask.position = CGPointMake(movement, 0);
+    [CATransaction commit];
+    
 }
 
 -(void) fillInnerImage {
@@ -43,28 +70,14 @@
     self.innerImageView.image = image;
 }
 
--(void) setupProgressbar:(UIImage *)image{
-    CGRect r = CGRectMake(0, 0, image.size.width, image.size.height);
-    CAShapeLayer* lay = [CAShapeLayer layer];
-    CGMutablePathRef path = CGPathCreateMutable();
-    CGPathAddRect(path, nil, r);
-    lay.path = path;
-    CGPathRelease(path);
-    lay.fillRule = kCAFillRuleEvenOdd;
-    
-    self.innerImageView.layer.mask = lay;
-}
-
--(void) updateProgress:(CGFloat)percent {
-    CGRect imageRect = CGRectMake(0, 0, self.innerImageView.image.size.width, self.innerImageView.image.size.height);
-    //CGFloat currentX = (imageRect.size.width) * percent;
-    imageRect.origin.x = 200;//currentX;
-    self.innerImageView.layer.mask.frame = imageRect;
-}
 
 -(void) finishProgress {
     self.innerImageView.image = nil;
     self.innerImageView.layer.mask = nil;
+
+    [UIView animateWithDuration:0.5 animations:^{
+       [self.view setBackgroundColor:self.defaultBackgroundColor];
+    }];
 }
 
 
