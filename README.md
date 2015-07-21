@@ -1,8 +1,7 @@
 ##  ios-snapSearch
 --------------------------------------------------
 
-This is a OCR (Optical Character Recognition) App for iOS platform, 
-powered by TesseractOCR for text recognition and OpenCV for image processing.
+This is an iOS app powered by TesseractOCR for text recognition and OpenCV for image processing.
 
 ### Mock
 ![mock](design/0715.png)
