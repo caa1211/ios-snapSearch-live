@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SettingViewController : UIViewController
+@protocol SettingViewControllerDelegate <NSObject>
 
+-(void) didChangeSetting;
+
+@end
+
+@interface SettingViewController : UIViewController
+    @property (nonatomic, weak) id<SettingViewControllerDelegate>delegate;
 @end

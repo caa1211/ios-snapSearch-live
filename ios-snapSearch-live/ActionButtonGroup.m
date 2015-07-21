@@ -32,6 +32,10 @@ typedef NS_ENUM(NSInteger, SEARCH_MODE) {
     [self setupActionButtons];
 }
 
+-(void) updateLinks {
+    [self collectUrl];
+}
+
 -(void) collectUrl {
     NSDictionary * searchSettingData = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"search"];
     NSDictionary * ecSettingData = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"ec"];
@@ -155,7 +159,6 @@ typedef NS_ENUM(NSInteger, SEARCH_MODE) {
 
 
 -(void) onECBtnClick:(id)sender {
-    [self collectUrl];
     WebViewController *webVC = [[WebViewController alloc] initWithUrl:[self linkGenerator:SEARCH_MODE_EC]];
    [self.viewController.navigationController pushViewController:webVC animated:YES];
 }
@@ -168,13 +171,11 @@ typedef NS_ENUM(NSInteger, SEARCH_MODE) {
 }
 
 -(void) onDictBtnClick:(id)sender {
-    [self collectUrl];
     WebViewController *webVC = [[WebViewController alloc] initWithUrl:[self linkGenerator:SEARCH_MODE_DICTIONARY]];
     [self.viewController.navigationController pushViewController:webVC animated:YES];
 }
 
 -(void) onSearchBtnClick:(id)sender {
-    [self collectUrl];
     WebViewController *webVC = [[WebViewController alloc] initWithUrl:[self linkGenerator:SEARCH_MODE_SEARCH]];
     [self.viewController.navigationController pushViewController:webVC animated:YES];
 }

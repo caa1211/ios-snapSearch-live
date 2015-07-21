@@ -9,6 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ActionButtonGroup : UIView
-
-
+    -(void) updateLinks;
 @end

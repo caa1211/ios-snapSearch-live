@@ -124,6 +124,7 @@ enum {
     [[NSUserDefaults standardUserDefaults] setObject:self.searchFilter forKey:@"search"];
     [[NSUserDefaults standardUserDefaults] setObject:self.dictFilter forKey:@"dict"];
     
+    [self.delegate didChangeSetting];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

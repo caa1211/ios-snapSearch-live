@@ -21,6 +21,8 @@
 #import "UIView+Toast.h"
 #import "RecognizeButton.h"
 #import "SettingViewController.h"
+#import "ActionButtonGroup.h"
+
 using namespace cv;
 
 typedef enum OCR_LANG_MODE : NSInteger {
@@ -37,7 +39,7 @@ typedef enum EFFECT_MODE : NSInteger {
     EFFECT_MODE_FLASH
 }EFFECT_MODE;
 
-@interface CVViewController () <CvVideoCameraDelegate, G8TesseractDelegate, UITextFieldDelegate>
+@interface CVViewController () <CvVideoCameraDelegate, G8TesseractDelegate, UITextFieldDelegate, SettingViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet RecognizeButton *recognizeButton;
 @property (weak, nonatomic) IBOutlet RecognizeTargetView *recognizeTargetView;
 
@@ -63,7 +65,7 @@ typedef enum EFFECT_MODE : NSInteger {
 @property (retain, nonatomic) DKCircleButton *invertBtn;
 @property (retain, nonatomic) DKCircleButton *flashBtn;
 
-@property (weak, nonatomic) IBOutlet UIView *actionBtnGroup;
+@property (weak, nonatomic) IBOutlet ActionButtonGroup *actionBtnGroup;
 @property (weak, nonatomic) IBOutlet UIButton *editButton;
 @property (weak, nonatomic) IBOutlet UIButton *langButton;
 @property (assign, nonatomic) BOOL isEditing;
@@ -196,6 +198,7 @@ typedef enum EFFECT_MODE : NSInteger {
 
 -(void) onSetting:(id) sender{
     SettingViewController *settingVC = [[SettingViewController alloc] init];
+    settingVC.delegate = self;
     [self.navigationController pushViewController:settingVC animated:YES];
 }
 
@@ -358,7 +361,7 @@ typedef enum EFFECT_MODE : NSInteger {
     if (!self.signCancelRecognize) {
         self.resultLabel.text = recognizedText;
     }else{
-        [self.actionBtnGroup makeToast:@"cancel recognizing" duration: 0.5 position:[NSValue valueWithCGPoint:CGPointMake(self.actionBtnGroup.bounds.size.width/2, -25)]];
+        [self.actionBtnGroup makeToast:@"recognition cancelled" duration: 0.5 position:[NSValue valueWithCGPoint:CGPointMake(self.actionBtnGroup.bounds.size.width/2, -25)]];
     }
     self.signCancelRecognize = NO;
 }
@@ -446,6 +449,11 @@ typedef enum EFFECT_MODE : NSInteger {
         [self cameraTurnTorchOn:btn.selected];
     }
 }
+#pragma mark - setting
+-(void) didChangeSetting {
+    [self.actionBtnGroup updateLinks];
+}
+
 
 #pragma mark - edit
 
