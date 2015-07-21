@@ -48,7 +48,7 @@
                             </connections>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tap to focus" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O3r-OW-q0g">
-                            <rect key="frame" x="112" y="70" width="96.5" height="25"/>
+                            <rect key="frame" x="112" y="70" width="97" height="25"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="25" id="gdb-zQ-xFd"/>
                                 <constraint firstAttribute="height" constant="21" id="ixY-OQ-JuK"/>
@@ -63,7 +63,7 @@
                             </variation>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="pan to resize" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0vL-Iw-dL4">
-                            <rect key="frame" x="112" y="89" width="104.5" height="25"/>
+                            <rect key="frame" x="112" y="89" width="105" height="25"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="25" id="bbU-fd-bUZ"/>
                                 <constraint firstAttribute="height" constant="21" id="kS7-dg-Y5z"/>
