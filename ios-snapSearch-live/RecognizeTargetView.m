@@ -35,7 +35,7 @@
 }
 
 -(void) startProgressbar {
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.2 animations:^{
         [self.view setBackgroundColor:[UIColor colorWithRed:0.872 green:0.630 blue:0.453 alpha:0.680]];
         [self.innerImageView setAlpha:1.0];
     }];

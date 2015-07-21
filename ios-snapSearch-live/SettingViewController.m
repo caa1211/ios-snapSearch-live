@@ -9,12 +9,14 @@
 #import "SettingViewController.h"
 #import "DDParentCell.h"
 #import "DDChildCell.h"
+#import "SwitchCell.h"
 
-@interface SettingViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface SettingViewController () <UITableViewDataSource, UITableViewDelegate, SwitchCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *selectableSearch;
 @property (strong, nonatomic) NSArray *selectableDict;
 @property (strong, nonatomic) NSArray *selectableEC;
+@property (strong, nonatomic) NSMutableArray *processingArray;
 @property (strong, nonatomic) NSDictionary *searchFilter;
 @property (strong, nonatomic) NSDictionary *ecFilter;
 @property (strong, nonatomic) NSDictionary *dictFilter;
@@ -22,7 +24,8 @@
 
 NSMutableIndexSet *expandedSections;
 enum {
-    ECSection = 0,
+    Processing = 0,
+    ECSection,
     SearchSection,
     DictionarySection
 };
@@ -30,6 +33,26 @@ enum {
 @implementation SettingViewController
 
 - (void) initVariables {
+    self.processingArray = [[NSMutableArray alloc]init];
+    
+    BOOL isGray = (BOOL)[[NSUserDefaults standardUserDefaults] boolForKey:@"gray"];
+    BOOL isInvert = (BOOL)[[NSUserDefaults standardUserDefaults] boolForKey:@"invert"];
+    BOOL setted = (BOOL)[[NSUserDefaults standardUserDefaults] boolForKey:@"processingSetted"];
+    
+    NSArray *array = @[
+                             @{
+                                 @"title": @"Gray",
+                                 @"value": setted ? [NSNumber numberWithBool: isGray] : @YES
+                                 },
+                             @{
+                                 @"title": @"Color Invert",
+                                 @"value": setted ? [NSNumber numberWithBool: isInvert] : @YES
+                                 },
+                             
+                             ];
+    
+    self.processingArray = [NSMutableArray arrayWithArray:array];
+    
     self.selectableSearch = @[
                               @{
                                   @"title": @"Yahoo",
@@ -108,6 +131,7 @@ enum {
     
     [self.tableView registerNib:[UINib nibWithNibName:@"DDParentCell" bundle:nil] forCellReuseIdentifier:@"DDParentCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"DDChildCell" bundle:nil] forCellReuseIdentifier:@"DDChildCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"SwitchCell" bundle:nil] forCellReuseIdentifier:@"SwitchCell"];
     
     expandedSections = [[NSMutableIndexSet alloc] init];
     
@@ -119,10 +143,13 @@ enum {
 }
 
 -(void) onOk{
-    
+
     [[NSUserDefaults standardUserDefaults] setObject:self.ecFilter forKey:@"ec"];
     [[NSUserDefaults standardUserDefaults] setObject:self.searchFilter forKey:@"search"];
     [[NSUserDefaults standardUserDefaults] setObject:self.dictFilter forKey:@"dict"];
+    [[NSUserDefaults standardUserDefaults] setObject: (NSNumber *)self.processingArray[0][@"value"] forKey:@"gray"];
+    [[NSUserDefaults standardUserDefaults] setObject: (NSNumber *)self.processingArray[1][@"value"] forKey:@"invert"];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"processingSetted"];
     
     [self.delegate didChangeSetting];
     [self.navigationController popViewControllerAnimated:YES];
@@ -130,22 +157,27 @@ enum {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     NSInteger num;
-    if (![expandedSections containsIndex:section]) {
-        num = 1;
-    }
-    else{
-        switch (section) {
-            case ECSection:
-                num = 4;
-                break;
-            case SearchSection:
-                num = 3;
-                break;
-            case DictionarySection:
-                num = 3;
-                break;
-            default:
-                break;
+    
+    if (section == Processing) {
+        num = self.processingArray.count;
+    }else{
+        if (![expandedSections containsIndex:section]) {
+            num = 1;
+        }
+        else{
+            switch (section) {
+                case ECSection:
+                    num = self.selectableEC.count +1;
+                    break;
+                case SearchSection:
+                    num = self.selectableSearch.count +1;
+                    break;
+                case DictionarySection:
+                    num = self.selectableDict.count +1;
+                    break;
+                default:
+                    break;
+            }
         }
     }
     return num;
@@ -157,42 +189,66 @@ enum {
     BOOL currentlyExpanded = [expandedSections containsIndex:section];
     NSArray *selectableArray;
     NSDictionary *filter;
-    switch (section) {
-        case ECSection:
-            selectableArray = self.selectableEC;
-            filter = self.ecFilter;
-            break;
-        case SearchSection:
-            selectableArray = self.selectableSearch;
-            filter = self.searchFilter;
-            break;
-        case DictionarySection:
-            selectableArray = self.selectableDict;
-            filter = self.dictFilter;
-            break;
-        default:
-            break;
-    }
-    
-    
-    if (!currentlyExpanded) {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"DDParentCell"];
-        ((DDParentCell*)cell).titleLabel.text = filter[@"title"];
-    } else {
-        /* Child cell */
-        cell = [tableView dequeueReusableCellWithIdentifier:@"DDChildCell"];
-        NSString *title = selectableArray[indexPath.row-1][@"title"];
-        ((DDChildCell*)cell).titleLabel.text = title;
-        
-        if([title isEqual:filter[@"title"]]){
-            [((DDChildCell*)cell) addMark];
+    if (section != Processing) {
+        switch (section) {
+            case ECSection:
+                selectableArray = self.selectableEC;
+                filter = self.ecFilter;
+                break;
+            case SearchSection:
+                selectableArray = self.selectableSearch;
+                filter = self.searchFilter;
+                break;
+            case DictionarySection:
+                selectableArray = self.selectableDict;
+                filter = self.dictFilter;
+                break;
+            default:
+                break;
         }
+        
+        
+        if (!currentlyExpanded) {
+            cell = [tableView dequeueReusableCellWithIdentifier:@"DDParentCell"];
+            ((DDParentCell*)cell).titleLabel.text = filter[@"title"];
+        } else {
+            /* Child cell */
+            cell = [tableView dequeueReusableCellWithIdentifier:@"DDChildCell"];
+            NSString *title = selectableArray[indexPath.row-1][@"title"];
+            ((DDChildCell*)cell).titleLabel.text = title;
+            
+            if([title isEqual:filter[@"title"]]){
+                [((DDChildCell*)cell) addMark];
+            }
+        }
+        
+    }else {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"SwitchCell"];
+        ((SwitchCell*)cell).delegate = self;
+        ((SwitchCell*)cell).on = [self.processingArray[indexPath.row][@"value"] boolValue];
+        ((SwitchCell*)cell).titleLabel.text = self.processingArray[indexPath.row][@"title"];
+        
     }
 
     
     return cell;
 }
 
+-(void) switchCell:(SwitchCell *)cell didUpdateValue:(BOOL)value {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    NSInteger section = indexPath.section;
+    switch (section) {
+        case Processing:
+            
+            self.processingArray[indexPath.row] =  @{
+                                                     @"title" : self.processingArray[indexPath.row][@"title"],
+                                                     @"value" : [NSNumber numberWithBool:value]
+                                                     };
+            
+            break;
+    }
+    
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
@@ -313,7 +369,7 @@ enum {
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 4;
 }
 
 
@@ -324,6 +380,9 @@ enum {
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     switch (section) {
+        case Processing:
+            return @"Image Processing";
+            break;
         case ECSection:
             return @"EC";
             break;

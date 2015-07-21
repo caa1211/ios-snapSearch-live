@@ -3,6 +3,9 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "+[CVTools UIImageFromCVMat:]:CVTools.mm">
+      </ContextState>
+      <ContextState
          contextName = "-[ActionButtonGroup onECBtnClick:]:ActionButtonGroup.m">
          <PersistentStrings>
             <PersistentString
@@ -25,13 +28,24 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "-[SettingViewController tableView:cellForRowAtIndexPath:]:SettingViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.processingArray[indexPath.row][@&quot;title&quot;]">
+            </PersistentString>
+            <PersistentString
+               value = "indexPath">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[WebViewController viewDidLoad]:WebViewController.m">
          <PersistentStrings>
             <PersistentString
-               value = "self.url">
+               value = "_url">
             </PersistentString>
             <PersistentString
-               value = "_url">
+               value = "self.url">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -58,10 +72,10 @@
          contextName = "-[CVViewController onLang:]:CVViewController.mm">
          <PersistentStrings>
             <PersistentString
-               value = " self.langArray[langInteger]">
+               value = " self.langArray[langInteger][@&quot;title&quot;]">
             </PersistentString>
             <PersistentString
-               value = " self.langArray[langInteger][@&quot;title&quot;]">
+               value = " self.langArray[langInteger]">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

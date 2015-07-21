@@ -276,8 +276,8 @@ typedef enum EFFECT_MODE : NSInteger {
         
         int invertX = self.startPanLoc.x > self.recognizeTargetView.center.x ? 1: -1;
         int invertY = self.startPanLoc.y > self.recognizeTargetView.center.y ? 1: -1;
-        CGFloat offsetX = invertX*(loc.x - self.startPanLoc.x)/5;
-        CGFloat offsetY = invertY*(loc.y - self.startPanLoc.y)/5;
+        CGFloat offsetX = invertX*(loc.x - self.startPanLoc.x)/7;
+        CGFloat offsetY = invertY*(loc.y - self.startPanLoc.y)/7;
  
         CGRect newFrame = self.recognizeTargetView.bounds;
         newFrame.size.width = MIN(newFrame.size.width + offsetX, 290);
@@ -430,9 +430,24 @@ typedef enum EFFECT_MODE : NSInteger {
     return btn;
 }
 
+- (void) updateEffectSetting {
+    //User setting
+    BOOL isGray = (BOOL)[[NSUserDefaults standardUserDefaults] boolForKey:@"gray"];
+    BOOL isInvert = (BOOL)[[NSUserDefaults standardUserDefaults] boolForKey:@"invert"];
+    BOOL setted = (BOOL)[[NSUserDefaults standardUserDefaults] boolForKey:@"processingSetted"];
+    
+    if (setted) {
+        [self.grayBtn setSelected:isGray];
+        [self.invertBtn setSelected:isInvert];
+    }
+}
+
 -(void) setupEffectButtons {
     self.grayBtn = [self effectButtonWithTitle:@"G" in:CGPointMake(30, 288) tag:EFFECT_MODE_GRAY];
     self.invertBtn = [self effectButtonWithTitle:@"I" in:CGPointMake(30, 340) tag:EFFECT_MODE_INVERT];
+    
+    [self updateEffectSetting];
+    
     self.flashBtn = [self effectButtonWithTitle:@"flash" in:CGPointMake(30, 100) tag:EFFECT_MODE_FLASH];
     self.flashBtn.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:20];
     [self.flashBtn setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-bolt"] forState:UIControlStateNormal];
@@ -445,14 +460,26 @@ typedef enum EFFECT_MODE : NSInteger {
 
 -(void) tapOnEffectButton:(id)sender{
     UIButton* btn = (UIButton*)sender;
+    
     btn.selected = !btn.selected;
     if ((EFFECT_MODE)btn.tag == EFFECT_MODE_FLASH) {
         [self cameraTurnTorchOn:btn.selected];
+    } else if((EFFECT_MODE)btn.tag == EFFECT_MODE_INVERT) {
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:btn.selected] forKey:@"invert"];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:self.grayBtn.selected] forKey:@"gray"];
+        
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"processingSetted"];
+    }else if((EFFECT_MODE)btn.tag == EFFECT_MODE_GRAY) {
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:btn.selected] forKey:@"gray"];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:self.invertBtn.selected] forKey:@"invert"];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"processingSetted"];
     }
 }
+
 #pragma mark - setting
 -(void) didChangeSetting {
     [self.actionBtnGroup updateLinks];
+    [self updateEffectSetting];
 }
 
 

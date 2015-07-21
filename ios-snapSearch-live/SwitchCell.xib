@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="49" id="KGk-i7-Jjw" customClass="SwitchCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ArL-y4-S9h">
+                        <rect key="frame" x="263" y="9" width="51" height="31"/>
+                        <connections>
+                            <action selector="switchValueCHanged:" destination="KGk-i7-Jjw" eventType="valueChanged" id="A0k-OZ-TzJ"/>
+                        </connections>
+                    </switch>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DT5-C3-x2M">
+                        <rect key="frame" x="20" y="14" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="ArL-y4-S9h" secondAttribute="trailing" constant="8" id="NCP-ab-zgn"/>
+                    <constraint firstItem="ArL-y4-S9h" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="9" id="Tk4-kv-now"/>
+                    <constraint firstAttribute="bottom" secondItem="ArL-y4-S9h" secondAttribute="bottom" constant="8.5" id="kt5-k5-VWp"/>
+                    <constraint firstAttribute="centerY" secondItem="DT5-C3-x2M" secondAttribute="centerY" id="mJO-W1-LH6"/>
+                    <constraint firstItem="DT5-C3-x2M" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="v5P-pi-1wN"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="titleLabel" destination="DT5-C3-x2M" id="TPD-3T-6o4"/>
+                <outlet property="toggleSwitch" destination="ArL-y4-S9h" id="FBf-eg-WLa"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="156.5"/>
+        </tableViewCell>
+    </objects>
+</document>
