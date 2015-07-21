@@ -276,8 +276,8 @@ typedef enum EFFECT_MODE : NSInteger {
         
         int invertX = self.startPanLoc.x > self.recognizeTargetView.center.x ? 1: -1;
         int invertY = self.startPanLoc.y > self.recognizeTargetView.center.y ? 1: -1;
-        CGFloat offsetX = invertX*(loc.x - self.startPanLoc.x)/7;
-        CGFloat offsetY = invertY*(loc.y - self.startPanLoc.y)/7;
+        CGFloat offsetX = invertX*(loc.x - self.startPanLoc.x)/10;
+        CGFloat offsetY = invertY*(loc.y - self.startPanLoc.y)/10;
  
         CGRect newFrame = self.recognizeTargetView.bounds;
         newFrame.size.width = MIN(newFrame.size.width + offsetX, 290);
