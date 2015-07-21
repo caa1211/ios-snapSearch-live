@@ -446,6 +446,8 @@ typedef enum EFFECT_MODE : NSInteger {
     self.grayBtn = [self effectButtonWithTitle:@"G" in:CGPointMake(30, 288) tag:EFFECT_MODE_GRAY];
     self.invertBtn = [self effectButtonWithTitle:@"I" in:CGPointMake(30, 340) tag:EFFECT_MODE_INVERT];
     
+    [self.grayBtn setHidden:YES];
+    [self.invertBtn setHidden:YES];
     [self updateEffectSetting];
     
     self.flashBtn = [self effectButtonWithTitle:@"flash" in:CGPointMake(30, 100) tag:EFFECT_MODE_FLASH];
@@ -528,8 +530,8 @@ typedef enum EFFECT_MODE : NSInteger {
 
 - (void) openEditMode:(BOOL)isediting {
     [self animateView:isediting];
-    self.grayBtn.hidden = isediting;
-    self.invertBtn.hidden = isediting;
+    //self.grayBtn.hidden = isediting;
+    //self.invertBtn.hidden = isediting;
     self.zoomSlider.hidden = isediting;
     self.recognizeTargetView.hidden = isediting;
     self.langButton.hidden = isediting;
