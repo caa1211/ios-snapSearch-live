@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ios-snapSearch-live/CVViewController.mm"
-            timestampString = "459155201.857883"
+            timestampString = "459156587.073612"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "258"
-            endingLineNumber = "258"
-            landmarkName = "-cropByTarget:"
+            startingLineNumber = "317"
+            endingLineNumber = "317"
+            landmarkName = "-doRecognition:complete:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -42,12 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ios-snapSearch-live/CVViewController.mm"
-            timestampString = "459155201.857883"
+            timestampString = "459156587.073612"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "259"
-            endingLineNumber = "259"
-            landmarkName = "-cropByTarget:"
+            startingLineNumber = "318"
+            endingLineNumber = "318"
+            landmarkName = "-doRecognition:complete:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
