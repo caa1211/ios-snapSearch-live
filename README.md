@@ -20,7 +20,6 @@ This is an iOS app powered by TesseractOCR for text recognition and OpenCV for i
 * [Tesseract-OCR-iOS](https://github.com/gali8/Tesseract-OCR-iOS)
 * [openCV](http://opencv.org)
 * [Font awesome](http://fortawesome.github.io/Font-Awesome/)
-* [openCV](http://opencv.org)
 * [BFPaperButton](https://github.com/bfeher/BFPaperButton)
 * [FXBlurView](https://github.com/nicklockwood/FXBlurView)
 * [DKCircleButton](https://github.com/kronik/DKCircleButton)
