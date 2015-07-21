@@ -19,6 +19,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-ios-snapSearch-live-FontAwesomeIconFactory.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-ios-snapSearch-live-TesseractOCRiOS.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -42,37 +47,42 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1DBEBC69A1EDCD16DD5D5092</key>
+		<key>16D207909C144398F8D47587</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2585E6919D37F1CD488D6C2A</key>
+		<key>30FA77685368B55516E1BBA4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9246FB2BAC37CBED6CBA515D</key>
+		<key>377D11FBF454076633588E25</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>983C4269A8640023AB4B0F82</key>
+		<key>48372C73077082CFAD16DA97</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CDFCCB413BC9D42A70E03DC3</key>
+		<key>65209A3E7C000E4022B76417</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D09700AA8FD0012B1B67CCCE</key>
+		<key>7250AF3C8128FA89BB8AE5B2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FF64AF5520E1170472B91130</key>
+		<key>8BD844DFC637784A55D2D249</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DBA57F74960B68951DC88D06</key>
 		<dict>
 			<key>primary</key>
 			<true/>

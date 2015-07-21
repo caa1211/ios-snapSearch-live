@@ -2,6 +2,7 @@ PODS:
   - BFPaperButton (2.0.18):
     - UIColor+BFPaperColors
   - DKCircleButton (1.1)
+  - FontAwesomeIconFactory (2.0.2)
   - FXBlurView (1.6.3)
   - TesseractOCRiOS (4.0.0)
   - Toast (2.4)
@@ -10,6 +11,7 @@ PODS:
 DEPENDENCIES:
   - BFPaperButton
   - DKCircleButton
+  - FontAwesomeIconFactory
   - FXBlurView
   - TesseractOCRiOS
   - Toast
@@ -17,6 +19,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   BFPaperButton: 16b3ec9c2964d24f89f623a4113321d3f003ed60
   DKCircleButton: 62564c9debae08ad77dabb8d9658dfeb5520f2c4
+  FontAwesomeIconFactory: 36ea917783d4df460a6a3abf7e26481d7d49aef2
   FXBlurView: c6d23f3d35af2c6282296a2930f61c6e2c788d01
   TesseractOCRiOS: 90638afbe43d082433f2e76b384c7901d23956df
   Toast: 0773b8fc0e97352ca6054517bec7ebdd4110029d

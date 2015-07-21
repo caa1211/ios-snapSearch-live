@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 #import "CameraViewController.h"
 #import "CVViewController.h"
-
 @interface AppDelegate ()
 
 @end
@@ -24,6 +23,9 @@
     //self.window.rootViewController = [[CVViewController alloc]init];
     
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[CVViewController alloc]init]];
+    
+    //self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[SettingViewController alloc]init]];
+    
     
     [self.window makeKeyAndVisible];
     

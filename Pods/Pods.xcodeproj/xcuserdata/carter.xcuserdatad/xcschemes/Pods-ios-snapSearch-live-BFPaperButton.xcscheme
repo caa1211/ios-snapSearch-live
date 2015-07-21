@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9246FB2BAC37CBED6CBA515D"
+               BlueprintIdentifier = "377D11FBF454076633588E25"
                BuildableName = "libPods-ios-snapSearch-live-BFPaperButton.a"
                BlueprintName = "Pods-ios-snapSearch-live-BFPaperButton"
                ReferencedContainer = "container:Pods.xcodeproj">

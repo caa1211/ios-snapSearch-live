@@ -1,6 +1,6 @@
 #include "Pods-ios-snapSearch-live-DKCircleButton.xcconfig"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/DKCircleButton" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/BFPaperButton" "${PODS_ROOT}/Headers/Public/DKCircleButton" "${PODS_ROOT}/Headers/Public/FXBlurView" "${PODS_ROOT}/Headers/Public/TesseractOCRiOS" "${PODS_ROOT}/Headers/Public/TesseractOCRiOS/TesseractOCR" "${PODS_ROOT}/Headers/Public/Toast" "${PODS_ROOT}/Headers/Public/UIColor+BFPaperColors"
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/DKCircleButton" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/BFPaperButton" "${PODS_ROOT}/Headers/Public/DKCircleButton" "${PODS_ROOT}/Headers/Public/FXBlurView" "${PODS_ROOT}/Headers/Public/FontAwesomeIconFactory" "${PODS_ROOT}/Headers/Public/TesseractOCRiOS" "${PODS_ROOT}/Headers/Public/TesseractOCRiOS/TesseractOCR" "${PODS_ROOT}/Headers/Public/Toast" "${PODS_ROOT}/Headers/Public/UIColor+BFPaperColors"
 OTHER_LDFLAGS = ${PODS_IOS_SNAPSEARCH_LIVE_DKCIRCLEBUTTON_OTHER_LDFLAGS} -ObjC
 PODS_ROOT = ${SRCROOT}
 SKIP_INSTALL = YES

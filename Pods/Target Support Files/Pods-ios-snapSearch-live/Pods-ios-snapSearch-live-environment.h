@@ -24,6 +24,12 @@
 #define COCOAPODS_VERSION_MINOR_FXBlurView 6
 #define COCOAPODS_VERSION_PATCH_FXBlurView 3
 
+// FontAwesomeIconFactory
+#define COCOAPODS_POD_AVAILABLE_FontAwesomeIconFactory
+#define COCOAPODS_VERSION_MAJOR_FontAwesomeIconFactory 2
+#define COCOAPODS_VERSION_MINOR_FontAwesomeIconFactory 0
+#define COCOAPODS_VERSION_PATCH_FontAwesomeIconFactory 2
+
 // TesseractOCRiOS
 #define COCOAPODS_POD_AVAILABLE_TesseractOCRiOS
 #define COCOAPODS_VERSION_MAJOR_TesseractOCRiOS 4

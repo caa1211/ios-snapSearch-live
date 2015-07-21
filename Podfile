@@ -7,6 +7,7 @@ target 'ios-snapSearch-live' do
     pod 'DKCircleButton'
     pod 'BFPaperButton'
     pod 'Toast'
+    pod 'FontAwesomeIconFactory'
 end
 
 target 'ios-snapSearch-liveTests' do

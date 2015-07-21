@@ -20,6 +20,7 @@
 #import "CVTools.h"
 #import "UIView+Toast.h"
 #import "RecognizeButton.h"
+#import "SettingViewController.h"
 using namespace cv;
 
 typedef enum OCR_LANG_MODE : NSInteger {
@@ -75,6 +76,8 @@ typedef enum EFFECT_MODE : NSInteger {
 @property (weak, nonatomic) IBOutlet UIButton *editMoveLeft;
 @property (weak, nonatomic) IBOutlet UIButton *editMoveRight;
 @property (weak, nonatomic) IBOutlet UILabel *editTitleLabel;
+
+@property (nonatomic, strong) UINavigationController *naviController;
 
 @end
 
@@ -175,6 +178,8 @@ typedef enum EFFECT_MODE : NSInteger {
     
     [self.editMoveLeft setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-angle-double-right"] forState:UIControlStateNormal];
     [self.editMoveRight setTitle:[NSString fontAwesomeIconStringForIconIdentifier:@"fa-angle-double-left"] forState:UIControlStateNormal];
+    
+    _naviController = [[UINavigationController alloc]init];
 }
 
 - (IBAction)onLang:(id)sender {
@@ -190,7 +195,8 @@ typedef enum EFFECT_MODE : NSInteger {
 }
 
 -(void) onSetting:(id) sender{
-    NSLog(@"=============onSetting==============");
+    SettingViewController *settingVC = [[SettingViewController alloc] init];
+    [self.navigationController pushViewController:settingVC animated:YES];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -215,8 +221,9 @@ typedef enum EFFECT_MODE : NSInteger {
 }
 
 - (void) cropByTarget:(void(^)(UIImage *image))completion{
-    // This function should be run in background thread
     
+    // This function should be run in background thread
+
     UIImage *image = self.currentImage;
     CGRect wrapperRect = self.recognizeWrapper.frame;
     CGRect frameRect = self.recognizeTargetView.frame;

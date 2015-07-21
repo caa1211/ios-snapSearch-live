@@ -32,6 +32,45 @@ typedef NS_ENUM(NSInteger, SEARCH_MODE) {
     [self setupActionButtons];
 }
 
+-(void) collectUrl {
+    NSDictionary * searchSettingData = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"search"];
+    NSDictionary * ecSettingData = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"ec"];
+    NSDictionary * dictSettingData = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"dict"];
+    
+    if (searchSettingData == nil) {
+        searchSettingData = @{
+                              @"value": @{
+                                      @"url": @"https://search.yahoo.com/search?p="
+                                      }
+                              };
+    }
+    
+    if (ecSettingData ==nil) {
+        ecSettingData = @{
+                          @"value": @{
+                                  
+                                  @"url": @"https://tw.search.bid.yahoo.com/search/auction/product?p="
+                                  }
+                          };
+    }
+    
+    if (dictSettingData ==nil) {
+        dictSettingData = @{
+                            @"value": @{
+                                    
+                                    @"url": @"http://dictionary.reference.com/browse/",
+                                    @"params": @"?s=t"
+                                    }
+                            };
+    }
+    
+    
+    self.urlArray = @[ecSettingData[@"value"],
+                      searchSettingData[@"value"],
+                      dictSettingData[@"value"]];
+
+}
+
 -(void) setupActionButtons {
     CGRect parentRect = self.bounds;
     
@@ -39,20 +78,8 @@ typedef NS_ENUM(NSInteger, SEARCH_MODE) {
     self.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
     self.layer.shadowRadius = 2.0f;
     self.layer.shadowOpacity = 0.5;
-    self.urlArray = @[@{
-                          @"url": @"https://tw.search.bid.yahoo.com/search/auction/product?p="
-                          },
-                      @{
-                          @"url": @"https://search.yahoo.com/search?p="
-                          },
-                      //                       @{
-                      //                           @"url": @"http://www.thefreedictionary.com/",
-                      //                           @"params": @"?s=t"
-                      //                        },
-                      @{
-                          @"url": @"http://dictionary.reference.com/browse/",
-                          @"params": @"?s=t"
-                          }];
+    
+    [self collectUrl];
     
     self.viewController = (CVViewController *)[self viewController];
     
@@ -128,6 +155,7 @@ typedef NS_ENUM(NSInteger, SEARCH_MODE) {
 
 
 -(void) onECBtnClick:(id)sender {
+    [self collectUrl];
     WebViewController *webVC = [[WebViewController alloc] initWithUrl:[self linkGenerator:SEARCH_MODE_EC]];
    [self.viewController.navigationController pushViewController:webVC animated:YES];
 }
@@ -140,11 +168,13 @@ typedef NS_ENUM(NSInteger, SEARCH_MODE) {
 }
 
 -(void) onDictBtnClick:(id)sender {
+    [self collectUrl];
     WebViewController *webVC = [[WebViewController alloc] initWithUrl:[self linkGenerator:SEARCH_MODE_DICTIONARY]];
     [self.viewController.navigationController pushViewController:webVC animated:YES];
 }
 
 -(void) onSearchBtnClick:(id)sender {
+    [self collectUrl];
     WebViewController *webVC = [[WebViewController alloc] initWithUrl:[self linkGenerator:SEARCH_MODE_SEARCH]];
     [self.viewController.navigationController pushViewController:webVC animated:YES];
 }

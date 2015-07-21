@@ -1,0 +1,1 @@
+PODS_IOS_SNAPSEARCH_LIVE_FONTAWESOMEICONFACTORY_OTHER_LDFLAGS = -framework "CoreGraphics" -framework "CoreText"
