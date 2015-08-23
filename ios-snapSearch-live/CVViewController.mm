@@ -60,6 +60,7 @@ typedef enum EFFECT_MODE : NSInteger {
 @property (weak, nonatomic) IBOutlet FXBlurView *cameraViewMask;
 @property (weak, nonatomic) IBOutlet UIView *ctrlView;
 @property (assign, nonatomic) BOOL isRecognizing;
+@property (assign, nonatomic) int textDectionMode;
 
 @property (retain, nonatomic) DKCircleButton *grayBtn;
 @property (retain, nonatomic) DKCircleButton *invertBtn;
@@ -88,6 +89,7 @@ typedef enum EFFECT_MODE : NSInteger {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.textDectionMode = 0;
     SystemSoundID soundID;
     NSURL *buttonURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"snap" ofType:@"wav"]];
     AudioServicesCreateSystemSoundID((__bridge CFURLRef)buttonURL, &soundID);
@@ -212,13 +214,15 @@ typedef enum EFFECT_MODE : NSInteger {
     // OpenCV convert to scanable mode
     //image = [self imageScanableProcessing:image];
     
-    /*
-    //DetectLetters
-    std::vector<cv::Rect> letterBBoxes= [self detectLetters:image];
-    for(int i=0; i< letterBBoxes.size(); i++){
-        cv::rectangle(image,letterBBoxes[i],cv::Scalar(0,255,0),3,8,0);
+    
+    if (self.textDectionMode == 1) {
+        //textDetection
+        std::vector<cv::Rect> letterBBoxes= [CVTools detectLetters:image];
+        for(int i=0; i< letterBBoxes.size(); i++){
+            cv::rectangle(image,letterBBoxes[i],cv::Scalar(0,255,0),3,8,0);
+        }
     }
-    */
+    
     
     self.currentImage = [CVTools UIImageFromCVMat:image];
     //[self cropByTarget:nil];
@@ -246,13 +250,15 @@ typedef enum EFFECT_MODE : NSInteger {
     
     CGImageRelease(imageRef);
     
-    // textDetection
-//    cv::Mat mat = [self cvMatFromUIImage:cropedImg];
-//    std::vector<cv::Rect> letterBBoxes= [self detectLetters:mat];
-//    for(int i=0; i< letterBBoxes.size(); i++){
-//        cv::rectangle(mat,letterBBoxes[i],cv::Scalar(0,255,0),3,8,0);
-//    }
-//    cropedImg = [self UIImageFromCVMat:mat];
+    if (self.textDectionMode == 2) {
+        // textDetection
+        cv::Mat mat = [CVTools cvMatFromUIImage:cropedImg];
+        std::vector<cv::Rect> letterBBoxes= [CVTools detectLetters:mat];
+        for(int i=0; i< letterBBoxes.size(); i++){
+            cv::rectangle(mat,letterBBoxes[i],cv::Scalar(0,255,0),3,8,0);
+        }
+        cropedImg = [CVTools UIImageFromCVMat:mat];
+    }
 
     
     // Apply openCV effect
@@ -326,7 +332,7 @@ typedef enum EFFECT_MODE : NSInteger {
     }else if(self.ocrLang == OCR_LANG_MODE_NUM){
         operation.tesseract.charWhitelist = @"0123456789";
     }else if (self.ocrLang == OCR_LANG_MODE_CHT){
-        operation.tesseract.maximumRecognitionTime = 30.0;
+        //operation.tesseract.maximumRecognitionTime = 30.0;
     }else if (self.ocrLang == OCR_LANG_MODE_JPN){
         operation.tesseract.maximumRecognitionTime = 30.0;
     }
@@ -664,7 +670,7 @@ typedef enum EFFECT_MODE : NSInteger {
         image = image_copy;
     }
     
-    if (self.grayBtn.selected) {
+    if (self.grayBtn.selected && self.textDectionMode == 0 ) {
         // Gray image (Need to markout gray image before enable DetectLetters)
         cvtColor(image, image_copy, CV_RGBA2GRAY);
         image = image_copy;

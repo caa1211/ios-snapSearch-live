@@ -11,6 +11,7 @@
 using namespace cv;
 
 @interface CVTools : NSObject
++(std::vector<cv::Rect>) detectLetters:(cv::Mat)img;
 + (UIImage *)UIImageFromCVMat:(cv::Mat)cvMat;
 + (cv::Mat)cvMatFromUIImage:(UIImage *)image;
 @end
